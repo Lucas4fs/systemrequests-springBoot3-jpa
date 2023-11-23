@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.requests.project.entities.User;
 import com.requests.project.repositories.UserRepository;
-
 @Service
 public class UserService {
 	@Autowired
@@ -17,8 +16,12 @@ public class UserService {
 		Optional<User> obj = repository.findById(id);
 		return obj.get();
 	}
-
+	
 	public User insert(User obj) {
 		return repository.save(obj);
+	}
+
+	public void delete(Long id) {
+		repository.deleteById(id);
 	}
 }
