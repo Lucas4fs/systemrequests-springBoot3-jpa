@@ -1,6 +1,7 @@
 package com.requests.project.services;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,8 @@ public class CategoryService {
 	}
 
 	public Category findById(Long id) {
-		Optional<Category> obj = repository.findById(id);
-		return obj.get();
+	    Optional<Category> obj = repository.findById(id);
+	    return obj.orElseThrow(() -> new NoSuchElementException());
 	}
+
 }
