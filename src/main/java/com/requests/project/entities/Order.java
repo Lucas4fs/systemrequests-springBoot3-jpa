@@ -19,6 +19,7 @@ import jakarta.persistence.Table;
 @Table(name = "tb_order")
 public class Order implements Serializable {
 	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -33,6 +34,7 @@ public class Order implements Serializable {
 	@OneToMany(mappedBy = "id.order")
 	private Set<OrderItem> items = new HashSet<>();
 	
+	//@ManyToOne
 	@OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
 	private Payment payment;
 	
@@ -42,18 +44,22 @@ public class Order implements Serializable {
 		super();
 		this.id = id;
 		this.moment = moment;
-		this.client = client;
 		setOrderStatus(orderStatus);
+		this.client = client;
 	}
+	
 	public Long getId() {
 		return id;
 	}
+	
 	public void setId(Long id) {
 		this.id = id;
 	}
+	
 	public Instant getMoment() {
 		return moment;
 	}
+	
 	public void setMoment(Instant moment) {
 		this.moment = moment;
 	}
@@ -98,6 +104,7 @@ public class Order implements Serializable {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

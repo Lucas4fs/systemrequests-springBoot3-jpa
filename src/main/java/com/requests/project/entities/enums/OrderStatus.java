@@ -9,7 +9,7 @@ public enum OrderStatus {
 	CANCELED(5);//CANCELADO
 
 	private int code;
-
+	
 	private OrderStatus(int code) {
 		this.code = code;
 	}

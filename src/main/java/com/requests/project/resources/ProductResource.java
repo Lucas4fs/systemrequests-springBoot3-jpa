@@ -43,9 +43,10 @@ public class ProductResource {
 		return ResponseEntity.created(uri).body(obj);
 	}
 	
+	//nao sei se esse metodo tem que ficar parecido com o da linha 39, mas o da linha 39 nao ta inserindo a categoria do produto
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Long id) {
-		service.delete(id);
+		service.delete(id); 
 		return ResponseEntity.noContent().build();
 	}
 	
