@@ -10,6 +10,7 @@ import com.requests.project.services.exceptions.DatabaseException;
 import com.requests.project.services.exceptions.ResourceNotFoundException;
 
 import jakarta.servlet.http.HttpServletRequest;
+
 @ControllerAdvice
 public class ResourceExceptionHandler {
 	@ExceptionHandler(ResourceNotFoundException.class)
