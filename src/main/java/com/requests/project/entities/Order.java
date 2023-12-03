@@ -3,8 +3,9 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
+
 import com.requests.project.entities.enums.OrderStatus;
-import jakarta.persistence.CascadeType;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,7 +13,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -23,6 +23,7 @@ public class Order implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
 	private Instant moment;
 	
 	private Integer orderStatus;
@@ -35,8 +36,8 @@ public class Order implements Serializable {
 	private Set<OrderItem> items = new HashSet<>();
 	
 	//@ManyToOne
-	@OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
-	private Payment payment;
+	//@OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
+	//private Payment payment;
 	
 	public Order() {
 	}
@@ -72,18 +73,19 @@ public class Order implements Serializable {
 	public OrderStatus getOrderStatus() {
 		return OrderStatus.valueOf(orderStatus);
 	}
+	
 	public void setOrderStatus(OrderStatus orderStatus) {
 		if (orderStatus != null) {
 			this.orderStatus = orderStatus.getCode();
 		}
 	}
 	
-	public Payment getPayment() {
-		return payment;
-	}
-	public void setPayment(Payment payment) {
-		this.payment = payment;
-	}
+//	public Payment getPayment() {
+//		return payment;
+//	}
+//	public void setPayment(Payment payment) {
+//		this.payment = payment;
+//	}
 	
 	public Set<OrderItem> getItems() {
 		return items;

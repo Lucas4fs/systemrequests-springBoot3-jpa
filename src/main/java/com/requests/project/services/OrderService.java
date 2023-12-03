@@ -12,6 +12,8 @@ import com.requests.project.repositories.OrderRepository;
 import com.requests.project.services.exceptions.DatabaseException;
 import com.requests.project.services.exceptions.ResourceNotFoundException;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @Service
 public class OrderService {
 
@@ -26,7 +28,11 @@ public class OrderService {
 		Optional<Order> obj = repository.findById(id);
 		return obj.get();
 	}
-	/*
+	
+	public Order insert(Order obj) {
+		return repository.save(obj);
+	}
+
 	public void delete(Long id) {
 	    try {
 	        if (repository.existsById(id)) {
@@ -38,5 +44,21 @@ public class OrderService {
 	        throw new DatabaseException(e.getMessage());		
 	    }	
 	}
-	*/
+	
+	public Order update(Long id, Order obj) {
+		try {
+			Order entity = repository.getReferenceById(id);
+			updateData(entity, obj);
+			return repository.save(entity);
+		} catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException(id);
+		}	
+	}
+
+	private void updateData(Order entity, Order obj) {
+		entity.setMoment(obj.getMoment());
+		entity.setOrderStatus(obj.getOrderStatus());
+		entity.setClient(obj.getClient());
+	}
+	
 }

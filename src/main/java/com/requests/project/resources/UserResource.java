@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.requests.project.entities.User;
 import com.requests.project.services.UserService;
+
 @RestController
 @RequestMapping(value = "/users")
 public class UserResource {
+	
 	@Autowired 
 	private UserService service;
 	
