@@ -2,7 +2,6 @@ package com.requests.project.resources;
 
 import java.net.URI;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
 import com.requests.project.entities.Product;
 import com.requests.project.services.ProductService;
 
@@ -44,7 +42,6 @@ public class ProductResource {
 		return ResponseEntity.created(uri).body(obj);
 	}
 	
-	//nao sei se esse metodo tem que ficar parecido com o da linha 39, mas o da linha 39 nao ta inserindo a categoria do produto
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Long id) {
 		service.delete(id); 
@@ -56,6 +53,4 @@ public class ProductResource {
 		obj = service.update(id, obj);
 		return ResponseEntity.ok().body(obj);
 	}
-	
-	
 }

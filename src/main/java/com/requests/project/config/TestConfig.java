@@ -1,12 +1,11 @@
 package com.requests.project.config;
+
 import java.time.Instant;
 import java.util.Arrays;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-
 import com.requests.project.entities.Category;
 import com.requests.project.entities.Order;
 import com.requests.project.entities.OrderItem;
@@ -59,28 +58,13 @@ public class TestConfig implements CommandLineRunner {
 		User u3 = new User(null, "Julia Sandi", "juliasandi@gmail.com", "977777771", "223456");
 		
 		Order o1 = new Order(null, Instant.parse("2019-06-20T19:53:07Z"), OrderStatus.PAID, u1);
-		//Order o2 = new Order(null, Instant.parse("2019-07-21T03:42:10Z"), OrderStatus.WAITING_PAYMENT, u2);
-		//Order o3 = new Order(null, Instant.parse("2019-07-22T15:21:22Z"), OrderStatus.SHIPPED, u3);
-		//QUANDO FOR FAZER INSERT DE UM PEDIDO NO POSTMAN SETAR O STATUS DO PAG COM TODOS EXCETO PAID
-		
-		/*
-		 * Payment pay1 = new Payment(null, Instant.parse("2019-06-20T21:53:07Z"), o1);
-		 * o1.setPayment(pay1);
-		 */
-		/*Payment pay2 = new Payment(null, Instant.parse("2019-07-22T00:00:10Z"), o2);
-		o2.setPayment(pay2);*/
-		/*Payment pay3 = new Payment(null, Instant.parse("2019-07-22T30:25:22Z"), o3);
-		o3.setPayment(pay3);*/
 		
 		userRepository.saveAll(Arrays.asList(u1, u2, u3));
 		orderRepository.saveAll(Arrays.asList(o1));
 		
 		OrderItem oi1 = new OrderItem(o1, p1, 2, p1.getPrice());
 		OrderItem oi2 = new OrderItem(o1, p3, 1, p3.getPrice());
-		//OrderItem oi3 = new OrderItem(o2, p3, 2, p3.getPrice());
-		//OrderItem oi4 = new OrderItem(o3, p5, 2, p5.getPrice());
 
 		orderItemRepository.saveAll(Arrays.asList(oi1, oi2));
-		
 	}
 }

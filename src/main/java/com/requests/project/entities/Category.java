@@ -1,10 +1,9 @@
 package com.requests.project.entities;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,11 +19,10 @@ public class Category implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
 	private String name;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "categoryProduct")//categories não existe na entidade de destino com.requests.project.entities.Product'
+	@OneToMany(mappedBy = "categoryProduct")
 	private List<Product> products = new ArrayList<>();
 
 	public Category() {
@@ -35,18 +33,23 @@ public class Category implements Serializable {
 		this.id = id;
 		this.name = name;
 	}
+	
 	public Long getId() {
 		return id;
 	}
+	
 	public void setId(Long id) {
 		this.id = id;
 	}
+	
 	public String getName() {
 		return name;
 	}
+	
 	public void setName(String name) {
 		this.name = name;
 	}
+	
 	public List<Product> getProducts() {
 		return products;
 	}
@@ -58,6 +61,7 @@ public class Category implements Serializable {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -74,5 +78,4 @@ public class Category implements Serializable {
 			return false;
 		return true;
 	}	
-	
 }
