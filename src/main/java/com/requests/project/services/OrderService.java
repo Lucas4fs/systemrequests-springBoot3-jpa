@@ -1,7 +1,7 @@
 package com.requests.project.services;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.Optional; 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,7 @@ public class OrderService {
 	@Autowired
 	private OrderRepository repository;
 
-	public List<Order> findAll() {
+	public List<Order> searchAll() {
 		return repository.findAll();
 	}
 
@@ -29,19 +29,16 @@ public class OrderService {
 	public Order insert(Order obj) {
 		return repository.save(obj);
 	}
-
+	
 	public void delete(Long id) {
 	    try {
-	        if (repository.existsById(id)) {
-	            repository.deleteById(id);			
-	        } else {				
-	            throw new ResourceNotFoundException(id);			
-	        }		
-	    } catch (DataIntegrityViolationException e) {			
-	        throw new DatabaseException(e.getMessage());		
-	    }	
+	        Order order = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
+	        repository.delete(order);
+	    } catch (DataIntegrityViolationException e) {
+	        throw new DatabaseException(e.getMessage());
+	    }
 	}
-	
+
 	public Order update(Long id, Order obj) {
 		try {
 			Order entity = repository.getReferenceById(id);

@@ -25,7 +25,7 @@ public class OrderResource {
 
 	@GetMapping
 	public ResponseEntity<List<Order>> findAll() {
-		List<Order> list = service.findAll();
+		List<Order> list = service.searchAll();
 		return ResponseEntity.ok().body(list);
 	}
 

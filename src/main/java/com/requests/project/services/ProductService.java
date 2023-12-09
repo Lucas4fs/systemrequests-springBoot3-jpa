@@ -17,8 +17,8 @@ public class ProductService {
 	@Autowired
 	private ProductRepository repository;
 
-	public List<Product> findAll() {
-		return repository.findAll();
+	public List<Product> searchAll() {
+		return repository.searchAll();
 	}
 
 	public Product findById(Long id) {
@@ -31,15 +31,12 @@ public class ProductService {
 	}
 
 	public void delete(Long id) {
-	    try {
-	        if (repository.existsById(id)) {
-	            repository.deleteById(id);			
-	        } else {				
-	            throw new ResourceNotFoundException(id);			
-	        }		
-	    } catch (DataIntegrityViolationException e) {			
-	        throw new DatabaseException(e.getMessage());		
-	    }	
+		try {
+			Product product = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
+			repository.delete(product);
+		} catch (DataIntegrityViolationException e) {
+			throw new DatabaseException(e.getMessage());
+		}
 	}
 	
 	public Product update(Long id, Product obj) {
