@@ -15,30 +15,29 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.requests.project.entities.Order;
-import com.requests.project.services.OrderService;
+import com.requests.project.dto.InterfaceOrderItem;
+import com.requests.project.entities.OrderItem;
+import com.requests.project.services.OrderItemService;
 
 @RestController
-@RequestMapping(value = "/orders")
-public class OrderResource {
+@RequestMapping(value = "/orderitem")
+public class OrderItemResource {
 
 	@Autowired
-	private OrderService service;
+	private OrderItemService service;
 
-	@GetMapping
-	public ResponseEntity<List<Order>> findAll() {
-		List<Order> list = service.searchAll();
-		return ResponseEntity.ok().body(list);
-	}
+	@GetMapping public ResponseEntity<List<InterfaceOrderItem>> findAll() {
+	List<InterfaceOrderItem> list = service.searchAll();
+	return ResponseEntity.ok().body(list); }
 
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Order> findById(@PathVariable Long id) {
-		Order obj = service.findById(id);
+	public ResponseEntity<OrderItem> findById(@PathVariable Long id) {
+		OrderItem obj = service.findById(id);
 		return ResponseEntity.ok().body(obj);
 	}
 
 	@PostMapping
-	public ResponseEntity<Order> insert(@RequestBody Order obj) {
+	public ResponseEntity<OrderItem> insert(@RequestBody OrderItem obj) {
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).body(obj);
@@ -51,7 +50,7 @@ public class OrderResource {
 	}
 
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<Order> update(@PathVariable Long id, @RequestBody Order obj) {
+	public ResponseEntity<OrderItem> update(@PathVariable Long id, @RequestBody OrderItem obj) {
 		obj = service.update(id, obj);
 		return ResponseEntity.ok().body(obj);
 	}

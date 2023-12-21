@@ -22,7 +22,7 @@ import com.requests.project.services.ProductService;
 @RequestMapping(value = "/products")
 public class ProductResource {
 
-	@Autowired 
+	@Autowired
 	private ProductService service;
 
 	@GetMapping
@@ -36,20 +36,20 @@ public class ProductResource {
 		Product obj = service.findById(id);
 		return ResponseEntity.ok().body(obj);
 	}
-	
+
 	@PostMapping
 	public ResponseEntity<Product> insert(@RequestBody Product obj) {
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).body(obj);
 	}
-	
+
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Long id) {
-		service.delete(id); 
+		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
-	
+
 	@PutMapping(value = "/{id}")
 	public ResponseEntity<Product> update(@PathVariable Long id, @RequestBody Product obj) {
 		obj = service.update(id, obj);

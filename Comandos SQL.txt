@@ -1,0 +1,32 @@
+SELECT id, email, name, password, phone
+	FROM public.tb_user;
+	
+select * from tb_category;
+
+select * from tb_product;
+
+select * from tb_order;
+
+INSERT INTO tb_order_item
+(price, quantity, product_id, order_id)
+VALUES
+(365.25, 1, 1, 1);
+
+select * from tb_order_item
+where order_id = 1;
+
+SELECT id, email, name, password, phone
+FROM public.tb_user
+where id = 1;
+
+select * from tb_product
+where id = 1;
+
+select * from tb_order
+where id = 1;
+
+select * from tb_category
+where id = 3;
+
+select * from tb_user
+where id = 1;

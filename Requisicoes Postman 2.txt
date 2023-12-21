@@ -1,0 +1,451 @@
+-----------------------------------------------------------//FAZER INSERT EM TUDO-----------------------------------------------------
+
+//INSERT users
+
+Postman: POST | http://localhost:8082/users //OK
+Body Postman
+{
+	 "name": "Manu Novaz",
+	 "email": "manu@gmail.com",
+	 "password": "12340",
+	 "phone": "61987865445"
+}
+
+Postman: POST | http://localhost:8082/users //OK
+Body Postman
+{
+	 "name": "Josiane Melo",
+	 "email": "josiane@gmail.com",
+	 "password": "12340",
+	 "phone": "11987654545"
+}
+
+Postman: POST | http://localhost:8082/users //OK
+Body Postman
+{
+    "name": "Ana Oliveira",
+    "email": "ana.oliveira@example.com",
+    "password": "senha456",
+    "phone": "62987767654"
+}
+
+Postman: POST | http://localhost:8082/users //OK
+Body Postman
+{
+    "name": "Francisco Aguiar",
+    "email": "francisco@example.com",
+    "password": "ab156",
+    "phone": "11985766664"
+}
+
+Postman: POST | http://localhost:8082/users //OK
+Body Postman
+{
+    "name": "Diego Medeiros",
+    "email": "diegom@example.com",
+    "password": "diegom1",
+    "phone": "21985766543"
+}
+
+//INSERT category
+
+Postman: POST | http://localhost:8082/categories //OK
+Body Postman:
+{
+    "name": "Electronics"
+}
+
+Postman: POST | http://localhost:8082/categories //OK
+Body Postman:
+{
+    "name": "Books"
+}
+
+Postman: POST | http://localhost:8082/categories //OK
+Body Postman:
+{
+    "name": "Machines"
+}
+
+Postman: POST | http://localhost:8082/categories //OK
+Body Postman:
+{
+    "name": "Foods"
+}
+
+//INSERT products
+
+Postman: POST | http://localhost:8082/products // OK
+Body Postman:
+{
+    "name": "Java How to Program",
+    "description": "Java programming book",
+    "price": 365.25,
+    "imgUrl": "",
+    "categoryProduct": {
+        "id": 2,
+        "name": "Books"
+    }
+}
+
+Postman: POST | http://localhost:8082/products // OK
+Body Postman:
+{
+    "name": "PC Gamer",
+    "description": "Machine adapted for games",
+    "price": 2780.25,
+    "imgUrl": "",
+    "categoryProduct": {
+        "id": 3,
+        "name": "Machines"
+    }
+}
+
+Postman: POST | http://localhost:8082/products // OK
+Body Postman:
+{
+    "name": "Smart Plug Wi-Fi 10A",
+    "description": "Wi-fi adapter",
+    "price": 50.00,
+    "imgUrl": "",
+    "categoryProduct": {
+        "id": 1,
+        "name": "Electronics"
+    }
+}
+
+Postman: POST | http://localhost:8082/products // OK
+Body Postman:
+{
+    "name": "Bluetooth headset",
+    "description": "To listen and speak",
+    "price": 250.00,
+    "imgUrl": "",
+    "categoryProduct": {
+        "id": 1,
+        "name": "Electronics"
+    }
+}
+
+
+//INSERT order
+
+Postman: POST | http://localhost:8082/orders //OK
+
+Body Postman:
+{
+    "moment": "2019-07-21T03:42:10Z",
+    "orderStatus": "WAITING PAYMENT",
+    "client": {
+        "id": 2,
+        "name": "Josiane Melo",
+        "email": "josiane@gmail.com",
+        "phone": "11987654545",
+        "password": "12340"
+    }    
+}
+
+Body Postman:
+{
+    "moment": "2023-07-21T03:42:10Z",
+    "orderStatus": "PAID",
+    "client": {
+        "id": 3,
+        "name": "Ana Oliveira",
+        "email": "ana.oliveira@example.com",
+        "phone": "62987767654",
+        "password": "senha456"
+    }    
+}
+
+Body Postman:
+{
+    "moment": "2020-07-21T03:42:01Z",
+    "orderStatus": "DELIVERED",
+    "client": {
+        "id": 5,
+        "name": "Diego Medeiros",
+        "email": "diegom@example.com",
+        "phone": "21985766543",
+        "password": "diegom1"
+    }    
+}
+
+//INSERT OrderItem
+
+Postman: POST | http://localhost:8082/orderitem //OK
+
+{
+    "quantity": 2,
+    "price": 50.00,
+    "productId": {
+        "id": 3,
+        "name": "Wi-fi adapter",
+        "description": "Smart Plug Wi-Fi 10A",
+        "price": 50.00,
+        "imgUrl": "",
+        "categoryProduct": {
+            "id": 1,
+            "name": "Eletronics"
+        }
+    },
+    "orderId": {
+        "id": 1,
+        "moment": "2019-07-21T03:42:10Z",
+        "orderStatus": "WAITING_PAYMENT",
+        "client": {
+            "id": 2,
+            "name": "Josiane Melo",
+            "email": "josiane@gmail.com",
+            "phone": "11987654545",
+            "password": "12340"
+        }
+    }
+}
+
+Postman: POST | http://localhost:8082/orderitem //OK
+
+{
+    "quantity": 2,
+    "price": 365.25,
+    "productId": {
+        "id": 1,
+        "name": "Java How to Program",
+        "description": "Java programming book",
+        "price": 365.25,
+        "imgUrl": "",
+        "categoryProduct": {
+            "id": 2,
+            "name": "Books"
+        }
+    },
+    "orderId": {
+        "id": 1,
+        "moment": "2019-07-21T03:42:10Z",
+        "orderStatus": "WAITING_PAYMENT",
+        "client": {
+            "id": 2,
+            "name": "Josiane Melo",
+            "email": "josiane@gmail.com",
+            "phone": "11987654545",
+            "password": "12340"
+        }
+    }
+}
+
+-----------------------------------------------------------//FAZER UPDATE EM TUDO-----------------------------------------------------
+
+//UPDATE orderitem
+
+PUT | http://localhost:8082/orderitem/9 //CASO O ID NÃO EXISTA
+
+{
+    "quantity": 3,
+    "price": 2780.25,
+    "productId": {
+        "id": 2,
+        "name": "PC Gamer",
+        "description": "Machine adapted for games",
+        "price": 2780.25,
+        "imgUrl": "",
+        "categoryProduct": {
+            "id": 2,
+            "name": "Books"
+        }
+    },
+    "orderId": {
+        "id": 1,
+        "moment": "2019-07-21T03:42:10Z",
+        "orderStatus": "WAITING_PAYMENT",
+        "client": {
+            "id": 2,
+            "name": "Josiane Melo",
+            "email": "josiane@gmail.com",
+            "phone": "11987654545",
+            "password": "12340"
+        }
+    }
+}
+
+
+PUT | http://localhost:8082/orderitem/2 //OK
+
+{
+    "quantity": 3,
+    "price": 2780.25,
+    "productId": {
+        "id": 2,
+        "name": "PC Gamer",
+        "description": "Machine adapted for games",
+        "price": 2780.25,
+        "imgUrl": "",
+        "categoryProduct": {
+            "id": 2,
+            "name": "Books"
+        }
+    },
+    "orderId": {
+        "id": 1,
+        "moment": "2019-07-21T03:42:10Z",
+        "orderStatus": "WAITING_PAYMENT",
+        "client": {
+            "id": 2,
+            "name": "Josiane Melo",
+            "email": "josiane@gmail.com",
+            "phone": "11987654545",
+            "password": "12340"
+        }
+    }
+}
+
+//UPDATE users
+
+Postman: PUT | http://localhost:8082/users/9 //CASO O ID NÃO EXISTA //OK
+Body Postman:
+{
+	 "name": "Marley Jonson",
+	 "email": "marley@gmail.com",
+	 "password": "senha456",
+	 "phone": "63994959678"
+}
+
+Postman: PUT | http://localhost:8082/users/1 //UPDATE DE USER OBTEVE ÊXITO  //OK //OBS: SELECIONA PARA DEPOIS FAZER UPDATE
+Body Postman:
+{
+    "name": "Jasmini Pereira",
+    "email": "jasmini@gmail.com",
+    "phone": "61988959678",
+    "password": "123456"
+}
+
+//UPDATE products
+
+Postman: PUT | http://localhost:8082/products/9 //CASO O ID NÃO EXISTA// OK
+{
+    "name": "Use your head! SQL",
+    "description": "The real secret to success is having power over your data.",
+    "price": 90.5,
+    "imgUrl": "",
+    "categoryProduct": {
+        "id": 2,
+        "name": "Books"
+    }
+}
+
+Postman: PUT | http://localhost:8082/products/1 //CASO O ID EXISTA// OK //OBS: SELECIONA PARA DEPOIS FAZER UPDATE
+Body Postman:
+{
+    "name": "Use your head! SQL",
+    "description": "The real secret to success is having power over your data.",
+    "price": 90.5,
+    "imgUrl": "",
+    "categoryProduct": {
+        "id": 2,
+        "name": "Books"
+    }
+}
+
+//UPDATE order
+
+Postman: PUT | http://localhost:8082/orders/1 //OK //ESTÁ FAZENDO 1 SELECT, 1 UPDATE 
+Body Postman:
+{
+    "moment": "2020-01-15T00:00:00Z",
+    "orderStatus": "CANCELED",
+    "client": {
+        "id": 2,
+        "name": "Josiane Melo",
+        "email": "josiane@gmail.com",
+        "phone": "11987654545",
+        "password": "12340"
+    }
+}
+
+//UPDATE category
+
+Postman: PUT |  http://localhost:8082/categories/3 // OK //FAZENDO UM SELECT E UM UPDATE
+Body Postman:
+{
+    "name": "Others"
+}
+
+Postman: PUT |  http://localhost:8082/categories/9 // OK //CASO A CATEGORIA NÃO EXISTA //TENTA FAZER SELECT
+Body Postman:
+{
+    "name": "Others"
+}
+
+-----------------------------------------------------------//FAZER DELETE EM TUDO-----------------------------------------------------
+//DELETE users
+
+
+Postman: DELETE | http://localhost:8082/users/9 //CASO O ID NÃO EXISTA //OK //TENTA FAZER SELECT
+
+Postman: DELETE | http://localhost:8082/users/1 //CASO O ID NÃO ESTEJA VINCULADO A ALGUM PEDIDO(CONSTRAINT) //OK
+
+Postman: DELETE | http://localhost:8082/users/2 //CASO O ID EXISTA E TENHA PEDIDO(CONSTRAINT) //OK 
+
+//DELETE products
+
+Postman: DELETE | http://localhost:8082/products/4 //CASO O ID EXISTA// OK
+
+Postman: DELETE | http://localhost:8082/products/9 //CASO O ID NÃO EXISTA// OK
+
+Postman: DELETE | http://localhost:8082/products/1 //CASO O ID ESTEJA VINCULADO A UM ORDER ITEM// OK
+
+//DELETE category
+
+Postman: DELETE | http://localhost:8082/categories/4 //OK //
+
+Postman: DELETE | http://localhost:8082/categories/9 //DELETAR ID QUE NÃO EXISTE DA ERRO //OK
+
+Postman: DELETE |  http://localhost:8082/categories/2 //DELETAR UMA CATEGORIA QUE ESTEJA VINCULADA A UM PRODUTO //OK
+
+//DELETE order
+
+Postman: DELETE | http://localhost:8082/orders/1 //CASO O ID ESTEJA VINCULADO A UMA CONSTRAINT ORDER ITEM, NESSE CASO É NECESSÁRIO DELETAR PRIMEIRO O ORDER ITEM PARA DEPOIS DELETAR O ORDER //OK
+
+Postman: DELETE | http://localhost:8082/orders/2 //CASO O ID NÃO ESTEJA VINCULADO A NENHUMA CONSTRAINT, DELEÇÃO TERÁ ÊXITO //OK 
+
+Postman: DELETE | http://localhost:8082/orders/9 //CASO O ID NÃO EXISTA //OK
+
+//DELETE OrderItem
+
+Postman: DELETE | http://localhost:8082/orderitem/2 //OK
+
+//DELETE OrderItem
+
+Postman: DELETE | http://localhost:8082/orderitem/9 //CASO O ID NÃO EXISTA
+
+-----------------------------------------------------------//FAZER SELECT EM TUDO-----------------------------------------------------
+
+//SELECT users
+Postman: GET | http://localhost:8082/users //TODOS //OK
+Postman: GET | http://localhost:8082/users/7 //CASO O ID NÃO EXISTA //OK
+Postman: GET | http://localhost:8082/users/3 //CASO O ID EXISTA //OK
+
+//SELECT products
+Postman: GET | http://localhost:8082/products //TODOS //OK
+Postman: GET | http://localhost:8082/products/2 //CASO O ID EXISTA //OK
+Postman: GET | http://localhost:8082/products/9 //CASO O ID NÃO EXISTA //OK
+
+//SELECT order
+Postman: GET | http://localhost:8082/orders //TODOS OS PEDIDOS //OK
+
+Postman: GET | http://localhost:8082/orders/1 //PEGAR PEDIDO POR ID //OK
+Postman: GET | http://localhost:8082/orders/9 //PEGAR PEDIDO POR ID CASO O ID NÃO EXISTA //OK
+
+//SELECT category
+Postman: GET | http://localhost:8082/categories //PEGA TODAS AS CATEGORIAS //OK
+
+Postman: GET | http://localhost:8082/categories/1 //PEGA CATEGORIA POR ID //OK
+
+Postman: GET | http://localhost:8082/categories/9 //PEGA CATEGORIA POR ID, CASO A CAT NAO EXISTA//OK
+
+//SELECT orderitem
+
+Postman: GET | http://localhost:8082/orderitem //PEGA TODOS
+
+Postman: GET | http://localhost:8082/orderitem/1 //PEGA ORDERITEM POR ID
+
+Postman: GET | http://localhost:8082/orderitem/9 //PEGA ORDERITEM POR ID //CASO O ID NÃO EXISTA

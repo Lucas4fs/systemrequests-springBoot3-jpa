@@ -1,8 +1,8 @@
 package com.requests.project.entities;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -18,28 +18,24 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "tb_product")
 public class Product implements Serializable {
-	
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
 	private String name;
-	
 	private String description;
-	
 	private Double price;
-	
 	private String imgUrl;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "category_id")
 	private Category categoryProduct;
 	
-	@OneToMany(mappedBy = "id.product")
-	private Set<OrderItem> items = new HashSet<>();
-	
+	@JsonIgnore
+	@OneToMany(mappedBy = "productId")
+	private List<OrderItem> orderItem = new ArrayList<>();
+	 
 	public Product() {
 	}
 
@@ -50,7 +46,7 @@ public class Product implements Serializable {
 		this.description = description;
 		this.price = price;
 		this.imgUrl = imgUrl;
-		this.categoryProduct  = categoryProduct;
+		this.categoryProduct = categoryProduct;
 	}
 
 	public Long getId() {
@@ -96,18 +92,13 @@ public class Product implements Serializable {
 	public Category getCategoryProduct() {
 		return categoryProduct;
 	}
-	
+
 	public void setCategoryProduct(Category categoryProduct) {
 		this.categoryProduct = categoryProduct;
 	}
 
-	@JsonIgnore
-	public Set<Order> getOrders() {
-		Set<Order> set = new HashSet<>();
-		for (OrderItem x : items) {
-			set.add(x.getOrder());
-		}
-		return set;
+	public List<OrderItem> getOrderItem() {
+		return orderItem;
 	}
 
 	@Override

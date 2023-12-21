@@ -2,10 +2,10 @@ package com.requests.project.entities;
 
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
-import com.requests.project.entities.enums.OrderStatus;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -25,24 +25,24 @@ public class Order implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private Instant moment;
-	private Integer orderStatus;
+	private String orderStatus;
 
 	@ManyToOne
 	@JoinColumn(name = "client_id")
 	private User client;
-
-	//posso até apagar //APAGAR DEPOIS E VER SE CONSIGO INSERIR UM ORDER NA TABELA ORDER_ITEM QUE NÃO EXISTE MANUALMENTE
-	@OneToMany(mappedBy = "id.order") private Set<OrderItem> items = new
-	HashSet<>();
-
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "orderId")
+	private List<OrderItem> orderItem = new ArrayList<>();
+	 
 	public Order() {
 	}
 
-	public Order(Long id, Instant moment, OrderStatus orderStatus, User client) {
+	public Order(Long id, Instant moment, String orderStatus, User client) {
 		super();
 		this.id = id;
 		this.moment = moment;
-		setOrderStatus(orderStatus);
+		this.orderStatus = orderStatus;
 		this.client = client;
 	}
 
@@ -62,6 +62,14 @@ public class Order implements Serializable {
 		this.moment = moment;
 	}
 
+	public String getOrderStatus() {
+		return orderStatus;
+	}
+
+	public void setOrderStatus(String orderStatus) {
+		this.orderStatus = orderStatus;
+	}
+	
 	public User getClient() {
 		return client;
 	}
@@ -70,23 +78,9 @@ public class Order implements Serializable {
 		this.client = client;
 	}
 
-	public OrderStatus getOrderStatus() {
-		return OrderStatus.valueOf(orderStatus);
-	}
-
-	public void setOrderStatus(OrderStatus orderStatus) {
-		if (orderStatus != null) {
-			this.orderStatus = orderStatus.getCode();
-		}
-	}
-
-	/* public Set<OrderItem> getItems() { return items; } */
-	 
-	/*
-	 * public Double getTotal() { double sum = 0.0; for (OrderItem x : items) { sum
-	 * += x.getSubTotal(); } return sum; }
-	 */
-	 
+	public List<OrderItem> getOrderItem() {
+		  return orderItem;
+	} 
 
 	@Override
 	public int hashCode() {

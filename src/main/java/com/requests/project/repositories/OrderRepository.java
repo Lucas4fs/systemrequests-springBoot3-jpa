@@ -8,8 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 import com.requests.project.entities.Order;
 
 public interface OrderRepository extends JpaRepository<Order, Long> {
-	
 	 @Query(value = "SELECT obj FROM Order obj JOIN FETCH obj.client")
 	 List<Order>searchAll();
-	
 }

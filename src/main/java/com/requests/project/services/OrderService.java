@@ -13,34 +13,33 @@ import com.requests.project.services.exceptions.DatabaseException;
 import com.requests.project.services.exceptions.ResourceNotFoundException;
 
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.transaction.Transactional;
 
 @Service
-public class OrderService{
+public class OrderService {
 
 	@Autowired
 	private OrderRepository repository;
 
-	public List<Order> searchAll() { 
-		return repository.searchAll(); 
+	public List<Order> searchAll() {
+		return repository.searchAll();
 	}
-	 
+
 	public Order findById(Long id) {
 		Optional<Order> obj = repository.findById(id);
 		return obj.orElseThrow(() -> new ResourceNotFoundException(id));
 	}
-	
+
 	public Order insert(Order obj) {
 		return repository.save(obj);
 	}
-	
+
 	public void delete(Long id) {
-	    try {
-	        Order order = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
-	        repository.delete(order);
-	    } catch (DataIntegrityViolationException e) {
-	        throw new DatabaseException(e.getMessage());
-	    }
+		try {
+			Order order = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
+			repository.delete(order);
+		} catch (DataIntegrityViolationException e) {
+			throw new DatabaseException(e.getMessage());
+		}
 	}
 
 	public Order update(Long id, Order obj) {
@@ -50,7 +49,7 @@ public class OrderService{
 			return repository.save(entity);
 		} catch (EntityNotFoundException e) {
 			throw new ResourceNotFoundException(id);
-		}	
+		}
 	}
 
 	private void updateData(Order entity, Order obj) {

@@ -7,44 +7,45 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
-import com.requests.project.entities.Product;
-import com.requests.project.repositories.ProductRepository;
+import com.requests.project.dto.InterfaceOrderItem;
+import com.requests.project.entities.OrderItem;
+import com.requests.project.repositories.OrderItemRepository;
 import com.requests.project.services.exceptions.DatabaseException;
 import com.requests.project.services.exceptions.ResourceNotFoundException;
 
 import jakarta.persistence.EntityNotFoundException;
 
 @Service
-public class ProductService {
+public class OrderItemService {
 
 	@Autowired
-	private ProductRepository repository;
-
-	public List<Product> searchAll() {
-		return repository.searchAll();
+	private OrderItemRepository repository;
+	
+	public List<InterfaceOrderItem> searchAll() {
+		return repository.procurarAll();
 	}
-
-	public Product findById(Long id) {
-		Optional<Product> obj = repository.findById(id);
+ 
+	public OrderItem findById(Long id) {
+		Optional<OrderItem> obj = repository.findById(id);
 		return obj.orElseThrow(() -> new ResourceNotFoundException(id));
 	}
 
-	public Product insert(Product obj) {
+	public OrderItem insert(OrderItem obj) {
 		return repository.save(obj);
 	}
 
 	public void delete(Long id) {
 		try {
-			Product product = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
-			repository.delete(product);
+			OrderItem orderItem = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
+			repository.delete(orderItem);
 		} catch (DataIntegrityViolationException e) {
 			throw new DatabaseException(e.getMessage());
 		}
 	}
 
-	public Product update(Long id, Product obj) {
+	public OrderItem update(Long id, OrderItem obj) {
 		try {
-			Product entity = repository.getReferenceById(id);
+			OrderItem entity = repository.getReferenceById(id);
 			updateData(entity, obj);
 			return repository.save(entity);
 		} catch (EntityNotFoundException e) {
@@ -52,11 +53,10 @@ public class ProductService {
 		}
 	}
 
-	private void updateData(Product entity, Product obj) {
-		entity.setName(obj.getName());
-		entity.setDescription(obj.getDescription());
+	private void updateData(OrderItem entity, OrderItem obj) {
+		entity.setQuantity(obj.getQuantity());
 		entity.setPrice(obj.getPrice());
-		entity.setImgUrl(obj.getImgUrl());
-		entity.setCategoryProduct(obj.getCategoryProduct());
+		entity.setProductId(obj.getProductId());
+		entity.setOrderId(obj.getOrderId());
 	}
 }

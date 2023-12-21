@@ -19,20 +19,20 @@ public class UserService {
 
 	@Autowired
 	private UserRepository repository;
-	
+
 	public List<User> searchAll() {
 		return repository.findAll();
 	}
-	
+
 	public User findById(Long id) {
 		Optional<User> obj = repository.findById(id);
 		return obj.orElseThrow(() -> new ResourceNotFoundException(id));
 	}
-	
+
 	public User insert(User obj) {
 		return repository.save(obj);
 	}
-	
+
 	public void delete(Long id) {
 		try {
 			User user = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
@@ -49,7 +49,7 @@ public class UserService {
 			return repository.save(entity);
 		} catch (EntityNotFoundException e) {
 			throw new ResourceNotFoundException(id);
-		}	
+		}
 	}
 
 	private void updateData(User entity, User obj) {

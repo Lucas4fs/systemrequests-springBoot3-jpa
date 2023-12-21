@@ -2,13 +2,16 @@ package com.requests.project.services;
 
 import java.util.List;
 import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+
 import com.requests.project.entities.Category;
 import com.requests.project.repositories.CategoryRepository;
 import com.requests.project.services.exceptions.DatabaseException;
 import com.requests.project.services.exceptions.ResourceNotFoundException;
+
 import jakarta.persistence.EntityNotFoundException;
 
 @Service
