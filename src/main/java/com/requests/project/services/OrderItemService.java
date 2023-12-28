@@ -22,7 +22,7 @@ public class OrderItemService {
 	private OrderItemRepository repository;
 	
 	public List<InterfaceOrderItem> searchAll() {
-		return repository.procurarAll();
+		return repository.searchAll();
 	}
  
 	public OrderItem findById(Long id) {

@@ -17,5 +17,5 @@ public interface OrderItemRepository extends JpaRepository<OrderItem, Long> {
 				 + " product_id AS productId"
 				 + " FROM tb_order_item"
 				 , nativeQuery = true)
-	List<InterfaceOrderItem> procurarAll();
+	List<InterfaceOrderItem> searchAll();
 }
