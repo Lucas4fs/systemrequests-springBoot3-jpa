@@ -133,7 +133,7 @@ import jakarta.persistence.Table;
 ```
 
 <p>
-A anotação <strong>@Entity</strong> define que a classe será uma entidade persistente, indicando que os objetos dessa classe podem ser mapeados para registros em um banco de dados relacional.<br>
+A anotação <strong>@Entity</strong> define que a classe será uma entidade persistente, indicando que os objetos dessa classe podem ser mapeados para registros em um BD relacional.<br>
 A anotação <strong>@Table(name = "tb_category")</strong> é usada para especificar detalhes adicionais sobre a tabela associada a uma entidade JPA (Java Persistence API) e definir o nome da tabela no BD.<br>
 A variável <strong>serialVersionUID</strong> recebe o valor <strong>1L</strong> que no caso é o código longo literal, ou seja, o serial do objeto.
 </p>
@@ -464,8 +464,8 @@ import jakarta.persistence.Table;
 ```
 
 <p>
-A anotação <strong>@Entity</strong> define que a classe será uma entidade persistente, indicando que os objetos dessa classe podem ser mapeados para registros em um banco de dados relacional.<br>
-A anotação <strong>@Table(name = "tb_order")</strong> é usada para especificar detalhes adicionais sobre a tabela associada a uma entidade JPA (Java Persistence API) e definir o nome da tabela no Banco de Dados.<br>
+A anotação <strong>@Entity</strong> define que a classe será uma entidade persistente, indicando que os objetos dessa classe podem ser mapeados para registros em um BD relacional.<br>
+A anotação <strong>@Table(name = "tb_order")</strong> é usada para especificar detalhes adicionais sobre a tabela associada a uma entidade JPA (Java Persistence API) e definir o nome da tabela no BD.<br>
 A variável <strong>serialVersionUID</strong> recebe o valor <strong>1L</strong> que no caso é o código longo literal, ou seja, o serial do objeto.
 </p>
 
@@ -837,7 +837,7 @@ private String password;
 ```
 
 <p>
-Criamos uma lista de pedidos dentro da entidade <strong>User</strong> porque cada pedido terá seu cliente e inserimos a anotação <strong>@JsonIgnore</strong> que serve para ignorar o JSON da lista de pedidos, ou seja, quando uma requisição for feita solicitando todos os usuários a lista de pedidos será ignorada e serão exibidas apenas os usuários, também inserimos a anotação <strong>@OneToMany(mappedBy = "client")</strong> para definir um relacionamento de "um para muitos" onde o atributo <strong>client</strong> que fica na classe <strong>Order</strong> se refere a uma usuário(cliente), ou seja, cada produto tem um usuário(cliente).
+Criamos uma lista de pedidos dentro da entidade <strong>User</strong> porque cada pedido terá seu cliente e inserimos a anotação <strong>@JsonIgnore</strong> que serve para ignorar o JSON da lista de pedidos, ou seja, quando uma requisição for feita solicitando todos os usuários a lista de pedidos será ignorada e serão exibidas apenas os usuários, também inserimos a anotação <strong>@OneToMany(mappedBy = "client")</strong> para definir um relacionamento de "um para muitos" onde o atributo <strong>client</strong> que fica na classe <strong>Order</strong> se refere a uma usuário(cliente), ou seja, pedido tem um usuário(cliente).
 </p>
 
 ```java
