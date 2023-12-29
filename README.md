@@ -1328,7 +1328,7 @@ obj = service.update(id, obj);
 ```
 
 <p>
-o <strong>return</strong> abaixo  está ...
+o <strong>return</strong> abaixo está retornando um objeto do tipo ResponseEntity, que é uma classe do Spring usada para representar toda a resposta HTTP. <strong>ResponseEntity.ok()</strong> retorna um status HTTP 200 OK. O método <strong>body(obj)</strong> define o corpo da resposta como o objeto <strong>Product</strong> atualizado.
 </p>
 
 ```java
