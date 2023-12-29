@@ -63,7 +63,7 @@ INSERIR...
 ## 2 DESENVOLVIMENTO
 
 <p>
-Iniciamos o desenvolvimento do código dentro da IDE Eclipse
+Iniciamos o desenvolvimento do código dentro da IDE <strong>Eclipse</strong>
 <p>
 
 ### Criando Classe que Starta a Aplicação
@@ -105,6 +105,10 @@ public static void main(String[] args) {
 
 ### 2.1 Criando Entidades
 
+<p>
+Vamos criar as entidades do nosso projeto, cada uma delas tem seus atributos, isso no BD irá refletir como as tabelas que tem suas colunas.
+</p>
+
 #### 2.1.1 Category
 
 <p>
@@ -130,7 +134,7 @@ import jakarta.persistence.Table;
 
 <p>
 A anotação <strong>@Entity</strong> define que a classe será uma entidade persistente, indicando que os objetos dessa classe podem ser mapeados para registros em um banco de dados relacional.<br>
-A anotação <strong>@Table(name = "tb_category")</strong> é usada para especificar detalhes adicionais sobre a tabela associada a uma entidade JPA (Java Persistence API) e definir o nome da tabela no Banco de Dados.<br>
+A anotação <strong>@Table(name = "tb_category")</strong> é usada para especificar detalhes adicionais sobre a tabela associada a uma entidade JPA (Java Persistence API) e definir o nome da tabela no BD.<br>
 A variável <strong>serialVersionUID</strong> recebe o valor <strong>1L</strong> que no caso é o código longo literal, ou seja, o serial do objeto.
 </p>
 
@@ -143,7 +147,7 @@ public class Category implements Serializable {
 
 <p>
 Agora vamos definir os atributos da classe, que no caso serão as colunas da tabela no BD.<br>
-A anotação <strong>@Id</strong> define que o atributo <strong>id</strong> será um id no BD e a anotação <strong>@GeneratedValue(strategy = GenerationType.IDENTITY)</strong> define que esse id será gerado automaticamente, quanto aos demais atributos todos serão colunas comuns.
+A anotação <strong>@Id</strong> define que o atributo <strong>id</strong> será um id no BD e a anotação <strong>@GeneratedValue(strategy = GenerationType.IDENTITY)</strong> define que esse id será gerado automaticamente, quanto ao atributo <strong>name</strong> este será uma coluna comum.
 </p>
 
 ```java
@@ -154,7 +158,7 @@ private String name;
 ```
 
 <p>
-Criamos uma lista de produtos dento da entidade <strong>Category</strong> porque cada produto terá uma categoria e inserimos a anotação <strong>@JsonIgnore</strong> que serve para ignorar o JSON da lista de produtos, ou seja, quando uma requisição for feita solicitando todas as categorias a lista de produtos será ignorada e serão exibidas apenas as categorias, também inserimos a anotação <strong>@OneToMany(mappedBy = "categoryProduct")</strong> para definir um relacionamento de "um-para-muitos" onde o atributo <strong>categoryProduct</strong> que fica na classe <strong>Product</strong> ocupa o lado do "muitos" e terá uma categoria, ou seja, cada produto terá uma categoria.
+Criamos uma lista de produtos dentro da entidade <strong>Category</strong> porque cada produto terá uma categoria e inserimos a anotação <strong>@JsonIgnore</strong> que serve para ignorar o JSON da lista de produtos, ou seja, quando uma requisição for feita solicitando todas as categorias a lista de produtos será ignorada e serão exibidas apenas as categorias, também inserimos a anotação <strong>@OneToMany(mappedBy = "categoryProduct")</strong> para definir um relacionamento de "um-para-muitos" onde o atributo <strong>categoryProduct</strong> que fica na classe <strong>Product</strong> se refere a uma categoria, ou seja, cada produto tem uma categoria.
 </p>
 
 ```java
@@ -243,6 +247,196 @@ public boolean equals(Object obj) {
 }
 ```
 
+#### 2.1.4 Product
+
+<p>
+Primeiro definimos o pacote que a classe irá pertencer e depois fazemos as importações necessárias.
+</p>
+
+```java
+package com.requests.project.entities;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+```
+
+<p>
+A anotação <strong>@Entity</strong> define que a classe será uma entidade persistente, indicando que os objetos dessa classe podem ser mapeados para registros em um BD relacional.<br>
+A anotação <strong>@Table(name = "tb_product")</strong> é usada para especificar detalhes adicionais sobre a tabela associada a uma entidade JPA (Java Persistence API) e definir o nome da tabela no BD.<br>
+A variável <strong>serialVersionUID</strong> recebe o valor <strong>1L</strong> que no caso é o código longo literal, ou seja, o serial do objeto.
+</p>
+
+```java
+@Entity
+@Table(name = "tb_product")
+public class Product implements Serializable {
+	private static final long serialVersionUID = 1L;
+```
+
+<p>
+Agora vamos definir os atributos da classe, que no caso serão as colunas da tabela no BD.<br>
+A anotação <strong>@Id</strong> define que o atributo <strong>id</strong> será um id no BD e a anotação <strong>@GeneratedValue(strategy = GenerationType.IDENTITY)</strong> define que esse id será gerado automaticamente, já os  atributos <strong>name</strong>,<strong>description</strong>, <strong>price</strong> e <strong>imgUrl</strong> serão colunas comuns.
+</p>
+
+```java
+@Id
+@GeneratedValue(strategy = GenerationType.IDENTITY)
+private Long id;
+private String name;
+private String description;
+private Double price;
+private String imgUrl;
+```
+
+<p>
+O atributo <strong>categoryProduct</strong> contém duas anotações, a anotação <strong>@ManyToOne</strong> faz com que o atributo tenha uma relação de "muitos para um" fazendo com que o atributo fique do lado do "um", ou seja, muitos produtos para uma categoria, cada produto terá uma categoria, a anotação <strong>@JoinColumn(name = "category_id")</strong>(junção de coluna) faz com que o atributo seja uma chave estrangeira e nomeia a coluna, repare que o atributo <strong>categoryProduct</strong> é moldado pela classe <strong>Category</strong>, essa junção se torna possível porque na entidade <strong>Category</strong> existe uma lista de produtos mapeada.<br>
+Isso no BD irá refletir como uma <strong>CONSTRAINT</strong>(limitação), pois a coluna <strong>category_id</strong> da tabela <strong>tb_product</strong> é uma FOREIGN KEY(chave estrangeira) que se refere a um objeto da tabela <strong>tb_category</strong> e esse objeto é identificado pelo seu <strong>id</strong>
+</p>
+
+```java
+@ManyToOne
+@JoinColumn(name = "category_id")
+private Category categoryProduct;
+```
+
+<p>
+Criamos uma lista de itens do pedido dentro da entidade <strong>Product</strong> porque cada item de pedido terá seu produto e inserimos a anotação <strong>@JsonIgnore</strong> que serve para ignorar o JSON da lista de itens do pedido, ou seja, quando uma requisição for feita solicitando todos os produtos a lista de itens do pedido será ignorada e serão exibidas apenas os produtos, também inserimos a anotação <strong>@OneToMany(mappedBy = "productId")</strong> para definir um relacionamento de "um para muitos" onde o atributo <strong>productId</strong> que fica na classe <strong>OrderItem</strong> se refere a um produto, ou seja, cada item de pedido tem um produto.
+</p>
+
+```java
+@JsonIgnore
+@OneToMany(mappedBy = "productId")
+private List<OrderItem> orderItem = new ArrayList<>();
+```
+
+<p>
+Criamos os contrutores padrões da classe, o primeiro construtor é padrão e sem parâmetros, é usado para instanciar um objeto sem fornecer valores específicos durante a criação, o segundo construtor que possui parâmetros é utilizado para instanciar um objeto e fornecer valores específicos para os atributos no momento da criação.
+</p>
+
+```java
+public Product() {
+}
+
+public Product(Long id, String name, String description, Double price, String imgUrl, Category categoryProduct) {
+	super();
+	this.id = id;
+	this.name = name;
+	this.description = description;
+	this.price = price;
+	this.imgUrl = imgUrl;
+	this.categoryProduct = categoryProduct;
+}
+```
+
+<p>
+Depois criamos os métodos getters e setters que servem para pegar e setar os atributos.
+</p>
+
+```java
+public Long getId() {
+    return id;
+}
+
+public void setId(Long id) {
+    this.id = id;
+}
+
+public String getName() {
+    return name;
+}
+
+public void setName(String name) {
+    this.name = name;
+}
+
+public String getDescription() {
+    return description;
+}
+
+public void setDescription(String description) {
+    this.description = description;
+}
+
+public Double getPrice() {
+    return price;
+}
+
+public void setPrice(Double price) {
+    this.price = price;
+}
+
+public String getImgUrl() {
+    return imgUrl;
+}
+
+public void setImgUrl(String imgUrl) {
+    this.imgUrl = imgUrl;
+}
+
+public Category getCategoryProduct() {
+    return categoryProduct;
+}
+
+public void setCategoryProduct(Category categoryProduct) {
+    this.categoryProduct = categoryProduct;
+}
+
+public List<OrderItem> getOrderItem() {
+    return orderItem;
+}
+```
+
+<p>
+Fazemos uma sobreposição com a anotação <strong>@Override</strong> do método <strong>hashCode()</strong> para gerar um código hash específico para cada instância do objeto pertencente a classe.
+</p>
+
+```java
+@Override
+public int hashCode() {
+	final int prime = 31;
+	int result = 1;
+	result = prime * result + ((id == null) ? 0 : id.hashCode());
+	return result;
+}
+```
+<p>
+A anotação <strong>@Override</strong> está fazendo uma sobreposição no método <strong>equals</strong> que compara objetos da classe <strong>Product</strong> com base no conteúdo de seus atributos, especialmente no atributo <strong>id</strong>. Dois objetos <strong>Product</strong> serão considerados iguais se tiverem o mesmo <strong>id</strong> ou se ambos forem nulos.
+</p>
+
+```java
+@Override
+public boolean equals(Object obj) {
+    if (this == obj)
+        return true;
+    if (obj == null)
+        return false;
+    if (getClass() != obj.getClass())
+        return false;
+    Product other = (Order) obj;
+    if (id == null) {
+        if (other.id != null)
+            return false;
+    } else if (!id.equals(other.id))
+        return false;
+    return true;
+}
+```
+```java
+}
+```
+
 #### 2.1.2 Order
 
 <p>
@@ -307,7 +501,7 @@ private User client;
 ```
 
 <p>
-Criamos uma lista de itens do pedido dentro da entidade <strong>Order</strong> porque cada item de pedido terá seu pedido e inserimos a anotação <strong>@JsonIgnore</strong> que serve para ignorar o JSON da lista de itens do pedido, ou seja, quando uma requisição for feita solicitando todos os pedidos a lista de itens do pedido será ignorada e serão exibidas apenas os pedidos, também inserimos a anotação <strong>@OneToMany(mappedBy = "orderId")</strong> para definir um relacionamento de "um para muitos" onde o atributo <strong>orderId</strong> que fica na classe <strong>OrderItem</strong> ocupa o lado do "muitos" e tera um pedido, ou seja, cada item de pedido terá um pedido.
+Criamos uma lista de itens do pedido dentro da entidade <strong>Order</strong> porque cada item de pedido terá seu pedido e inserimos a anotação <strong>@JsonIgnore</strong> que serve para ignorar o JSON da lista de itens do pedido, ou seja, quando uma requisição for feita solicitando todos os pedidos a lista de itens do pedido será ignorada e serão exibidas apenas os pedidos, também inserimos a anotação <strong>@OneToMany(mappedBy = "orderId")</strong> para definir um relacionamento de "um para muitos" onde o atributo <strong>orderId</strong> que fica na classe <strong>OrderItem</strong> se refere a um pedido, ou seja, cada item de pedido tem um pedido.
 </p>
 
 ```java
@@ -591,196 +785,6 @@ public boolean equals(Object obj) {
 }
 ```
 
-#### 2.1.4 Product
-
-<p>
-Primeiro definimos o pacote que a classe irá pertencer e depois fazemos as importações necessárias.
-</p>
-
-```java
-package com.requests.project.entities;
-
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-```
-
-<p>
-A anotação <strong>@Entity</strong> define que a classe será uma entidade persistente, indicando que os objetos dessa classe podem ser mapeados para registros em um BD relacional.<br>
-A anotação <strong>@Table(name = "tb_product")</strong> é usada para especificar detalhes adicionais sobre a tabela associada a uma entidade JPA (Java Persistence API) e definir o nome da tabela no BD.<br>
-A variável <strong>serialVersionUID</strong> recebe o valor <strong>1L</strong> que no caso é o código longo literal, ou seja, o serial do objeto.
-</p>
-
-```java
-@Entity
-@Table(name = "tb_product")
-public class Product implements Serializable {
-	private static final long serialVersionUID = 1L;
-```
-
-<p>
-Agora vamos definir os atributos da classe, que no caso serão as colunas da tabela no BD.<br>
-A anotação <strong>@Id</strong> define que o atributo <strong>id</strong> será um id no BD e a anotação <strong>@GeneratedValue(strategy = GenerationType.IDENTITY)</strong> define que esse id será gerado automaticamente, já os  atributos <strong>name</strong>,<strong>description</strong>, <strong>price</strong> e <strong>imgUrl</strong> serão colunas comuns.
-</p>
-
-```java
-@Id
-@GeneratedValue(strategy = GenerationType.IDENTITY)
-private Long id;
-private String name;
-private String description;
-private Double price;
-private String imgUrl;
-```
-
-<p>
-O atributo <strong>categoryProduct</strong> contém duas anotações, a anotação <strong>@ManyToOne</strong> faz com que o atributo tenha uma relação de "muitos para um" fazendo com que o atributo fique do lado do "um", ou seja, muitos produtos para uma categoria, cada produto terá uma categoria, a anotação <strong>@JoinColumn(name = "category_id")</strong>(junção de coluna) faz com que o atributo seja uma chave estrangeira e nomeia a coluna, repare que o atributo <strong>categoryProduct</strong> é moldado pela classe <strong>Category</strong>, essa junção se torna possível porque na entidade <strong>Category</strong> existe uma lista de produtos mapeada.<br>
-Isso no BD irá refletir como uma <strong>CONSTRAINT</strong>(limitação), pois a coluna <strong>category_id</strong> da tabela <strong>tb_product</strong> é uma FOREIGN KEY(chave estrangeira) que se refere a um objeto da tabela <strong>tb_category</strong> e esse objeto é identificado pelo seu <strong>id</strong>
-</p>
-
-```java
-@ManyToOne
-@JoinColumn(name = "category_id")
-private Category categoryProduct;
-```
-
-<p>
-Criamos uma lista de itens do pedido dentro da entidade <strong>Product</strong> porque cada item de pedido terá seu produto e inserimos a anotação <strong>@JsonIgnore</strong> que serve para ignorar o JSON da lista de itens do pedido, ou seja, quando uma requisição for feita solicitando todos os produtos a lista de itens do pedido será ignorada e serão exibidas apenas os produtos, também inserimos a anotação <strong>@OneToMany(mappedBy = "productId")</strong> para definir um relacionamento de "um para muitos" onde o atributo <strong>productId</strong> que fica na classe <strong>OrderItem</strong> ocupa o lado do "muitos" e terá um produto, ou seja, cada item de pedido terá um produto.
-</p>
-
-```java
-@JsonIgnore
-@OneToMany(mappedBy = "productId")
-private List<OrderItem> orderItem = new ArrayList<>();
-```
-
-<p>
-Criamos os contrutores padrões da classe, o primeiro construtor é padrão e sem parâmetros, é usado para instanciar um objeto sem fornecer valores específicos durante a criação, o segundo construtor que possui parâmetros é utilizado para instanciar um objeto e fornecer valores específicos para os atributos no momento da criação.
-</p>
-
-```java
-public Product() {
-}
-
-public Product(Long id, String name, String description, Double price, String imgUrl, Category categoryProduct) {
-	super();
-	this.id = id;
-	this.name = name;
-	this.description = description;
-	this.price = price;
-	this.imgUrl = imgUrl;
-	this.categoryProduct = categoryProduct;
-}
-```
-
-<p>
-Depois criamos os métodos getters e setters que servem para pegar e setar os atributos.
-</p>
-
-```java
-public Long getId() {
-    return id;
-}
-
-public void setId(Long id) {
-    this.id = id;
-}
-
-public String getName() {
-    return name;
-}
-
-public void setName(String name) {
-    this.name = name;
-}
-
-public String getDescription() {
-    return description;
-}
-
-public void setDescription(String description) {
-    this.description = description;
-}
-
-public Double getPrice() {
-    return price;
-}
-
-public void setPrice(Double price) {
-    this.price = price;
-}
-
-public String getImgUrl() {
-    return imgUrl;
-}
-
-public void setImgUrl(String imgUrl) {
-    this.imgUrl = imgUrl;
-}
-
-public Category getCategoryProduct() {
-    return categoryProduct;
-}
-
-public void setCategoryProduct(Category categoryProduct) {
-    this.categoryProduct = categoryProduct;
-}
-
-public List<OrderItem> getOrderItem() {
-    return orderItem;
-}
-```
-
-<p>
-Fazemos uma sobreposição com a anotação <strong>@Override</strong> do método <strong>hashCode()</strong> para gerar um código hash específico para cada instância do objeto pertencente a classe.
-</p>
-
-```java
-@Override
-public int hashCode() {
-	final int prime = 31;
-	int result = 1;
-	result = prime * result + ((id == null) ? 0 : id.hashCode());
-	return result;
-}
-```
-<p>
-A anotação <strong>@Override</strong> está fazendo uma sobreposição no método <strong>equals</strong> que compara objetos da classe <strong>Product</strong> com base no conteúdo de seus atributos, especialmente no atributo <strong>id</strong>. Dois objetos <strong>Product</strong> serão considerados iguais se tiverem o mesmo <strong>id</strong> ou se ambos forem nulos.
-</p>
-
-```java
-@Override
-public boolean equals(Object obj) {
-    if (this == obj)
-        return true;
-    if (obj == null)
-        return false;
-    if (getClass() != obj.getClass())
-        return false;
-    Product other = (Order) obj;
-    if (id == null) {
-        if (other.id != null)
-            return false;
-    } else if (!id.equals(other.id))
-        return false;
-    return true;
-}
-```
-```java
-}
-```
-
 #### 2.1.5 User
 
 <p>
@@ -833,7 +837,7 @@ private String password;
 ```
 
 <p>
-Criamos uma lista de pedidos dentro da entidade <strong>User</strong> porque cada pedido terá seu cliente e inserimos a anotação <strong>@JsonIgnore</strong> que serve para ignorar o JSON da lista de pedidos, ou seja, quando uma requisição for feita solicitando todos os usuários a lista de pedidos será ignorada e serão exibidas apenas os usuários, também inserimos a anotação <strong>@OneToMany(mappedBy = "client")</strong> para definir um relacionamento de "um para muitos" onde o atributo <strong>client</strong> que fica na classe <strong>Order</strong> ocupa o lado do "um" e terá um usuário, ou seja, cada pedido terá um cliente.
+Criamos uma lista de pedidos dentro da entidade <strong>User</strong> porque cada pedido terá seu cliente e inserimos a anotação <strong>@JsonIgnore</strong> que serve para ignorar o JSON da lista de pedidos, ou seja, quando uma requisição for feita solicitando todos os usuários a lista de pedidos será ignorada e serão exibidas apenas os usuários, também inserimos a anotação <strong>@OneToMany(mappedBy = "client")</strong> para definir um relacionamento de "um para muitos" onde o atributo <strong>client</strong> que fica na classe <strong>Order</strong> se refere a uma usuário(cliente), ou seja, cada produto tem um usuário(cliente).
 </p>
 
 ```java
