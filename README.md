@@ -609,6 +609,174 @@ public boolean equals(Object obj) {
 }
 ```
 
+#### 2.1.5 User
+
+<p>
+Primeiro definimos o pacote que a classe irá pertencer e depois fazemos as importações necessárias.
+</p>
+
+```java
+package com.requests.project.entities;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+```
+
+<p>
+A anotação <strong>@Entity</strong> define que a classe será uma entidade persistente, indicando que os objetos dessa classe podem ser mapeados para registros em um BD relacional.<br>
+A anotação <strong>@Table(name = "tb_user")</strong> é usada para especificar detalhes adicionais sobre a tabela associada a uma entidade JPA (Java Persistence API) e definir o nome da tabela no BD.<br>
+A variável <strong>serialVersionUID</strong> recebe o valor <strong>1L</strong> que no caso é o código longo literal, ou seja, o serial do objeto.
+</p>
+
+```java
+@Entity
+@Table(name = "tb_user")
+public class User implements Serializable {
+	private static final long serialVersionUID = 1L;
+```
+
+<p>
+Agora vamos definir os atributos da classe, que no caso serão as colunas da tabela no BD.<br>
+A anotação <strong>@Id</strong> define que o atributo <strong>id</strong> será um id no BD e a anotação <strong>@GeneratedValue(strategy = GenerationType.IDENTITY)</strong> define que esse id será gerado automaticamente, já os demais atributos serão colunas comuns.
+</p>
+
+```java
+@Id
+@GeneratedValue(strategy = GenerationType.IDENTITY)
+private Long id;
+private String name;
+private String email;
+private String phone;
+private String password;
+```
+
+<p>
+Criamos uma lista de pedidos dentro da entidade <strong>User</strong> porque cada pedido terá seu cliente e inserimos a anotação <strong>@JsonIgnore</strong> que serve para ignorar o JSON da lista de pedidos, ou seja, quando uma requisição for feita solicitando todos os usuários a lista de pedidos será ignorada e serão exibidas apenas os usuários, também inserimos a anotação <strong>@OneToMany(mappedBy = "client")</strong> para definir um relacionamento de "um para muitos" onde o atributo <strong>client</strong> que fica na classe <strong>Order</strong> se refere a uma usuário(cliente), ou seja, pedido tem um usuário(cliente).
+</p>
+
+```java
+@JsonIgnore
+@OneToMany(mappedBy = "client")
+private List<Order> orders = new ArrayList<>();
+```
+
+<p>
+Criamos os contrutores padrões da classe, o primeiro construtor é padrão e sem parâmetros, é usado para instanciar um objeto sem fornecer valores específicos durante a criação, o segundo construtor que possui parâmetros é utilizado para instanciar um objeto e fornecer valores específicos para os atributos no momento da criação.
+</p>
+
+```java
+public User() {
+}
+
+public User(Long id, String name, String email, String phone, String password) {
+    super();
+    this.id = id;
+    this.name = name;
+    this.email = email;
+    this.phone = phone;
+    this.password = password;
+}
+```
+
+<p>
+Depois criamos os métodos getters e setters que servem para pegar e setar os atributos.
+</p>
+
+```java
+public Long getId() {
+    return id;
+}
+
+public void setId(Long id) {
+    this.id = id;
+}
+
+public String getName() {
+    return name;
+}
+
+public void setName(String name) {
+    this.name = name;
+}
+
+public String getEmail() {
+    return email;
+}
+
+public void setEmail(String email) {
+    this.email = email;
+}
+
+public String getPhone() {
+    return phone;
+}
+
+public void setPhone(String phone) {
+    this.phone = phone;
+}
+
+public String getPassword() {
+    return password;
+}
+
+public void setPassword(String password) {
+    this.password = password;
+}
+
+public List<Order> getOrders() {
+    return orders;
+}
+```
+
+<p>
+Fazemos uma sobreposição com a anotação <strong>@Override</strong> do método <strong>hashCode()</strong> para gerar um código hash específico para cada instância do objeto pertencente a classe.
+</p>
+
+```java
+@Override
+public int hashCode() {
+	final int prime = 31;
+	int result = 1;
+	result = prime * result + ((id == null) ? 0 : id.hashCode());
+	return result;
+}
+```
+<p>
+A anotação <strong>@Override</strong> está fazendo uma sobreposição no método <strong>equals</strong> que compara objetos da classe <strong>User</strong> com base no conteúdo de seus atributos, especialmente no atributo <strong>id</strong>. Dois objetos <strong>User</strong> serão considerados iguais se tiverem o mesmo <strong>id</strong> ou se ambos forem nulos.
+</p>
+
+```java
+@Override
+public boolean equals(Object obj) {
+    if (this == obj)
+        return true;
+    if (obj == null)
+        return false;
+    if (getClass() != obj.getClass())
+        return false;
+    User other = (Order) obj;
+    if (id == null) {
+        if (other.id != null)
+            return false;
+    } else if (!id.equals(other.id))
+        return false;
+    return true;
+}
+```
+```java
+}
+```
+
 #### 2.1.3 OrderItem
 
 <p>
@@ -785,173 +953,7 @@ public boolean equals(Object obj) {
 }
 ```
 
-#### 2.1.5 User
 
-<p>
-Primeiro definimos o pacote que a classe irá pertencer e depois fazemos as importações necessárias.
-</p>
-
-```java
-package com.requests.project.entities;
-
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-```
-
-<p>
-A anotação <strong>@Entity</strong> define que a classe será uma entidade persistente, indicando que os objetos dessa classe podem ser mapeados para registros em um BD relacional.<br>
-A anotação <strong>@Table(name = "tb_user")</strong> é usada para especificar detalhes adicionais sobre a tabela associada a uma entidade JPA (Java Persistence API) e definir o nome da tabela no BD.<br>
-A variável <strong>serialVersionUID</strong> recebe o valor <strong>1L</strong> que no caso é o código longo literal, ou seja, o serial do objeto.
-</p>
-
-```java
-@Entity
-@Table(name = "tb_user")
-public class User implements Serializable {
-	private static final long serialVersionUID = 1L;
-```
-
-<p>
-Agora vamos definir os atributos da classe, que no caso serão as colunas da tabela no BD.<br>
-A anotação <strong>@Id</strong> define que o atributo <strong>id</strong> será um id no BD e a anotação <strong>@GeneratedValue(strategy = GenerationType.IDENTITY)</strong> define que esse id será gerado automaticamente, já os demais atributos serão colunas comuns.
-</p>
-
-```java
-@Id
-@GeneratedValue(strategy = GenerationType.IDENTITY)
-private Long id;
-private String name;
-private String email;
-private String phone;
-private String password;
-```
-
-<p>
-Criamos uma lista de pedidos dentro da entidade <strong>User</strong> porque cada pedido terá seu cliente e inserimos a anotação <strong>@JsonIgnore</strong> que serve para ignorar o JSON da lista de pedidos, ou seja, quando uma requisição for feita solicitando todos os usuários a lista de pedidos será ignorada e serão exibidas apenas os usuários, também inserimos a anotação <strong>@OneToMany(mappedBy = "client")</strong> para definir um relacionamento de "um para muitos" onde o atributo <strong>client</strong> que fica na classe <strong>Order</strong> se refere a uma usuário(cliente), ou seja, pedido tem um usuário(cliente).
-</p>
-
-```java
-@JsonIgnore
-@OneToMany(mappedBy = "client")
-private List<Order> orders = new ArrayList<>();
-```
-
-<p>
-Criamos os contrutores padrões da classe, o primeiro construtor é padrão e sem parâmetros, é usado para instanciar um objeto sem fornecer valores específicos durante a criação, o segundo construtor que possui parâmetros é utilizado para instanciar um objeto e fornecer valores específicos para os atributos no momento da criação.
-</p>
-
-```java
-public User() {
-}
-
-public User(Long id, String name, String email, String phone, String password) {
-    super();
-    this.id = id;
-    this.name = name;
-    this.email = email;
-    this.phone = phone;
-    this.password = password;
-}
-```
-
-<p>
-Depois criamos os métodos getters e setters que servem para pegar e setar os atributos.
-</p>
-
-```java
-public Long getId() {
-    return id;
-}
-
-public void setId(Long id) {
-    this.id = id;
-}
-
-public String getName() {
-    return name;
-}
-
-public void setName(String name) {
-    this.name = name;
-}
-
-public String getEmail() {
-    return email;
-}
-
-public void setEmail(String email) {
-    this.email = email;
-}
-
-public String getPhone() {
-    return phone;
-}
-
-public void setPhone(String phone) {
-    this.phone = phone;
-}
-
-public String getPassword() {
-    return password;
-}
-
-public void setPassword(String password) {
-    this.password = password;
-}
-
-public List<Order> getOrders() {
-    return orders;
-}
-```
-
-<p>
-Fazemos uma sobreposição com a anotação <strong>@Override</strong> do método <strong>hashCode()</strong> para gerar um código hash específico para cada instância do objeto pertencente a classe.
-</p>
-
-```java
-@Override
-public int hashCode() {
-	final int prime = 31;
-	int result = 1;
-	result = prime * result + ((id == null) ? 0 : id.hashCode());
-	return result;
-}
-```
-<p>
-A anotação <strong>@Override</strong> está fazendo uma sobreposição no método <strong>equals</strong> que compara objetos da classe <strong>User</strong> com base no conteúdo de seus atributos, especialmente no atributo <strong>id</strong>. Dois objetos <strong>User</strong> serão considerados iguais se tiverem o mesmo <strong>id</strong> ou se ambos forem nulos.
-</p>
-
-```java
-@Override
-public boolean equals(Object obj) {
-    if (this == obj)
-        return true;
-    if (obj == null)
-        return false;
-    if (getClass() != obj.getClass())
-        return false;
-    User other = (Order) obj;
-    if (id == null) {
-        if (other.id != null)
-            return false;
-    } else if (!id.equals(other.id))
-        return false;
-    return true;
-}
-```
-```java
-}
-```
 
 ### 2.1 Criando Repositórios
 
