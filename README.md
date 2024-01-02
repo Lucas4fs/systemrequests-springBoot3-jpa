@@ -2078,11 +2078,7 @@ public Product insert(Product obj) {
 ```
 
 <p>
-Criamos também o método <strong>delete</strong> moldado pela tipagem <strong>void</strong>(vazio) que tem como argumento um <strong>id</strong> moldado pela classe <strong>Long</strong>, esse <strong>id</strong> no caso é o id do produto. Logo no começo do método temos a abertura de um bloco <strong>try catch</strong>(este bloco serve para tentar(<strong>try</strong>) fazer alguma ação, caso a ação obtenha êxito o código segue normal, caso a ação não obtenha êxito o bloco pega(catch) o erro causado). Na abertura do <strong>try</strong> é feita a tentativa, a variável <strong>product</strong> moldada pela classe <strong>Product</strong> recebe o <strong>repository</strong> que chama o método <strong>findById(id)</strong>(método pronto do Java que pega o objeto por id e como argumento está sendo passado um id que no caso é o id do produto), o método <strong>findById(id)</strong> chama o método <strong>orElseThrow(()</strong>(ou se não lançar) que faz uma expressão lambda se referindo a <strong>new ResourceNotFoundException(id)</strong>(Recurso Não Encontrado Exceção) passando <strong>id</strong> como argumento, está é uma excessão pronta do Java, ou seja, o código tenta pegar o objeto através do id e caso não consiga é lançada uma excessão que tem aquele id como argumento, depois a variável <strong>repository</strong>(pertencente a classe <strong>ProductRepository</strong>) chama o método <strong>delete</strong>(método pronto do Java que serve para deletar) que tem o <strong>product</strong> como argumento, que no caso é o produto que foi pego pelo id, ou seja, é feita a deleção do produto. no fechamento do <strong>try</strong>(tentar) é feita a abertura do catch(pegar) passando a variável <strong>e</strong> como argumento que é moldada pela classe <strong>DataIntegrityViolationException</strong>(Dados Integridade Violação Exceção) e dentro do método existe um <strong>throw new</strong>(jogue novo) <strong>DatabaseException</strong>(Excessão de BD) recebendo <strong>(e.getMessage())</strong> como argumento, ou seja, a mensagem de excessão no BD será jogada caso seja pega alguma violação de integridade no BD e essa violação só irá acontecer caso haja alguma excessão(caso o id do produto não seja encontrado).
-
- 
- por fim o método tem um <strong>return</strong>(retorno) do <strong>repository</strong>(repositório) chamando <strong>save</strong> que é um método pronto do Java que serve para salvar, repare que <strong>obj</strong> está sendo passado como argumento, esse <strong>obj</strong> é o corpo do produto.
-</p>
+Criamos também o método <strong>delete</strong> moldado pela tipagem <strong>void</strong>(vazio) que tem como argumento um <strong>id</strong> moldado pela classe <strong>Long</strong>, esse <strong>id</strong> no caso é o id do produto. Logo no começo do método temos a abertura de um bloco <strong>try catch</strong>(este bloco serve para tentar(<strong>try</strong>) fazer alguma ação, caso a ação obtenha êxito o código segue normal, caso a ação não obtenha êxito o bloco pega(catch) o erro causado). Na abertura do <strong>try</strong> é feita a tentativa, a variável <strong>product</strong> moldada pela classe <strong>Product</strong> recebe o <strong>repository</strong>(pertencente a classe ProductRepository) que chama o método <strong>findById(id)</strong>(método pronto do Java que pega o objeto por id e como argumento está sendo passado um id que no caso é o id do produto), o método <strong>findById(id)</strong> chama o método <strong>orElseThrow(()</strong>(ou se não lançar) que faz uma expressão lambda se referindo a <strong>new ResourceNotFoundException(id)</strong>(Recurso Não Encontrado Exceção) passando <strong>id</strong> como argumento, está é uma excessão pronta do Java, ou seja, o código tenta pegar o objeto através do id e caso não consiga é lançada uma excessão que tem aquele id como argumento, depois a variável <strong>repository</strong>(pertencente a classe <strong>ProductRepository</strong>) chama o método <strong>delete</strong>(método pronto do Java que serve para deletar) que tem o <strong>product</strong> como argumento, que no caso é o produto que foi pego pelo id, ou seja, é feita a deleção do produto. no fechamento do <strong>try</strong>(tentar) é feita a abertura do catch(pegar) passando a variável <strong>e</strong> como argumento que é moldada pela classe <strong>DataIntegrityViolationException</strong>(Dados Integridade Violação Exceção, classe pronta do Java) e dentro do método existe um <strong>throw new</strong>(jogue novo) <strong>DatabaseException</strong>(Excessão de BD, classe pronta do Java) recebendo <strong>(e.getMessage())</strong> como argumento, ou seja, a mensagem de excessão no BD será jogada caso seja pega alguma violação de integridade no BD e essa violação só irá acontecer caso haja alguma excessão(caso o id do produto não seja encontrado).
 
 ```java
 public void delete(Long id) {
@@ -2095,7 +2091,36 @@ public void delete(Long id) {
 }
 ```
 
+<p>
+Criamos também o método <strong>delete</strong> moldado pela tipagem <strong>void</strong>(vazio) que tem como argumento um <strong>id</strong> moldado pela classe <strong>Long</strong>, esse <strong>id</strong> no caso é o id do produto. Logo no começo do método temos a abertura de um bloco <strong>try catch</strong>(este bloco serve para tentar(<strong>try</strong>) fazer alguma ação, caso a ação obtenha êxito o código segue normal, caso a ação não obtenha êxito o bloco pega(catch) o erro causado). Na abertura do <strong>try</strong> é feita a tentativa, a variável <strong>product</strong> moldada pela classe <strong>Product</strong> recebe o <strong>repository</strong>(pertencente a classe ProductRepository) que chama o método <strong>findById(id)</strong>(método pronto do Java que pega o objeto por id e como argumento está sendo passado um id que no caso é o id do produto), o método <strong>findById(id)</strong> chama o método <strong>orElseThrow(()</strong>(ou se não lançar) que faz uma expressão lambda se referindo a <strong>new ResourceNotFoundException(id)</strong>(Recurso Não Encontrado Exceção) passando <strong>id</strong> como argumento, está é uma excessão pronta do Java, ou seja, o código tenta pegar o objeto através do id e caso não consiga é lançada uma excessão que tem aquele id como argumento, depois a variável <strong>repository</strong>(pertencente a classe <strong>ProductRepository</strong>) chama o método <strong>delete</strong>(método pronto do Java que serve para deletar) que tem o <strong>product</strong> como argumento, que no caso é o produto que foi pego pelo id, ou seja, é feita a deleção do produto. no fechamento do <strong>try</strong>(tentar) é feita a abertura do catch(pegar) passando a variável <strong>e</strong> como argumento que é moldada pela classe <strong>DataIntegrityViolationException</strong>(Dados Integridade Violação Exceção, classe pronta do Java) e dentro do método existe um <strong>throw new</strong>(jogue novo) <strong>DatabaseException</strong>(Excessão de BD, classe pronta do Java) recebendo <strong>(e.getMessage())</strong> como argumento, ou seja, a mensagem de excessão no BD será jogada caso seja pega alguma violação de integridade no BD e essa violação só irá acontecer caso haja alguma excessão(caso o id do produto não seja encontrado).
 
+```java
+public void delete(Long id) {
+	try {
+		Product product = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
+		repository.delete(product);
+	} catch (DataIntegrityViolationException e) {
+		throw new DatabaseException(e.getMessage());
+	}
+}
+```
+
+<p>
+Criamos o método update com retorno do tipo Product, recebendo um id do tipo Long e um objeto Product chamado obj. O bloco try-catch é utilizado para lidar com possíveis exceções durante a execução. No início do bloco try, é feita uma tentativa de obter uma referência à entidade Product no repositório usando o método getReferenceById(id). Esta operação pode lançar uma exceção do tipo EntityNotFoundException. Posteriormente, o método updateData(entity, obj) é chamado para atualizar os dados da entidade com base no objeto obj. Finalmente, a entidade atualizada é salva no repositório através do método repository.save(entity) e é retornada.
+
+Caso uma exceção EntityNotFoundException seja capturada no bloco catch, é lançada uma exceção ResourceNotFoundException(id) para indicar que o recurso com o ID fornecido não foi encontrado. Em resumo, o método busca a entidade no repositório, atualiza seus dados com base no objeto fornecido e salva a entidade atualizada, lançando uma exceção personalizada em caso de falha na localização da entidade.
+
+```java
+public Product update(Long id, Product obj) {
+	try {
+		Product entity = repository.getReferenceById(id);
+		updateData(entity, obj);
+		return repository.save(entity);
+	} catch (EntityNotFoundException e) {
+		throw new ResourceNotFoundException(id);
+	}
+}
+```
 
 
 <img src = "imagensedocumentos\MODELORELACIONAL.png">
