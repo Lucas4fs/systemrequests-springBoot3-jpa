@@ -1251,7 +1251,7 @@ public ResponseEntity<List<Product>> findAll() {
 ```	
 
 <p>
-Depois criamos um método quase igual ao anterior, a diferença é que ao invês de pegar todos os produtos iremos pegar um único produto através do seu <strong>id</strong>, por isso o método <strong>@GetMapping</strong> agora tem um valor como parâmetro, <strong>(value = "/{id}")</strong>, esse <strong>id</strong> quem passa é o usuário que faz a requisição GET, repare também que o nome do método muda para <strong>findById</strong> e é passada a variável <strong>id</strong> como argumento, essa variável é moldada pela classe <strong>Long</strong> que no caso é a tipagem do argumento e também contém a anotação <strong>@PathVariable</strong> que serve para capturar valores de variáveis na URL. Repare também que	a variável <strong>service</strong> chama outro método que está na classe <strong>CategoryService</strong>, passando <strong>id</strong> como argumento, observe: <strong>findById(id)</strong>, por fim o <strong>return</strong> vai retornar um objeto do tipo <strong>ResponseEntity</strong>(abstração que encapsula toda a informação necessária para representar uma resposta HTTP, incluindo o corpo da resposta, cabeçalhos e o status HTTP) utilizando a fábrica estática <strong>ok()</strong> que indica um status <strong>HTTP 200 (OK)</strong>, em seguida, o método <strong>body(list)</strong> é chamado para especificar o corpo da resposta, que é a lista de produtos <strong>(list)</strong>.
+Depois criamos um método quase igual ao anterior, a diferença é que ao invês de pegar todos os produtos iremos pegar um único produto através do seu <strong>id</strong>, por isso o método <strong>@GetMapping</strong> agora tem um valor como parâmetro, <strong>(value = "/{id}")</strong>, esse <strong>id</strong> quem passa é o usuário que faz a requisição GET, repare também que o nome do método muda para <strong>findById</strong> e é passada a variável <strong>id</strong> como argumento, essa variável é moldada pela classe <strong>Long</strong> que no caso é a tipagem do argumento e também contém a anotação <strong>@PathVariable</strong> que serve para capturar valores de variáveis na URL. Repare também que	a variável <strong>service</strong> chama outro método que está na classe <strong>CategoryService</strong>, passando <strong>id</strong> como argumento, observe: <strong>findById(id)</strong>, por fim o <strong>return</strong> vai retornar um objeto do tipo <strong>ResponseEntity</strong>(abstração que encapsula toda a informação necessária para representar uma resposta HTTP, incluindo o corpo da resposta, cabeçalhos e o status HTTP) utilizando a fábrica estática <strong>ok()</strong> que indica um status <strong>HTTP 200 (OK)</strong>, em seguida, o método <strong>body(obj)</strong> é chamado para especificar o corpo da resposta, que é o objeto, no caso o produto.
 </p>
 
 ```java
@@ -1413,7 +1413,7 @@ public ResponseEntity<List<Category>> findAll() {
 ```	
 
 <p>
-Depois criamos um método quase igual ao anterior, a diferença é que ao invês de pegar todos as categorias iremos pegar a única categoria através do seu <strong>id</strong>, por isso o método <strong>@GetMapping</strong> agora tem um valor como parâmetro, <strong>(value = "/{id}")</strong>, esse <strong>id</strong> quem passa é o usuário que faz a requisição GET, repare também que o nome do método muda para <strong>findById</strong> e é passada a variável <strong>id</strong> como argumento, essa variável é moldada pela classe <strong>Long</strong> que no caso é a tipagem do argumento e também contém a anotação <strong>@PathVariable</strong> que serve para capturar valores de variáveis na URL. Repare também que	a variável <strong>service</strong> chama outro método que está na classe <strong>CategoryService</strong>, passando <strong>id</strong> como argumento, observe: <strong>findById(id)</strong>, por fim o <strong>return</strong> vai retornar um objeto do tipo <strong>ResponseEntity</strong>(abstração que encapsula toda a informação necessária para representar uma resposta HTTP, incluindo o corpo da resposta, cabeçalhos e o status HTTP) utilizando a fábrica estática <strong>ok()</strong> que indica um status <strong>HTTP 200 (OK)</strong>, em seguida, o método <strong>body(list)</strong> é chamado para especificar o corpo da resposta, que é a lista de categorias <strong>(list)</strong>.
+Depois criamos um método quase igual ao anterior, a diferença é que ao invês de pegar todos as categorias iremos pegar a única categoria através do seu <strong>id</strong>, por isso o método <strong>@GetMapping</strong> agora tem um valor como parâmetro, <strong>(value = "/{id}")</strong>, esse <strong>id</strong> quem passa é o usuário que faz a requisição GET, repare também que o nome do método muda para <strong>findById</strong> e é passada a variável <strong>id</strong> como argumento, essa variável é moldada pela classe <strong>Long</strong> que no caso é a tipagem do argumento e também contém a anotação <strong>@PathVariable</strong> que serve para capturar valores de variáveis na URL. Repare também que	a variável <strong>service</strong> chama outro método que está na classe <strong>CategoryService</strong>, passando <strong>id</strong> como argumento, observe: <strong>findById(id)</strong>, por fim o <strong>return</strong> vai retornar um objeto do tipo <strong>ResponseEntity</strong>(abstração que encapsula toda a informação necessária para representar uma resposta HTTP, incluindo o corpo da resposta, cabeçalhos e o status HTTP) utilizando a fábrica estática <strong>ok()</strong> que indica um status <strong>HTTP 200 (OK)</strong>, em seguida, o método <strong>body(obj)</strong> é chamado para especificar o corpo da resposta, que é o objeto, no caso o item do pedido.
 </p>
 
 ```java
@@ -1517,7 +1517,7 @@ return ResponseEntity.ok().body(obj);
 
 <p>
 Primeiro definimos o pacote que a classe irá pertencer e depois fazemos as importações necessárias.
-</p>
+</p>
 
 ```java
 package com.requests.project.resources;
@@ -1575,7 +1575,7 @@ public ResponseEntity<List<Order>> findAll() {
 ```	
 
 <p>
-Depois criamos um método quase igual ao anterior, a diferença é que ao invês de pegar todos as pedidos iremos pegar a única categoria através do seu <strong>id</strong>, por isso o método <strong>@GetMapping</strong> agora tem um valor como parâmetro, <strong>(value = "/{id}")</strong>, esse <strong>id</strong> quem passa é o usuário que faz a requisição GET, repare também que o nome do método muda para <strong>findById</strong> e é passada a variável <strong>id</strong> como argumento, essa variável é moldada pela classe <strong>Long</strong> que no caso é a tipagem do argumento e também contém a anotação <strong>@PathVariable</strong> que serve para capturar valores de variáveis na URL. Repare também que	a variável <strong>service</strong> chama outro método que está na classe <strong>OrderService</strong>, passando <strong>id</strong> como argumento, observe: <strong>findById(id)</strong>, por fim o <strong>return</strong> vai retornar um objeto do tipo <strong>ResponseEntity</strong>(abstração que encapsula toda a informação necessária para representar uma resposta HTTP, incluindo o corpo da resposta, cabeçalhos e o status HTTP) utilizando a fábrica estática <strong>ok()</strong> que indica um status <strong>HTTP 200 (OK)</strong>, em seguida, o método <strong>body(list)</strong> é chamado para especificar o corpo da resposta, que é a lista de pedidos <strong>(list)</strong>.
+Depois criamos um método quase igual ao anterior, a diferença é que ao invês de pegar todos as pedidos iremos pegar a única categoria através do seu <strong>id</strong>, por isso o método <strong>@GetMapping</strong> agora tem um valor como parâmetro, <strong>(value = "/{id}")</strong>, esse <strong>id</strong> quem passa é o usuário que faz a requisição GET, repare também que o nome do método muda para <strong>findById</strong> e é passada a variável <strong>id</strong> como argumento, essa variável é moldada pela classe <strong>Long</strong> que no caso é a tipagem do argumento e também contém a anotação <strong>@PathVariable</strong> que serve para capturar valores de variáveis na URL. Repare também que	a variável <strong>service</strong> chama outro método que está na classe <strong>OrderService</strong>, passando <strong>id</strong> como argumento, observe: <strong>findById(id)</strong>, por fim o <strong>return</strong> vai retornar um objeto do tipo <strong>ResponseEntity</strong>(abstração que encapsula toda a informação necessária para representar uma resposta HTTP, incluindo o corpo da resposta, cabeçalhos e o status HTTP) utilizando a fábrica estática <strong>ok()</strong> que indica um status <strong>HTTP 200 (OK)</strong>, em seguida, o método <strong>body(obj)</strong> é chamado para especificar o corpo da resposta, que é o objeto, no caso o pedido.
 </p>
 
 ```java
@@ -1595,7 +1595,7 @@ Também criamos o método responsável por inserir(POST), começamos colocando a
 public ResponseEntity<Order> insert(@RequestBody Order obj) {
 ```
 <p>
-A variável <strong>obj</strong> recebe o serviço de inserção que é um método(está dentro da classe <strong>OrderService</strong>) e o argumento passado para esse método é o <strong>obj</strong> que no caso é o objeto que foi passado no argumento do <strong>insert</strong>, este objeto é o corpo do produto que deve ser inserido.
+A variável <strong>obj</strong> recebe o serviço de inserção que é um método(está dentro da classe <strong>OrderService</strong>) e o argumento passado para esse método é o <strong>obj</strong> que no caso é o objeto que foi passado no argumento do <strong>insert</strong>, este objeto é o corpo do pedido que deve ser inserido.
 </p>
 
 ```java
@@ -1675,9 +1675,335 @@ return ResponseEntity.ok().body(obj);
 }
 ```
 
+#### UserResource
+
+<p>
+Primeiro definimos o pacote que a classe irá pertencer e depois fazemos as importações necessárias.
+</p>
+
+```java
+package com.requests.project.resources;
+
+import java.net.URI;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import com.requests.project.entities.User;
+import com.requests.project.services.UserService;
+```
+
+<p>
+Criamos a classe <strong>UserResource</strong> e inserimos duas anotações encima da classe, <strong>@RestController</strong> que serve para indicar que a classe é um controlador específico para APIs RESTful onde cada método do controlador retorna diretamente dados serializados no corpo da resposta HTTP e <strong>@RequestMapping(value = "/users")</strong> que é usado para mapear um determinado caminho (path) à classe e a métodos específicos dentro da classe controladora, ou seja, <strong>"/users"</strong> faz parte da estrutura da URL que o usuário deve acessar para fazer requisições CRUD's, este é o endpoint específico para fazer requisições referentes aos usuários.
+</p>
+
+```java
+@RestController
+@RequestMapping(value = "/users")
+public class UserResource {
+```
+
+<p>
+A variável <strong>service</strong> é moldada pela classe <strong>UserService</strong>, inserimos a anotação <strong>@Autowired</strong> que realiza a injeção de dependências para a variável, o Spring fica responsável pela criação e gestão da instância da dependência <strong>service</strong>.
+</p>
+
+```java
+@Autowired
+private UserService service;
+```
+
+<p>
+Criamos um método e inserimos a anotação <strong>@GetMapping</strong> encima do método, essa anotação é usada para mapear solicitações HTTP GET para métodos de manipulação em controladores. 
+O método <strong>findAll()</strong> é moldado pela classe <strong>ResponseEntity</strong> que aceita uma <strong>List</strong> que aceita objetos do tipo <strong>User</strong>, a classe <strong>ResponseEntity</strong> é uma classe pronta do Spring Framework que encapsula toda a informação necessária para representar uma resposta HTTP, incluindo o corpo da resposta, cabeçalhos e o status HTTP. Dentro do método <strong>findAll()</strong> existe a variável <strong>list</strong> que é moldada por uma <strong>List</strong> que aceita objetos do tipo <strong>User</strong>, a variável <strong>list</strong> recebe a variável <strong>service</strong> que chama o método <strong>searchAll()</strong> que está dentro da classe <strong>UserService</strong>, por fim o <strong>return</strong> vai retornar um objeto do tipo <strong>ResponseEntity</strong>(abstração que encapsula toda a informação necessária para representar uma resposta HTTP, incluindo o corpo da resposta, cabeçalhos e o status HTTP) utilizando a fábrica estática <strong>ok()</strong> que indica um status <strong>HTTP 200 (OK)</strong>, em seguida, o método <strong>body(list)</strong> é chamado para especificar o corpo da resposta, que é a lista de usuários <strong>(list)</strong>.
+Este método é responsável por pegar todos os usuários.
+</p>
+
+```java
+@GetMapping
+public ResponseEntity<List<User>> findAll() {
+	List<User> list = service.searchAll();
+	return ResponseEntity.ok().body(list);
+}
+```	
+
+<p>
+Depois criamos um método quase igual ao anterior, a diferença é que ao invês de pegar todos os usuários iremos pegar um único usuário através do seu <strong>id</strong>, por isso o método <strong>@GetMapping</strong> agora tem um valor como parâmetro, <strong>(value = "/{id}")</strong>, esse <strong>id</strong> quem passa é o usuário que faz a requisição GET, repare também que o nome do método muda para <strong>findById</strong> e é passada a variável <strong>id</strong> como argumento, essa variável é moldada pela classe <strong>Long</strong> que no caso é a tipagem do argumento e também contém a anotação <strong>@PathVariable</strong> que serve para capturar valores de variáveis na URL. Repare também que	a variável <strong>service</strong> chama outro método que está na classe <strong>UserService</strong>, passando <strong>id</strong> como argumento, observe: <strong>findById(id)</strong>, por fim o <strong>return</strong> vai retornar um objeto do tipo <strong>ResponseEntity</strong>(abstração que encapsula toda a informação necessária para representar uma resposta HTTP, incluindo o corpo da resposta, cabeçalhos e o status HTTP) utilizando a fábrica estática <strong>ok()</strong> que indica um status <strong>HTTP 200 (OK)</strong>, em seguida, o método <strong>body(obj)</strong> é chamado para especificar o corpo da resposta, que é o objeto, no caso o usuário.
+</p>
+
+```java
+@GetMapping(value = "/{id}")
+public ResponseEntity<User> findById(@PathVariable Long id) {
+	User obj = service.findById(id);
+	return ResponseEntity.ok().body(obj);
+}
+```	
+
+<p>
+Também criamos o método responsável por inserir(POST), começamos colocando a anotação <strong>@PostMapping</strong> que no Spring é usada para mapear solicitações HTTP POST para métodos de manipulação em controladores. Criamos o método <strong>insert</strong> que é moldado pela classe <strong>ResponseEntity</strong>(utilizada para representar toda a resposta HTTP, incluindo o corpo, cabeçalhos e status) que aceita objetos do tipo <strong>User</strong> e passa como argumento a variável <strong>obj</strong> que é moldada pela classe <strong>User</strong> e também tem a anotação <strong>@RequestBody</strong> que serve para converter o corpo da solicitação em um objeto, esse objeto no caso é o usuário.
+</p>
+
+```java
+@PostMapping
+public ResponseEntity<User> insert(@RequestBody User obj) {
+```
+<p>
+A variável <strong>obj</strong> recebe o serviço de inserção que é um método(está dentro da classe <strong>UserService</strong>) e o argumento passado para esse método é o <strong>obj</strong> que no caso é o objeto que foi passado no argumento do <strong>insert</strong>, este objeto é o corpo do usuário que deve ser inserido.
+</p>
+
+```java
+obj = service.insert(obj);
+```
+
+<p>
+A linha a seguir está construindo uma <strong>URI</strong> para o novo recurso inserido. Essa <strong>URI</strong> inclui o caminho atual da requisição, adiciona <strong>"/{id}"</strong> como parte do caminho, e substitui <strong>{id}</strong> pelo ID do objeto <strong>User</strong> recém-inserido. O objetivo é criar uma <strong>URI</strong> que aponte para o novo recurso, facilitando a localização e acesso a ele. Essa <strong>URI</strong> pode ser incluída no cabeçalho da resposta HTTP para indicar onde o recurso recém-criado está disponível.
+</p>
+
+```java
+URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
+```
+
+<p>
+A linha de código abaixo está criando e retornando uma resposta HTTP com status <strong>201 (Created)</strong> indicando que a operação de criação foi bem-sucedida. A <strong>URI</strong> do novo recurso é incluída no cabeçalho da resposta, e o corpo(<strong>body</strong>) da resposta contém o objeto <strong>User</strong> recém-criado.
+</p>
+
+```java
+return ResponseEntity.created(uri).body(obj);
+}
+```
+
+<p>
+Também criamos o método responsável por deletar(DELETE), começamos inserindo a anotação <strong>@DeleteMapping(value = "/{id}")</strong>, essa anotação é  utilizada para mapear solicitações HTTP DELETE para um método de manipulação em um controlador, passamos <strong>/{id}</strong> como valor, ou seja, ao realizar a requisição DELETE o usuário deverá informar o <strong>id</strong> do usuário que quer deletar. O método <strong>delete</strong> é moldado pela classe <strong>ResponseEntity</strong>(utilizada para representar toda a resposta HTTP, incluindo o corpo, cabeçalhos e status). que aceita objetos do tipo <strong>Void</strong>(vazio) e passa um argumento <strong>id</strong> que é moldado pela classe <strong>Long</strong> e tem a anotação <strong>@PathVariable</strong> que serve para capturar valores de variáveis na URL, esse <strong>id</strong> no caso é <strong>id</strong> do usuário que será deletado(o usuário deverá passar esse valor no momento da requisição).
+</p>
+
+```java
+@DeleteMapping(value = "/{id}")
+public ResponseEntity<Void> delete(@PathVariable Long id) {
+}
+```
+
+<p>
+Variável <strong>service</strong> chama o método <strong>delete</strong> e passa um <strong>id</strong> como argumento, esse <strong>id</strong> no caso é o <strong>id</strong> do usuário que será deletado.
+</p>
+
+```java
+service.delete(id);
+```
+
+<p>
+o <strong>return</strong> abaixo  está construindo e retornando uma resposta HTTP com status 204 No Content, em resumo, a linha mencionada está indicando que a operação de exclusão foi bem-sucedida.
+</p>
+
+```java
+return ResponseEntity.noContent().build();
+}
+```
+
+<p>
+Também criamos o método responsável por atualizar(PUT), começamos inserindo a anotação <strong>@PutMapping(value = "/{id}")</strong>, essa anotação é  utilizada para mapear solicitações HTTP UPDATE para um método de manipulação em um controlador, passamos <strong>/{id}</strong> como valor, ou seja, ao realizar a requisição UPDATE o usuário deverá informar o <strong>id</strong> do usuário que quer atualizar. O método <strong>update</strong> é moldado pela classe <strong>ResponseEntity</strong>(utilizada para representar toda a resposta HTTP, incluindo o corpo, cabeçalhos e status) que aceita objetos do tipo <strong>User</strong> e passa um argumento <strong>id</strong> que é moldado pela classe <strong>Long</strong> e tem a anotação <strong>@PathVariable</strong> que serve para capturar valores de variáveis na URL, esse <strong>id</strong> no caso é o <strong>id</strong> do usuário que será atualizado(o usuário deverá passar esse valor no momento da requisição), já o outro argumento <strong>obj</strong> irá receber os dados da atualização, a variável <strong>obj</strong> é moldada pela classe <strong>User</strong> e contém a anotação <strong>@RequestBody</strong> que serve para converter o corpo da solicitação em um objeto, esse objeto no caso é o usuário.
+</p>
+
+```java
+@PutMapping(value = "/{id}")
+public ResponseEntity<User> update(@PathVariable Long id, @RequestBody User obj) {
+```
+
+<p>
+A variável <strong>obj</strong> recebe a variável <strong>service</strong> que chama o método <strong>update</strong> da classe <strong>UserService</strong> e passamos os argumentos <strong>id</strong> e <strong>obj</strong>, onde <strong>id</strong> será o id do usuário que será atualizado e <strong>obj</strong> será os dados que serão passados para a atualização.
+</p>
+
+```java
+obj = service.update(id, obj);
+```
+
+<p>
+o <strong>return</strong> abaixo está retornando um objeto do tipo ResponseEntity, que é uma classe do Spring usada para representar toda a resposta HTTP. <strong>ResponseEntity.ok()</strong> retorna um status HTTP 200 OK. O método <strong>body(obj)</strong> define o corpo da resposta como o objeto <strong>User</strong> atualizado.
+</p>
+
+```java
+return ResponseEntity.ok().body(obj);
+}
+```
+```java
+}
+```
+
+#### OrderItemResource
+
+<p>
+Primeiro definimos o pacote que a classe irá pertencer e depois fazemos as importações necessárias.
+</p>
+
+```java
+package com.requests.project.resources;
+
+import java.net.URI;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import com.requests.project.dto.InterfaceOrderItem;
+import com.requests.project.entities.OrderItem;
+import com.requests.project.services.OrderItemService;
+```
+
+<p>
+Criamos a classe <strong>OrderItemResource</strong> e inserimos duas anotações encima da classe, <strong>@RestController</strong> que serve para indicar que a classe é um controlador específico para APIs RESTful onde cada método do controlador retorna diretamente dados serializados no corpo da resposta HTTP e <strong>@RequestMapping(value = "/orderitem")</strong> que é usado para mapear um determinado caminho (path) à classe e a métodos específicos dentro da classe controladora, ou seja, <strong>"/orderitem"</strong> faz parte da estrutura da URL que o item do pedido deve acessar para fazer requisições CRUD's, este é o endpoint específico para fazer requisições referentes aos itens dos pedidos.
+</p>
+
+```java
+@RestController
+@RequestMapping(value = "/orderitem")
+public class OrderItemResource {
+```
+
+<p>
+A variável <strong>service</strong> é moldada pela classe <strong>OrderItemService</strong>, inserimos a anotação <strong>@Autowired</strong> que realiza a injeção de dependências para a variável, o Spring fica responsável pela criação e gestão da instância da dependência <strong>service</strong>.
+</p>
+
+```java
+@Autowired
+private OrderItemService service;
+```
+
+<p>
+Criamos um método e inserimos a anotação <strong>@GetMapping</strong> encima do método, essa anotação é usada para mapear solicitações HTTP GET para métodos de manipulação em controladores. 
+O método <strong>findAll()</strong> é moldado pela classe <strong>ResponseEntity</strong> que aceita uma <strong>List</strong> que aceita objetos do tipo <strong>OrderItem</strong>, a classe <strong>ResponseEntity</strong> é uma classe pronta do Spring Framework que encapsula toda a informação necessária para representar uma resposta HTTP, incluindo o corpo da resposta, cabeçalhos e o status HTTP. Dentro do método <strong>findAll()</strong> existe a variável <strong>list</strong> que é moldada por uma <strong>List</strong> que aceita objetos do tipo <strong>OrderItem</strong>, a variável <strong>list</strong> recebe a variável <strong>service</strong> que chama o método <strong>searchAll()</strong> que está dentro da classe <strong>OrderItemService</strong>, por fim o <strong>return</strong> vai retornar um objeto do tipo <strong>ResponseEntity</strong>(abstração que encapsula toda a informação necessária para representar uma resposta HTTP, incluindo o corpo da resposta, cabeçalhos e o status HTTP) utilizando a fábrica estática <strong>ok()</strong> que indica um status <strong>HTTP 200 (OK)</strong>, em seguida, o método <strong>body(list)</strong> é chamado para especificar o corpo da resposta, que é a lista de itens dos pedidos <strong>(list)</strong>.
+Este método é responsável por pegar todos os item do pedidos.
+</p>
+
+```java
+@GetMapping
+public ResponseEntity<List<OrderItem>> findAll() {
+	List<OrderItem> list = service.searchAll();
+	return ResponseEntity.ok().body(list);
+}
+```	
+
+<p>
+Depois criamos um método quase igual ao anterior, a diferença é que ao invês de pegar todos os item do pedidos iremos pegar um único item do pedido através do seu <strong>id</strong>, por isso o método <strong>@GetMapping</strong> agora tem um valor como parâmetro, <strong>(value = "/{id}")</strong>, esse <strong>id</strong> quem passa é o usuário que faz a requisição GET, repare também que o nome do método muda para <strong>findById</strong> e é passada a variável <strong>id</strong> como argumento, essa variável é moldada pela classe <strong>Long</strong> que no caso é a tipagem do argumento e também contém a anotação <strong>@PathVariable</strong> que serve para capturar valores de variáveis na URL. Repare também que a variável <strong>service</strong> chama outro método que está na classe <strong>OrderItemService</strong>, passando <strong>id</strong> como argumento, observe: <strong>findById(id)</strong>, por fim o <strong>return</strong> vai retornar um objeto do tipo <strong>ResponseEntity</strong>(abstração que encapsula toda a informação necessária para representar uma resposta HTTP, incluindo o corpo da resposta, cabeçalhos e o status HTTP) utilizando a fábrica estática <strong>ok()</strong> que indica um status <strong>HTTP 200 (OK)</strong>, em seguida, o método <strong>body(obj)</strong> é chamado para especificar o corpo da resposta, que é o objeto, no caso o item do pedido.
+</p>
+
+```java
+@GetMapping(value = "/{id}")
+public ResponseEntity<OrderItem> findById(@PathVariable Long id) {
+	OrderItem obj = service.findById(id);
+	return ResponseEntity.ok().body(obj);
+}
+```	
+
+<p>
+Também criamos o método responsável por inserir(POST), começamos colocando a anotação <strong>@PostMapping</strong> que no Spring é usada para mapear solicitações HTTP POST para métodos de manipulação em controladores. Criamos o método <strong>insert</strong> que é moldado pela classe <strong>ResponseEntity</strong>(utilizada para representar toda a resposta HTTP, incluindo o corpo, cabeçalhos e status) que aceita objetos do tipo <strong>OrderItem</strong> e passa como argumento a variável <strong>obj</strong> que é moldada pela classe <strong>OrderItem</strong> e também tem a anotação <strong>@RequestBody</strong> que serve para converter o corpo da solicitação em um objeto, esse objeto no caso é o item do pedido.
+</p>
+
+```java
+@PostMapping
+public ResponseEntity<OrderItem> insert(@RequestBody OrderItem obj) {
+```
+<p>
+A variável <strong>obj</strong> recebe o serviço de inserção que é um método(está dentro da classe <strong>OrderItemService</strong>) e o argumento passado para esse método é o <strong>obj</strong> que no caso é o objeto que foi passado no argumento do <strong>insert</strong>, este objeto é o corpo do item do pedido que deve ser inserido.
+</p>
+
+```java
+obj = service.insert(obj);
+```
+
+<p>
+A linha a seguir está construindo uma <strong>URI</strong> para o novo recurso inserido. Essa <strong>URI</strong> inclui o caminho atual da requisição, adiciona <strong>"/{id}"</strong> como parte do caminho, e substitui <strong>{id}</strong> pelo ID do objeto <strong>OrderItem</strong> recém-inserido. O objetivo é criar uma <strong>URI</strong> que aponte para o novo recurso, facilitando a localização e acesso a ele. Essa <strong>URI</strong> pode ser incluída no cabeçalho da resposta HTTP para indicar onde o recurso recém-criado está disponível.
+</p>
+
+```java
+URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
+```
+
+<p>
+A linha de código abaixo está criando e retornando uma resposta HTTP com status <strong>201 (Created)</strong> indicando que a operação de criação foi bem-sucedida. A <strong>URI</strong> do novo recurso é incluída no cabeçalho da resposta, e o corpo(<strong>body</strong>) da resposta contém o objeto <strong>OrderItem</strong> recém-criado.
+</p>
+
+```java
+return ResponseEntity.created(uri).body(obj);
+}
+```
+
+<p>
+Também criamos o método responsável por deletar(DELETE), começamos inserindo a anotação <strong>@DeleteMapping(value = "/{id}")</strong>, essa anotação é  utilizada para mapear solicitações HTTP DELETE para um método de manipulação em um controlador, passamos <strong>/{id}</strong> como valor, ou seja, ao realizar a requisição DELETE o item do pedido deverá informar o <strong>id</strong> do item do pedido que quer deletar. O método <strong>delete</strong> é moldado pela classe <strong>ResponseEntity</strong>(utilizada para representar toda a resposta HTTP, incluindo o corpo, cabeçalhos e status). que aceita objetos do tipo <strong>Void</strong>(vazio) e passa um argumento <strong>id</strong> que é moldado pela classe <strong>Long</strong> e tem a anotação <strong>@PathVariable</strong> que serve para capturar valores de variáveis na URL, esse <strong>id</strong> no caso é <strong>id</strong> do item do pedido que será deletado(o item do pedido deverá passar esse valor no momento da requisição).
+</p>
+
+```java
+@DeleteMapping(value = "/{id}")
+public ResponseEntity<Void> delete(@PathVariable Long id) {
+}
+```
+
+<p>
+Variável <strong>service</strong> chama o método <strong>delete</strong> e passa um <strong>id</strong> como argumento, esse <strong>id</strong> no caso é o <strong>id</strong> do item do pedido que será deletado.
+</p>
+
+```java
+service.delete(id);
+```
+
+<p>
+o <strong>return</strong> abaixo  está construindo e retornando uma resposta HTTP com status 204 No Content, em resumo, a linha mencionada está indicando que a operação de exclusão foi bem-sucedida.
+</p>
+
+```java
+return ResponseEntity.noContent().build();
+}
+```
+
+<p>
+Também criamos o método responsável por atualizar(PUT), começamos inserindo a anotação <strong>@PutMapping(value = "/{id}")</strong>, essa anotação é  utilizada para mapear solicitações HTTP UPDATE para um método de manipulação em um controlador, passamos <strong>/{id}</strong> como valor, ou seja, ao realizar a requisição UPDATE o item do pedido deverá informar o <strong>id</strong> do item do pedido que quer atualizar. O método <strong>update</strong> é moldado pela classe <strong>ResponseEntity</strong>(utilizada para representar toda a resposta HTTP, incluindo o corpo, cabeçalhos e status) que aceita objetos do tipo <strong>OrderItem</strong> e passa um argumento <strong>id</strong> que é moldado pela classe <strong>Long</strong> e tem a anotação <strong>@PathVariable</strong> que serve para capturar valores de variáveis na URL, esse <strong>id</strong> no caso é o <strong>id</strong> do item do pedido que será atualizado(o item do pedido deverá passar esse valor no momento da requisição), já o outro argumento <strong>obj</strong> irá receber os dados da atualização, a variável <strong>obj</strong> é moldada pela classe <strong>OrderItem</strong> e contém a anotação <strong>@RequestBody</strong> que serve para converter o corpo da solicitação em um objeto, esse objeto no caso é o item do pedido.
+</p>
+
+```java
+@PutMapping(value = "/{id}")
+public ResponseEntity<OrderItem> update(@PathVariable Long id, @RequestBody OrderItem obj) {
+```
+
+<p>
+A variável <strong>obj</strong> recebe a variável <strong>service</strong> que chama o método <strong>update</strong> da classe <strong>OrderItemService</strong> e passamos os argumentos <strong>id</strong> e <strong>obj</strong>, onde <strong>id</strong> será o id do item do pedido que será atualizado e <strong>obj</strong> será os dados que serão passados para a atualização.
+</p>
+
+```java
+obj = service.update(id, obj);
+```
+
+<p>
+o <strong>return</strong> abaixo está retornando um objeto do tipo ResponseEntity, que é uma classe do Spring usada para representar toda a resposta HTTP. <strong>ResponseEntity.ok()</strong> retorna um status HTTP 200 OK. O método <strong>body(obj)</strong> define o corpo da resposta como o objeto <strong>OrderItem</strong> atualizado.
+</p>
+
+```java
+return ResponseEntity.ok().body(obj);
+}
+```
+```java
+}
+```
+
+
 ------------------------------------------------------------
 
-### Product Service 
+### ProductService 
 
 <p>
 Primeiro vamos inserir o pacote que a classe pertence e fazer as importações necessárias.
@@ -1738,6 +2064,34 @@ Criamos também o método <strong>findById</strong> moldado pela classe <strong>
 public Product findById(Long id) {
 	Optional<Product> obj = repository.findById(id);
 	return obj.orElseThrow(() -> new ResourceNotFoundException(id));
+}
+```
+
+<p>
+Criamos também o método <strong>insert</strong> moldado pela classe <strong>Product</strong> que tem como argumento um <strong>obj</strong> moldado pela classe <strong>Product</strong>, esse <strong>obj</strong> no caso é o produto, por fim o método tem um <strong>return</strong>(retorno) do <strong>repository</strong>(repositório) chamando <strong>save</strong> que é um método pronto do Java que serve para salvar, repare que <strong>obj</strong> está sendo passado como argumento, esse <strong>obj</strong> é o corpo do produto.
+</p>
+
+```java
+public Product insert(Product obj) {
+	return repository.save(obj);
+}
+```
+
+<p>
+Criamos também o método <strong>delete</strong> moldado pela tipagem <strong>void</strong>(vazio) que tem como argumento um <strong>id</strong> moldado pela classe <strong>Long</strong>, esse <strong>id</strong> no caso é o id do produto. Logo no começo do método temos a abertura de um bloco <strong>try catch</strong>(este bloco serve para tentar(<strong>try</strong>) fazer alguma ação, caso a ação obtenha êxito o código segue normal, caso a ação não obtenha êxito o bloco pega(catch) o erro causado). Na abertura do <strong>try</strong> é feita a tentativa, a variável <strong>product</strong> moldada pela classe <strong>Product</strong> recebe o <strong>repository</strong> que chama o método <strong>findById(id)</strong>(método pronto do Java que pega o objeto por id e como argumento está sendo passado um id que no caso é o id do produto), o método <strong>findById(id)</strong> chama o método <strong>orElseThrow(()</strong>(ou se não lançar) que faz uma expressão lambda se referindo a <strong>new ResourceNotFoundException(id)</strong>(Recurso Não Encontrado Exceção) passando <strong>id</strong> como argumento, está é uma excessão pronta do Java, ou seja, o código tenta pegar o objeto através do id e caso não consiga é lançada uma excessão que tem aquele id como argumento, depois a variável <strong>repository</strong>(pertencente a classe <strong>ProductRepository</strong>) chama o método <strong>delete</strong>(método pronto do Java que serve para deletar) que tem o <strong>product</strong> como argumento, que no caso é o produto que foi pego pelo id, ou seja, é feita a deleção do produto. no fechamento do <strong>try</strong>(tentar) é feita a abertura do catch(pegar) passando a variável <strong>e</strong> como argumento que é moldada pela classe <strong>DataIntegrityViolationException</strong>(Dados Integridade Violação Exceção) e dentro do método existe um <strong>throw new</strong>(jogue novo) <strong>DatabaseException</strong>(Excessão de BD) recebendo <strong>(e.getMessage())</strong> como argumento, ou seja, a mensagem de excessão no BD será jogada caso seja pega alguma violação de integridade no BD e essa violação só irá acontecer caso haja alguma excessão(caso o id do produto não seja encontrado).
+
+ 
+ por fim o método tem um <strong>return</strong>(retorno) do <strong>repository</strong>(repositório) chamando <strong>save</strong> que é um método pronto do Java que serve para salvar, repare que <strong>obj</strong> está sendo passado como argumento, esse <strong>obj</strong> é o corpo do produto.
+</p>
+
+```java
+public void delete(Long id) {
+	try {
+		Product product = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
+		repository.delete(product);
+	} catch (DataIntegrityViolationException e) {
+		throw new DatabaseException(e.getMessage());
+	}
 }
 ```
 
