@@ -2000,8 +2000,6 @@ return ResponseEntity.ok().body(obj);
 }
 ```
 
-
-------------------------------------------------------------
 ### Criando Serviços
 
 <p>
@@ -2097,7 +2095,7 @@ public void delete(Long id) {
 ```
 
 <p>
-Criamos o método <strong>update</strong> com retorno do tipo <strong>Product</strong>, recebendo um <strong>id</strong> do tipo <strong>Long</strong> e um objeto <strong>Product</strong> chamado <strong>obj</strong>. O bloco <strong>try-catch</strong> é utilizado para lidar com possíveis exceções durante a execução. No início do bloco <strong>try</strong>, é feita uma tentativa de obter uma referência à entidade <storng>Product</storng> no repositório usando o método <strong>getReferenceById(id)</strong>. Esta operação pode lançar uma exceção do tipo <strong>EntityNotFoundException</strong>. Posteriormente, o método <strong>updateData(entity, obj)</strong> é chamado para atualizar os dados da entidade com base no objeto <strong>obj</strong>. Finalmente, a entidade atualizada é salva no repositório através do método <strong>repository.save(entity)</strong> é retornada.Caso uma exceção <strong>EntityNotFoundException</strong> seja capturada no bloco <strong>catch</strong>(pegar) é lançada uma exceção <strong>ResourceNotFoundException(id)</strong> para indicar que o recurso com o ID fornecido não foi encontrado. Em resumo, o método busca a entidade no repositório, atualiza seus dados com base no objeto fornecido e salva a entidade atualizada, lançando uma exceção personalizada em caso de falha na localização da entidade.
+Criamos o método <strong>update</strong> com retorno do tipo <strong>Product</strong>, recebendo um <strong>id</strong> do tipo <strong>Long</strong> e um objeto <strong>Product</strong> chamado <strong>obj</strong>. O bloco <strong>try-catch</strong> é utilizado para lidar com possíveis exceções durante a execução. No início do bloco <strong>try</strong>, é feita uma tentativa de obter uma referência à entidade <strong>Product</strong> no repositório usando o método <strong>getReferenceById(id)</strong>. Esta operação pode lançar uma exceção do tipo <strong>EntityNotFoundException</strong>. Posteriormente, o método <strong>updateData(entity, obj)</strong> é chamado para atualizar os dados da entidade com base no objeto <strong>obj</strong>. Finalmente, a entidade atualizada é salva no repositório através do método <strong>repository.save(entity)</strong> é retornada. Caso uma exceção <strong>EntityNotFoundException</strong> seja capturada no bloco <strong>catch</strong>(pegar) é lançada uma exceção <strong>ResourceNotFoundException(id)</strong> para indicar que o recurso com o ID fornecido não foi encontrado. Em resumo, o método busca a entidade no repositório, atualiza seus dados com base no objeto fornecido e salva a entidade atualizada, lançando uma exceção personalizada em caso de falha na localização da entidade.
 
 ```java
 public Product update(Long id, Product obj) {
@@ -2132,6 +2130,506 @@ private void updateData(Product entity, Product obj) {
 ```java
 }
 ```
+
+#### CategoryService
+
+<p>
+Primeiro vamos inserir o pacote que a classe pertence e fazer as importações necessárias.
+</p>
+
+```java
+package com.requests.project.services;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.stereotype.Service;
+
+import com.requests.project.entities.Category;
+import com.requests.project.repositories.CategoryRepository;
+import com.requests.project.services.exceptions.DatabaseException;
+import com.requests.project.services.exceptions.ResourceNotFoundException;
+
+import jakarta.persistence.EntityNotFoundException;
+```
+
+<p>
+Criamos a classe <strong>CategoryService</strong> e inserimos a anotação <strong>@Service</strong> encima da mesma. A anotação <strong>@Service</strong> faz com que a classe se torne serviço gerenciado pelo Spring, isso permite que outras classes possam injetar uma instância da classe quando necessário, facilitando a organização e reutilização de componentes na aplicação.
+ </p>
+
+```java
+@Service
+public class CategoryService {
+```
+
+<p>
+Fazemos uma injeção de dependência com a anotação <strong>@Autowired</strong> e agora o objeto <strong>repository</strong> nos dá acesso a classe <strong>CategoryRepository</strong>.
+</p>
+
+```java
+@Autowired
+private CategoryRepository repository;
+```
+
+<p>
+Criamos o método <strong>searchAll()</strong> que é moldado por uma <strong>List</strong> (lista) que aceita objetos do tipo <strong>Category</strong> (categoria), esse método tem um <strong>return</strong> (retorno) que retorna o <strong>repository</strong> chamando o método <strong>searchAll()</strong> que está dentro da classe <strong>CategoryRepository</strong>.<br>
+Esse método chama outro método do repositório que pega(GET) todos os categorias.
+</p>
+
+```java
+public List<Category> searchAll() {
+	return repository.searchAll();
+}
+```
+
+<p>
+Criamos também o método <strong>findById</strong> moldado pela classe <strong>Category</strong> que tem como argumento um <strong>id</strong> moldado pela classe <strong>Long</strong>, esse <strong>id</strong> no caso é o <strong>id</strong> do categoria, dentro do método temos um <strong>obj</strong> moldado pela classe <strong>Optional</strong>(nos permite trabalhar com valores que podem ou não estar presentes) que aceita objetos do tipo <strong>Category</strong> e recebe o <strong>repository</strong> chamando o método <strong>findById</strong>(esse é um método pronto do Java que pega o objeto por <strong>id</strong>) que passa um <strong>id</strong> como argumento, esse <strong>id</strong> no caso é o <strong>id</strong> do categoria, por fim o metodo tem um <strong>return</strong>(retorno) que traz o objeto ou uma excessão caso esse objeto não exista.
+</p>
+
+```java
+public Category findById(Long id) {
+	Optional<Category> obj = repository.findById(id);
+	return obj.orElseThrow(() -> new ResourceNotFoundException(id));
+}
+```
+
+<p>
+Criamos também o método <strong>insert</strong> moldado pela classe <strong>Category</strong> que tem como argumento um <strong>obj</strong> moldado pela classe <strong>Category</strong>, esse <strong>obj</strong> no caso é o categoria, por fim o método tem um <strong>return</strong>(retorno) do <strong>repository</strong>(repositório) chamando <strong>save</strong> que é um método pronto do Java que serve para salvar, repare que <strong>obj</strong> está sendo passado como argumento, esse <strong>obj</strong> é o corpo do categoria.
+</p>
+
+```java
+public Category insert(Category obj) {
+	return repository.save(obj);
+}
+```
+
+<p>
+Criamos também o método <strong>delete</strong> moldado pela tipagem <strong>void</strong>(vazio) que tem como argumento um <strong>id</strong> moldado pela classe <strong>Long</strong>, esse <strong>id</strong> no caso é o id do categoria. Logo no começo do método temos a abertura de um bloco <strong>try catch</strong>, este bloco serve para tentar(<strong>try</strong>) fazer alguma ação, caso a ação obtenha êxito o código segue normal, caso a ação não obtenha êxito o bloco pega(catch) o erro causado. Na abertura do <strong>try</strong> é feita a tentativa, a variável <strong>Category</strong> moldada pela classe <strong>Category</strong> recebe o <strong>repository</strong>(pertencente a classe CategoryRepository) que chama o método <strong>findById(id)</strong>(método pronto do Java que pega o objeto por id e como argumento está sendo passado um id que no caso é o id do categoria), o método <strong>findById(id)</strong> chama o método <strong>orElseThrow(())</strong>(ou se não lançar) que faz uma expressão lambda se referindo a <strong>new ResourceNotFoundException(id)</strong>(Recurso Não Encontrado Exceção) passando <strong>id</strong> como argumento, está é uma excessão pronta do Java, ou seja, o código tenta pegar o objeto através do id e caso não consiga é lançada uma excessão que tem aquele id como argumento, depois a variável <strong>repository</strong>(pertencente a classe <strong>CategoryRepository</strong>) chama o método <strong>delete</strong>(método pronto do Java que serve para deletar) que tem o <strong>Category</strong> como argumento, que no caso é a categoria que foi pega pelo id, ou seja, é feita a deleção do categoria, no fechamento do <strong>try</strong>(tentar) é feita a abertura do catch(pegar) passando a variável <strong>e</strong> como argumento que é moldada pela classe <strong>DataIntegrityViolationException</strong>(Dados Integridade Violação Exceção, classe pronta do Java) e dentro do método existe um <strong>throw new</strong>(jogue novo) <strong>DatabaseException</strong>(Excessão de BD, classe pronta do Java) recebendo <strong>e.getMessage()</strong> como argumento, ou seja, a mensagem de excessão no BD será jogada caso seja pega alguma violação de integridade no BD e essa violação só irá acontecer caso haja alguma excessão(caso o id do categoria não seja encontrada).
+
+```java
+public void delete(Long id) {
+	try {
+		Category category = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
+		repository.delete(category);
+	} catch (DataIntegrityViolationException e) {
+		throw new DatabaseException(e.getMessage());
+	}
+}
+```
+
+<p>
+Criamos o método <strong>update</strong> com retorno do tipo <strong>Category</strong>, recebendo um <strong>id</strong> do tipo <strong>Long</strong> e um objeto <strong>Category</strong> chamado <strong>obj</strong>. O bloco <strong>try-catch</strong> é utilizado para lidar com possíveis exceções durante a execução. No início do bloco <strong>try</strong>, é feita uma tentativa de obter uma referência à entidade <strong>Category</strong> no repositório usando o método <strong>getReferenceById(id)</strong>. Esta operação pode lançar uma exceção do tipo <strong>EntityNotFoundException</strong>. Posteriormente, o método <strong>updateData(entity, obj)</strong> é chamado para atualizar os dados da entidade com base no objeto <strong>obj</strong>. Finalmente, a entidade atualizada é salva no repositório através do método <strong>repository.save(entity)</strong> é retornada. Caso uma exceção <strong>EntityNotFoundException</strong> seja capturada no bloco <strong>catch</strong>(pegar) é lançada uma exceção <strong>ResourceNotFoundException(id)</strong> para indicar que o recurso com o ID fornecido não foi encontrado. Em resumo, o método busca a entidade no repositório, atualiza seus dados com base no objeto fornecido e salva a entidade atualizada, lançando uma exceção personalizada em caso de falha na localização da entidade.
+
+```java
+public Category update(Long id, Category obj) {
+	try {
+		Category entity = repository.getReferenceById(id);
+		updateData(entity, obj);
+		return repository.save(entity);
+	} catch (EntityNotFoundException e) {
+		throw new ResourceNotFoundException(id);
+	}
+}
+```
+
+<p>
+Este é um método privado chamado <strong>updateData</strong>, utilizado para atualizar os dados de um objeto <strong>Category</strong>. O método recebe dois parâmetros do tipo <strong>Category</strong>: <strong>entity</strong> (o objeto a ser atualizado) e <strong>obj</strong> (o objeto contendo os novos dados), o método realiza a atualização dos campos do objeto <strong>entity</strong> com base nos valores do objeto <strong>obj</strong>.<br>
+- <strong>entity.setName(obj.getName());</strong> atualiza o nome do objeto <strong>entity</strong> com o nome do objeto <strong>obj</strong>.
+<p>
+
+```java
+private void updateData(Category entity, Category obj) {
+	entity.setName(obj.getName());
+}
+```
+```java
+}
+```
+
+#### OrderService
+
+<p>
+Primeiro vamos inserir o pacote que a classe pertence e fazer as importações necessárias.
+</p>
+
+```java
+package com.requests.project.services;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.stereotype.Service;
+
+import com.requests.project.entities.Order;
+import com.requests.project.repositories.OrderRepository;
+import com.requests.project.services.exceptions.DatabaseException;
+import com.requests.project.services.exceptions.ResourceNotFoundException;
+
+import jakarta.persistence.EntityNotFoundException;
+```
+
+<p>
+Criamos a classe <strong>OrderService</strong> e inserimos a anotação <strong>@Service</strong> encima da mesma. A anotação <strong>@Service</strong> faz com que a classe se torne um serviço gerenciado pelo Spring, isso permite que outras classes possam injetar uma instância da classe quando necessário, facilitando a organização e reutilização de componentes na aplicação.
+ </p>
+
+```java
+@Service
+public class OrderService {
+```
+
+<p>
+Fazemos uma injeção de dependência com a anotação <strong>@Autowired</strong> e agora o objeto <strong>repository</strong> nos dá acesso a classe <strong>OrderRepository</strong>.
+</p>
+
+```java
+@Autowired
+private OrderRepository repository;
+```
+
+<p>
+Criamos o método <strong>searchAll()</strong> que é moldado por uma <strong>List</strong> (lista) que aceita objetos do tipo <strong>Order</strong> (pedido), esse método tem um <strong>return</strong> (retorno) que retorna o <strong>repository</strong> chamando o método <strong>searchAll()</strong> que está dentro da classe <strong>OrderRepository</strong>.<br>
+Esse método chama outro método do repositório que pega(GET) todos os pedidos.
+</p>
+
+```java
+public List<Order> searchAll() {
+	return repository.searchAll();
+}
+```
+
+<p>
+Criamos também o método <strong>findById</strong> moldado pela classe <strong>Order</strong> que tem como argumento um <strong>id</strong> moldado pela classe <strong>Long</strong>, esse <strong>id</strong> no caso é o <strong>id</strong> do pedido, dentro do método temos um <strong>obj</strong> moldado pela classe <strong>Optional</strong>(nos permite trabalhar com valores que podem ou não estar presentes) que aceita objetos do tipo <strong>Order</strong> e recebe o <strong>repository</strong> chamando o método <strong>findById</strong>(esse é um método pronto do Java que pega o objeto por <strong>id</strong>) que passa um <strong>id</strong> como argumento, esse <strong>id</strong> no caso é o <strong>id</strong> do pedido, por fim o metodo tem um <strong>return</strong>(retorno) que traz o objeto ou uma excessão caso esse objeto não exista.
+</p>
+
+```java
+public Order findById(Long id) {
+	Optional<Order> obj = repository.findById(id);
+	return obj.orElseThrow(() -> new ResourceNotFoundException(id));
+}
+```
+
+<p>
+Criamos também o método <strong>insert</strong> moldado pela classe <strong>Order</strong> que tem como argumento um <strong>obj</strong> moldado pela classe <strong>Order</strong>, esse <strong>obj</strong> no caso é o pedido, por fim o método tem um <strong>return</strong>(retorno) do <strong>repository</strong>(repositório) chamando <strong>save</strong> que é um método pronto do Java que serve para salvar, repare que <strong>obj</strong> está sendo passado como argumento, esse <strong>obj</strong> é o corpo do pedido.
+</p>
+
+```java
+public Order insert(Order obj) {
+	return repository.save(obj);
+}
+```
+
+<p>
+Criamos também o método <strong>delete</strong> moldado pela tipagem <strong>void</strong>(vazio) que tem como argumento um <strong>id</strong> moldado pela classe <strong>Long</strong>, esse <strong>id</strong> no caso é o id do pedido. Logo no começo do método temos a abertura de um bloco <strong>try catch</strong>, este bloco serve para tentar(<strong>try</strong>) fazer alguma ação, caso a ação obtenha êxito o código segue normal, caso a ação não obtenha êxito o bloco pega(catch) o erro causado. Na abertura do <strong>try</strong> é feita a tentativa, a variável <strong>Order</strong> moldada pela classe <strong>Order</strong> recebe o <strong>repository</strong>(pertencente a classe OrderRepository) que chama o método <strong>findById(id)</strong>(método pronto do Java que pega o objeto por id e como argumento está sendo passado um id que no caso é o id do pedido), o método <strong>findById(id)</strong> chama o método <strong>orElseThrow(())</strong>(ou se não lançar) que faz uma expressão lambda se referindo a <strong>new ResourceNotFoundException(id)</strong>(Recurso Não Encontrado Exceção) passando <strong>id</strong> como argumento, está é uma excessão pronta do Java, ou seja, o código tenta pegar o objeto através do id e caso não consiga é lançada uma excessão que tem aquele id como argumento, depois a variável <strong>repository</strong>(pertencente a classe <strong>OrderRepository</strong>) chama o método <strong>delete</strong>(método pronto do Java que serve para deletar) que tem o <strong>Order</strong> como argumento, que no caso é o pedido que foi pego pelo id, ou seja, é feita a deleção do pedido, no fechamento do <strong>try</strong>(tentar) é feita a abertura do catch(pegar) passando a variável <strong>e</strong> como argumento que é moldada pela classe <strong>DataIntegrityViolationException</strong>(Dados Integridade Violação Exceção, classe pronta do Java) e dentro do método existe um <strong>throw new</strong>(jogue novo) <strong>DatabaseException</strong>(Excessão de BD, classe pronta do Java) recebendo <strong>e.getMessage()</strong> como argumento, ou seja, a mensagem de excessão no BD será jogada caso seja pega alguma violação de integridade no BD e essa violação só irá acontecer caso haja alguma excessão(caso o id do pedido não seja encontrado).
+
+```java
+public void delete(Long id) {
+	try {
+		Order Order = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
+		repository.delete(Order);
+	} catch (DataIntegrityViolationException e) {
+		throw new DatabaseException(e.getMessage());
+	}
+}
+```
+
+<p>
+Criamos o método <strong>update</strong> com retorno do tipo <strong>Order</strong>, recebendo um <strong>id</strong> do tipo <strong>Long</strong> e um objeto <strong>Order</strong> chamado <strong>obj</strong>. O bloco <strong>try-catch</strong> é utilizado para lidar com possíveis exceções durante a execução. No início do bloco <strong>try</strong>, é feita uma tentativa de obter uma referência à entidade <strong>Order</strong> no repositório usando o método <strong>getReferenceById(id)</strong>. Esta operação pode lançar uma exceção do tipo <strong>EntityNotFoundException</strong>. Posteriormente, o método <strong>updateData(entity, obj)</strong> é chamado para atualizar os dados da entidade com base no objeto <strong>obj</strong>. Finalmente, a entidade atualizada é salva no repositório através do método <strong>repository.save(entity)</strong> é retornada. Caso uma exceção <strong>EntityNotFoundException</strong> seja capturada no bloco <strong>catch</strong>(pegar) é lançada uma exceção <strong>ResourceNotFoundException(id)</strong> para indicar que o recurso com o ID fornecido não foi encontrado. Em resumo, o método busca a entidade no repositório, atualiza seus dados com base no objeto fornecido e salva a entidade atualizada, lançando uma exceção personalizada em caso de falha na localização da entidade.
+
+```java
+public Order update(Long id, Order obj) {
+	try {
+		Order entity = repository.getReferenceById(id);
+		updateData(entity, obj);
+		return repository.save(entity);
+	} catch (EntityNotFoundException e) {
+		throw new ResourceNotFoundException(id);
+	}
+}
+```
+
+<p>
+Este é um método privado chamado <strong>updateData</strong>, utilizado para atualizar os dados de um objeto <strong>Order</strong>. O método recebe dois parâmetros do tipo <strong>Order</strong>: <strong>entity</strong> (o objeto a ser atualizado) e <strong>obj</strong> (o objeto contendo os novos dados), o método realiza a atualização dos campos do objeto <strong>entity</strong> com base nos valores do objeto <strong>obj</strong>.<br>
+- <strong>entity.setMoment(obj.getMoment());</strong> atualiza o momento do objeto <strong>entity</strong> com o momento do objeto <strong>obj</strong>.<br>
+- <strong>entity.setOrderStatus(obj.getOrderStatus());</strong> atualiza o status do pedido do objeto <strong>entity</strong> com o status do pedido do objeto <strong>obj</strong>.<br>
+- <strong>entity.setClient(obj.getClient());</strong> atualiza o cliente do objeto <strong>entity</strong> com o cliente do objeto <strong>obj</strong>.
+<p>
+
+```java
+private void updateData(Order entity, Order obj) {
+	entity.setMoment(obj.getMoment());
+	entity.setOrderStatus(obj.getOrderStatus());
+	entity.setClient(obj.getClient());
+}
+```
+```java
+}
+```
+
+#### UserService
+
+<p>
+Primeiro vamos inserir o pacote que a classe pertence e fazer as importações necessárias.
+</p>
+
+```java
+package com.requests.project.services;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.stereotype.Service;
+
+import com.requests.project.entities.User;
+import com.requests.project.repositories.UserRepository;
+import com.requests.project.services.exceptions.DatabaseException;
+import com.requests.project.services.exceptions.ResourceNotFoundException;
+
+import jakarta.persistence.EntityNotFoundException;
+```
+
+<p>
+Criamos a classe <strong>UserService</strong> e inserimos a anotação <strong>@Service</strong> encima da mesma. A anotação <strong>@Service</strong> faz com que a classe se torne o serviço gerenciado pelo Spring, isso permite que outras classes possam injetar uma instância da classe quando necessário, facilitando a organização e reutilização de componentes na aplicação.
+ </p>
+
+```java
+@Service
+public class UserService {
+```
+
+<p>
+Fazemos uma injeção de dependência com a anotação <strong>@Autowired</strong> e agora o objeto <strong>repository</strong> nos dá acesso a classe <strong>UserRepository</strong>.
+</p>
+
+```java
+@Autowired
+private UserRepository repository;
+```
+
+<p>
+Criamos o método <strong>searchAll()</strong> que é moldado por uma <strong>List</strong> (lista) que aceita objetos do tipo <strong>User</strong> (usuário), esse método tem um <strong>return</strong> (retorno) que retorna o <strong>repository</strong> chamando o método <strong>searchAll()</strong> que está dentro da classe <strong>UserRepository</strong>.<br>
+Esse método chama outro método do repositório que pega(GET) todos os usuários.
+</p>
+
+```java
+public List<User> searchAll() {
+		return repository.findAll();
+}
+```
+
+<p>
+Criamos também o método <strong>findById</strong> moldado pela classe <strong>User</strong> que tem como argumento um <strong>id</strong> moldado pela classe <strong>Long</strong>, esse <strong>id</strong> no caso é o <strong>id</strong> do usuário, dentro do método temos um <strong>obj</strong> moldado pela classe <strong>Optional</strong>(nos permite trabalhar com valores que podem ou não estar presentes) que aceita objetos do tipo <strong>User</strong> e recebe o <strong>repository</strong> chamando o método <strong>findById</strong>(esse é um método pronto do Java que pega o objeto por <strong>id</strong>) que passa um <strong>id</strong> como argumento, esse <strong>id</strong> no caso é o <strong>id</strong> do usuário, por fim o metodo tem um <strong>return</strong>(retorno) que traz o objeto ou uma excessão caso esse objeto não exista.
+</p>
+
+```java
+public User findById(Long id) {
+	Optional<User> obj = repository.findById(id);
+	return obj.orElseThrow(() -> new ResourceNotFoundException(id));
+}
+```
+
+<p>
+Criamos também o método <strong>insert</strong> moldado pela classe <strong>User</strong> que tem como argumento um <strong>obj</strong> moldado pela classe <strong>User</strong>, esse <strong>obj</strong> no caso é o usuário, por fim o método tem um <strong>return</strong>(retorno) do <strong>repository</strong>(repositório) chamando <strong>save</strong> que é um método pronto do Java que serve para salvar, repare que <strong>obj</strong> está sendo passado como argumento, esse <strong>obj</strong> é o corpo do usuário.
+</p>
+
+```java
+public User insert(User obj) {
+	return repository.save(obj);
+}
+```
+
+<p>
+Criamos também o método <strong>delete</strong> moldado pela tipagem <strong>void</strong>(vazio) que tem como argumento um <strong>id</strong> moldado pela classe <strong>Long</strong>, esse <strong>id</strong> no caso é o id do usuário. Logo no começo do método temos a abertura de um bloco <strong>try catch</strong>, este bloco serve para tentar(<strong>try</strong>) fazer alguma ação, caso a ação obtenha êxito o código segue normal, caso a ação não obtenha êxito o bloco pega(catch) o erro causado. Na abertura do <strong>try</strong> é feita a tentativa, a variável <strong>User</strong> moldada pela classe <strong>User</strong> recebe o <strong>repository</strong>(pertencente a classe <strong>UserRepository</strong>) que chama o método <strong>findById(id)</strong>(método pronto do Java que pega o objeto por id e como argumento está sendo passado um id que no caso é o id do usuário), o método <strong>findById(id)</strong> chama o método <strong>orElseThrow(())</strong>(ou se não lançar) que faz uma expressão lambda se referindo a <strong>new ResourceNotFoundException(id)</strong>(Recurso Não Encontrado Exceção) passando <strong>id</strong> como argumento, está é uma excessão pronta do Java, ou seja, o código tenta pegar o objeto através do id e caso não consiga é lançada uma excessão que tem aquele id como argumento, depois a variável <strong>repository</strong>(pertencente a classe <strong>UserRepository</strong>) chama o método <strong>delete</strong>(método pronto do Java que serve para deletar) que tem o <strong>User</strong> como argumento, que no caso é o usuário que foi pego pelo id, ou seja, é feita a deleção do usuário, no fechamento do <strong>try</strong>(tentar) é feita a abertura do catch(pegar) passando a variável <strong>e</strong> como argumento que é moldada pela classe <strong>DataIntegrityViolationException</strong>(Dados Integridade Violação Exceção, classe pronta do Java) e dentro do método existe um <strong>throw new</strong>(jogue novo) <strong>DatabaseException</strong>(Excessão de BD, classe pronta do Java) recebendo <strong>e.getMessage()</strong> como argumento, ou seja, a mensagem de excessão no BD será jogada caso seja pega alguma violação de integridade no BD e essa violação só irá acontecer caso haja alguma excessão(caso o id do usuário não seja encontrado).
+
+```java
+public void delete(Long id) {
+	try {
+			User user = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
+			repository.delete(user);
+		} catch (DataIntegrityViolationException e) {
+			throw new DatabaseException(e.getMessage());
+		}
+	}
+```
+
+<p>
+Criamos o método <strong>update</strong> com retorno do tipo <strong>User</strong>, recebendo um <strong>id</strong> do tipo <strong>Long</strong> e um objeto <strong>User</strong> chamado <strong>obj</strong>. O bloco <strong>try-catch</strong> é utilizado para lidar com possíveis exceções durante a execução. No início do bloco <strong>try</strong>, é feita uma tentativa de obter uma referência à entidade <strong>User</strong> no repositório usando o método <strong>getReferenceById(id)</strong>. Esta operação pode lançar uma exceção do tipo <strong>EntityNotFoundException</strong>. Posteriormente, o método <strong>updateData(entity, obj)</strong> é chamado para atualizar os dados da entidade com base no objeto <strong>obj</strong>. Finalmente, a entidade atualizada é salva no repositório através do método <strong>repository.save(entity)</strong> é retornada. Caso uma exceção <strong>EntityNotFoundException</strong> seja capturada no bloco <strong>catch</strong>(pegar) é lançada uma exceção <strong>ResourceNotFoundException(id)</strong> para indicar que o recurso com o ID fornecido não foi encontrado. Em resumo, o método busca a entidade no repositório, atualiza seus dados com base no objeto fornecido e salva a entidade atualizada, lançando uma exceção personalizada em caso de falha na localização da entidade.
+
+```java
+public User update(Long id, User obj) {
+	try {
+		User entity = repository.getReferenceById(id);
+		updateData(entity, obj);
+		return repository.save(entity);
+	} catch (EntityNotFoundException e) {
+		throw new ResourceNotFoundException(id);
+	}
+}
+```
+
+<p>
+Este é um método privado chamado <strong>updateData</strong>, utilizado para atualizar os dados de um objeto <strong>User</strong>. O método recebe dois parâmetros do tipo <strong>User</strong>: <strong>entity</strong> (o objeto a ser atualizado) e <strong>obj</strong> (o objeto contendo os novos dados), o método realiza a atualização dos campos do objeto <strong>entity</strong> com base nos valores do objeto <strong>obj</strong>.<br>
+- <strong>entity.setName(obj.getName());</strong> atualiza o nome do objeto <strong>entity</strong> com o nome do objeto <strong>obj</strong>.<br>
+- <strong>entity.setEmail(obj.getEmail());</strong> atualiza a o email do objeto <strong>entity</strong> com o email do objeto <strong>obj</strong>.<br>
+- <strong>entity.setPhone(obj.getPhone());</strong> atualiza o phone do objeto <strong>entity</strong> com o phone do objeto <strong>obj</strong>.<br>
+<p>
+
+```java
+private void updateData(User entity, User obj) {
+	entity.setName(obj.getName());
+	entity.setEmail(obj.getEmail());
+	entity.setPhone(obj.getPhone());
+}
+```
+```java
+}
+```
+
+#### OrderItemService 
+
+<p>
+Primeiro vamos inserir o pacote que a classe pertence e fazer as importações necessárias.
+</p>
+
+```java
+package com.requests.project.services;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.stereotype.Service;
+
+import com.requests.project.dto.InterfaceOrderItem;
+import com.requests.project.entities.OrderItem;
+import com.requests.project.repositories.OrderItemRepository;
+import com.requests.project.services.exceptions.DatabaseException;
+import com.requests.project.services.exceptions.ResourceNotFoundException;
+
+import jakarta.persistence.EntityNotFoundException;
+```
+
+<p>
+Criamos a classe <strong>OrderItemService</strong> e inserimos a anotação <strong>@Service</strong> encima da mesma. A anotação <strong>@Service</strong> faz com que a classe se torne serviço gerenciado pelo Spring, isso permite que outras classes possam injetar uma instância da classe quando necessário, facilitando a organização e reutilização de componentes na aplicação.
+ </p>
+
+```java
+@Service
+public class OrderItemService {
+```
+
+<p>
+Fazemos uma injeção de dependência com a anotação <strong>@Autowired</strong> e agora o objeto <strong>repository</strong> nos dá acesso a classe <strong>OrderItemRepository</strong>
+</p>
+
+```java
+@Autowired
+private OrderItemRepository repository;
+```
+
+<p>
+Criamos o método <strong>searchAll()</strong> que é moldado por uma <strong>List</strong> (lista) que aceita objetos do tipo <strong>OrderItem</strong> (item do pedido), esse método tem um <strong>return</strong> (retorno) que retorna o <strong>repository</strong> chamando o método <strong>searchAll()</strong> que está dentro da classe <strong>OrderItemRepository</strong>.<br>
+Esse método chama outro método do repositório que pega(GET) todos os item do pedidos
+</p>
+
+```java
+public List<OrderItem> searchAll() {
+	return repository.searchAll();
+}
+```
+
+<p>
+Criamos também o método <strong>findById</strong> moldado pela classe <strong>OrderItem</strong> que tem como argumento um <strong>id</strong> moldado pela classe <strong>Long</strong>, esse <strong>id</strong> no caso é o <strong>id</strong> do item do pedido, dentro do método temos um <strong>obj</strong> moldado pela classe <strong>Optional</strong>(nos permite trabalhar com valores que podem ou não estar presentes) que aceita objetos do tipo <strong>OrderItem</strong> e recebe o <strong>repository</strong> chamando o método <strong>findById</strong>(esse é um método pronto do Java que pega o objeto por <strong>id</strong>) que passa um <strong>id</strong> como argumento, esse <strong>id</strong> no caso é o <strong>id</strong> do item do pedido, por fim o método tem um <strong>return</strong>(retorno) que traz o objeto ou uma excessão caso esse objeto não exista.
+</p>
+
+```java
+public OrderItem findById(Long id) {
+	Optional<OrderItem> obj = repository.findById(id);
+	return obj.orElseThrow(() -> new ResourceNotFoundException(id));
+}
+```
+
+<p>
+Criamos também o método <strong>insert</strong> moldado pela classe <strong>OrderItem</strong> que tem como argumento um <strong>obj</strong> moldado pela classe <strong>OrderItem</strong>, esse <strong>obj</strong> no caso é o item do pedido, por fim o método tem um <strong>return</strong>(retorno) do <strong>repository</strong>(repositório) chamando <strong>save</strong> que é um método pronto do Java que serve para salvar, repare que <strong>obj</strong> está sendo passado como argumento, esse <strong>obj</strong> é o corpo do item do pedido.
+</p>
+
+```java
+public OrderItem insert(OrderItem obj) {
+	return repository.save(obj);
+}
+```
+
+<p>
+Criamos também o método <strong>delete</strong> moldado pela tipagem <strong>void</strong>(vazio) que tem como argumento um <strong>id</strong> moldado pela classe <strong>Long</strong>, esse <strong>id</strong> no caso é o id do item do pedido. Logo no começo do método temos a abertura de um bloco <strong>try catch</strong>, este bloco serve para tentar(<strong>try</strong>) fazer alguma ação, caso a ação obtenha êxito o código segue normal, caso a ação não obtenha êxito o bloco pega(catch) o erro causado. Na abertura do <strong>try</strong> é feita a tentativa, a variável <strong>OrderItem</strong> moldada pela classe <strong>OrderItem</strong> recebe o <strong>repository</strong>(pertencente a classe OrderItemRepository) que chama o método <strong>findById(id)</strong>(método pronto do Java que pega o objeto por id e como argumento está sendo passado um id que no caso é o id do item do pedido), o método <strong>findById(id)</strong> chama o método <strong>orElseThrow(())</strong>(ou se não lançar) que faz uma expressão lambda se referindo a <strong>new ResourceNotFoundException(id)</strong>(Recurso Não Encontrado Exceção) passando <strong>id</strong> como argumento, está é uma excessão pronta do Java, ou seja, o código tenta pegar o objeto através do id e caso não consiga é lançada uma excessão que tem aquele id como argumento, depois a variável <strong>repository</strong>(pertencente a classe <strong>OrderItemRepository</strong>) chama o método <strong>delete</strong>(método pronto do Java que serve para deletar) que tem o <strong>OrderItem</strong> como argumento, que no caso é o item do pedido que foi pego pelo id, ou seja, é feita a deleção do item do pedido. no fechamento do <strong>try</strong>(tentar) é feita a abertura do catch(pegar) passando a variável <strong>e</strong> como argumento que é moldada pela classe <strong>DataIntegrityViolationException</strong>(Dados Integridade Violação Exceção, classe pronta do Java) e dentro do método existe um <strong>throw new</strong>(jogue novo) <strong>DatabaseException</strong>(Excessão de BD, classe pronta do Java) recebendo <strong>(e.getMessage())</strong> como argumento, ou seja, a mensagem de excessão no BD será jogada caso seja pega alguma violação de integridade no BD e essa violação só irá acontecer caso haja alguma excessão(caso o id do item do pedido não seja encontrado).
+
+```java
+public void delete(Long id) {
+	try {
+		OrderItem orderItem = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
+		repository.delete(orderItem);
+	} catch (DataIntegrityViolationException e) {
+		throw new DatabaseException(e.getMessage());
+	}
+}
+```
+------------------- update service parei aqui
+<p>
+Criamos também o método <strong>delete</strong> moldado pela tipagem <strong>void</strong>(vazio) que tem como argumento um <strong>id</strong> moldado pela classe <strong>Long</strong>, esse <strong>id</strong> no caso é o id do item do pedido. Logo no começo do método temos a abertura de um bloco <strong>try catch</strong>(este bloco serve para tentar(<strong>try</strong>) fazer alguma ação, caso a ação obtenha êxito o código segue normal, caso a ação não obtenha êxito o bloco pega(catch) o erro causado). Na abertura do <strong>try</strong> é feita a tentativa, a variável <strong>OrderItem</strong> moldada pela classe <strong>OrderItem</strong> recebe o <strong>repository</strong>(pertencente a classe OrderItemRepository) que chama o método <strong>findById(id)</strong>(método pronto do Java que pega o objeto por id e como argumento está sendo passado um id que no caso é o id do item do pedido), o método <strong>findById(id)</strong> chama o método <strong>orElseThrow(()</strong>(ou se não lançar) que faz uma expressão lambda se referindo a <strong>new ResourceNotFoundException(id)</strong>(Recurso Não Encontrado Exceção) passando <strong>id</strong> como argumento, está é uma excessão pronta do Java, ou seja, o código tenta pegar o objeto através do id e caso não consiga é lançada uma excessão que tem aquele id como argumento, depois a variável <strong>repository</strong>(pertencente a classe <strong>OrderItemRepository</strong>) chama o método <strong>delete</strong>(método pronto do Java que serve para deletar) que tem o <strong>OrderItem</strong> como argumento, que no caso é o item do pedido que foi pego pelo id, ou seja, é feita a deleção do item do pedido. no fechamento do <strong>try</strong>(tentar) é feita a abertura do catch(pegar) passando a variável <strong>e</strong> como argumento que é moldada pela classe <strong>DataIntegrityViolationException</strong>(Dados Integridade Violação Exceção, classe pronta do Java) e dentro do método existe um <strong>throw new</strong>(jogue novo) <strong>DatabaseException</strong>(Excessão de BD, classe pronta do Java) recebendo <strong>(e.getMessage())</strong> como argumento, ou seja, a mensagem de excessão no BD será jogada caso seja pega alguma violação de integridade no BD e essa violação só irá acontecer caso haja alguma excessão(caso o id do item do pedido não seja encontrado).
+
+```java
+public void delete(Long id) {
+	try {
+		OrderItem OrderItem = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
+		repository.delete(OrderItem);
+	} catch (DataIntegrityViolationException e) {
+		throw new DatabaseException(e.getMessage());
+	}
+}
+```
+
+<p>
+Criamos o método <strong>update</strong> com retorno do tipo <strong>OrderItem</strong>, recebendo um <strong>id</strong> do tipo <strong>Long</strong> e um objeto <strong>OrderItem</strong> chamado <strong>obj</strong>. O bloco <strong>try-catch</strong> é utilizado para lidar com possíveis exceções durante a execução. No início do bloco <strong>try</strong>, é feita uma tentativa de obter uma referência à entidade <storng>OrderItem</storng> no repositório usando o método <strong>getReferenceById(id)</strong>. Esta operação pode lançar uma exceção do tipo <strong>EntityNotFoundException</strong>. Posteriormente, o método <strong>updateData(entity, obj)</strong> é chamado para atualizar os dados da entidade com base no objeto <strong>obj</strong>. Finalmente, a entidade atualizada é salva no repositório através do método <strong>repository.save(entity)</strong> é retornada.Caso uma exceção <strong>EntityNotFoundException</strong> seja capturada no bloco <strong>catch</strong>(pegar) é lançada uma exceção <strong>ResourceNotFoundException(id)</strong> para indicar que o recurso com o ID fornecido não foi encontrado. Em resumo, o método busca a entidade no repositório, atualiza seus dados com base no objeto fornecido e salva a entidade atualizada, lançando uma exceção personalizada em caso de falha na localização da entidade.
+
+```java
+public OrderItem update(Long id, OrderItem obj) {
+	try {
+		OrderItem entity = repository.getReferenceById(id);
+		updateData(entity, obj);
+		return repository.save(entity);
+	} catch (EntityNotFoundException e) {
+		throw new ResourceNotFoundException(id);
+	}
+}
+```
+
+<p>
+Este é um método privado chamado <strong>updateData</strong>, utilizado para atualizar os dados de um objeto <strong>OrderItem</strong>. O método recebe dois parâmetros do tipo <strong>OrderItem</strong>: <strong>entity</strong> (o objeto a ser atualizado) e <strong>obj</strong> (o objeto contendo os novos dados), o método realiza a atualização dos campos do objeto <strong>entity</strong> com base nos valores do objeto obj.<br>
+- <strong>entity.setName(obj.getName());</strong> atualiza o nome do objeto <strong>entity</strong> com o nome do objeto <strong>obj</strong>.<br>
+- <strong>entity.setDescription(obj.getDescription());</strong> atualiza a descrição do objeto <strong>entity</strong> com a descrição do objeto <strong>obj</strong>.<br>
+- <strong>entity.setPrice(obj.getPrice());</strong> atualiza o preço do objeto <strong>entity</strong> com o preço do objeto <strong>obj</strong>.<br>
+- <strong>entity.setImgUrl(obj.getImgUrl());</strong> atualiza a <strong>URL</strong> da imagem do objeto <strong>entity</strong> com a <strong>URL</strong> da imagem do objeto <strong>obj</strong>.<br>
+- <strong>entity.setCategoryOrderItem(obj.getCategoryOrderItem());</strong> atualiza a categoria do item do pedido do objeto <strong>entity</strong> com a categoria do objeto <strong>obj</strong>.
+<p>
+
+```java
+private void updateData(OrderItem entity, OrderItem obj) {
+	entity.setName(obj.getName());
+	entity.setDescription(obj.getDescription());
+	entity.setPrice(obj.getPrice());
+	entity.setImgUrl(obj.getImgUrl());
+	entity.setCategoryOrderItem(obj.getCategoryOrderItem());
+}
+```
+```java
+}
+```
+
 
 
 <img src = "imagensedocumentos\MODELORELACIONAL.png">
