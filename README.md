@@ -2002,8 +2002,13 @@ return ResponseEntity.ok().body(obj);
 
 
 ------------------------------------------------------------
+### Criando Serviços
 
-### ProductService 
+<p>
+As classes de serviço em um projeto coordenam a lógica de negócios, realizam validações, gerenciam transações e integram as entidades com os repositórios. Elas encapsulam a complexidade, promovem a reutilização de código e mantêm a coesão do sistema, facilitando a manutenção e evolução do código.
+</p>
+
+#### ProductService 
 
 <p>
 Primeiro vamos inserir o pacote que a classe pertence e fazer as importações necessárias.
@@ -2125,9 +2130,8 @@ Este é um método privado chamado <strong>updateData</strong>, utilizado para a
 - <strong>entity.setName(obj.getName());</strong> atualiza o nome do objeto <strong>entity</strong> com o nome do objeto <strong>obj</strong>.<br>
 - <strong>entity.setDescription(obj.getDescription());</strong> atualiza a descrição do objeto <strong>entity</strong> com a descrição do objeto <strong>obj</strong>.<br>
 - <strong>entity.setPrice(obj.getPrice());</strong> atualiza o preço do objeto <strong>entity</strong> com o preço do objeto <strong>obj</strong>.<br>
-- <strong>entity.setImgUrl(obj.getImgUrl());</strong> atualiza a <strong>URL</strong> da imagem do objeto <strong>entity</strong> com a <strong>URL</strong> da imagem do objeto <strong>obj</strong><br>
+- <strong>entity.setImgUrl(obj.getImgUrl());</strong> atualiza a <strong>URL</strong> da imagem do objeto <strong>entity</strong> com a <strong>URL</strong> da imagem do objeto <strong>obj</strong>.<br>
 - <strong>entity.setCategoryProduct(obj.getCategoryProduct());</strong> atualiza a categoria do produto do objeto <strong>entity</strong> com a categoria do objeto <strong>obj</strong>.
-
 <p>
 
 ```java
