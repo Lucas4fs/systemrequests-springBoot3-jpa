@@ -2106,9 +2106,7 @@ public void delete(Long id) {
 ```
 
 <p>
-Criamos o método update com retorno do tipo Product, recebendo um id do tipo Long e um objeto Product chamado obj. O bloco try-catch é utilizado para lidar com possíveis exceções durante a execução. No início do bloco try, é feita uma tentativa de obter uma referência à entidade Product no repositório usando o método getReferenceById(id). Esta operação pode lançar uma exceção do tipo EntityNotFoundException. Posteriormente, o método updateData(entity, obj) é chamado para atualizar os dados da entidade com base no objeto obj. Finalmente, a entidade atualizada é salva no repositório através do método repository.save(entity) e é retornada.
-
-Caso uma exceção EntityNotFoundException seja capturada no bloco catch, é lançada uma exceção ResourceNotFoundException(id) para indicar que o recurso com o ID fornecido não foi encontrado. Em resumo, o método busca a entidade no repositório, atualiza seus dados com base no objeto fornecido e salva a entidade atualizada, lançando uma exceção personalizada em caso de falha na localização da entidade.
+Criamos o método <strong>update</strong> com retorno do tipo <strong>Product</strong>, recebendo um <strong>id</strong> do tipo <strong>Long</strong> e um objeto <strong>Product</strong> chamado <strong>obj</strong>. O bloco <strong>try-catch</strong> é utilizado para lidar com possíveis exceções durante a execução. No início do bloco <strong>try</strong>, é feita uma tentativa de obter uma referência à entidade <storng>Product</storng> no repositório usando o método <strong>getReferenceById(id)</strong>. Esta operação pode lançar uma exceção do tipo <strong>EntityNotFoundException</strong>. Posteriormente, o método <strong>updateData(entity, obj)</strong> é chamado para atualizar os dados da entidade com base no objeto <strong>obj</strong>. Finalmente, a entidade atualizada é salva no repositório através do método <strong>repository.save(entity)</strong> é retornada.Caso uma exceção <strong>EntityNotFoundException</strong> seja capturada no bloco <strong>catch</strong>(pegar) é lançada uma exceção <strong>ResourceNotFoundException(id)</strong> para indicar que o recurso com o ID fornecido não foi encontrado. Em resumo, o método busca a entidade no repositório, atualiza seus dados com base no objeto fornecido e salva a entidade atualizada, lançando uma exceção personalizada em caso de falha na localização da entidade.
 
 ```java
 public Product update(Long id, Product obj) {
@@ -2119,6 +2117,29 @@ public Product update(Long id, Product obj) {
 	} catch (EntityNotFoundException e) {
 		throw new ResourceNotFoundException(id);
 	}
+}
+```
+
+<p>
+Este é um método privado chamado <strong>updateData</strong>, utilizado para atualizar os dados de um objeto <strong>Product</strong>. O método recebe dois parâmetros do tipo <strong>Product</strong>: <strong>entity</strong> (o objeto a ser atualizado) e <strong>obj</strong> (o objeto contendo os novos dados), o método realiza a atualização dos campos do objeto <strong>entity</strong> com base nos valores do objeto obj.<br>
+- <strong>entity.setName(obj.getName());</strong> atualiza o nome do objeto <strong>entity</strong> com o nome do objeto <strong>obj</strong>.<br>
+- <strong>entity.setDescription(obj.getDescription());</strong> atualiza a descrição do objeto <strong>entity</strong> com a descrição do objeto <strong>obj</strong>.<br>
+- <strong>entity.setPrice(obj.getPrice());</strong> atualiza o preço do objeto <strong>entity</strong> com o preço do objeto <strong>obj</strong>.<br>
+- <strong>entity.setImgUrl(obj.getImgUrl());</strong> atualiza a <strong>URL</strong> da imagem do objeto <strong>entity</strong> com a <strong>URL</strong> da imagem do objeto <strong>obj</strong><br>
+- <strong>entity.setCategoryProduct(obj.getCategoryProduct());</strong> atualiza a categoria do produto do objeto <strong>entity</strong> com a categoria do objeto <strong>obj</strong>.
+
+<p>
+
+```java
+private void updateData(Product entity, Product obj) {
+	entity.setName(obj.getName());
+	entity.setDescription(obj.getDescription());
+	entity.setPrice(obj.getPrice());
+	entity.setImgUrl(obj.getImgUrl());
+	entity.setCategoryProduct(obj.getCategoryProduct());
+}
+```
+```java
 }
 ```
 
