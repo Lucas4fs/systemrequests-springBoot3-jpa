@@ -2076,12 +2076,6 @@ public ResponseEntity<StandardError> database(DatabaseException e, HttpServletRe
 As classes de serviço em um projeto coordenam a lógica de negócios, realizam validações, gerenciam transações e integram as entidades com os repositórios. Elas encapsulam a complexidade, promovem a reutilização de código e mantêm a coesão do sistema, facilitando a manutenção e evolução do código.
 </p>
 
-### Criando Serviços
-
-<p>
-As classes de serviço em um projeto coordenam a lógica de negócios, realizam validações, gerenciam transações e integram as entidades com os repositórios. Elas encapsulam a complexidade, promovem a reutilização de código e mantêm a coesão do sistema, facilitando a manutenção e evolução do código.
-</p>
-
 #### ProductService 
 
 <p>
@@ -2654,7 +2648,6 @@ public void delete(Long id) {
 	}
 }
 ```
-------------------- update service parei aqui
 
 <p>
 Criamos o método <strong>update</strong> com retorno do tipo <strong>OrderItem</strong>, recebendo um <strong>id</strong> do tipo <strong>Long</strong> e um objeto <strong>OrderItem</strong> chamado <strong>obj</strong>. O bloco <strong>try-catch</strong> é utilizado para lidar com possíveis exceções durante a execução. No início do bloco <strong>try</strong>, é feita uma tentativa de obter uma referência à entidade <storng>OrderItem</storng> no repositório usando o método <strong>getReferenceById(id)</strong>. Esta operação pode lançar uma exceção do tipo <strong>EntityNotFoundException</strong>. Posteriormente, o método <strong>updateData(entity, obj)</strong> é chamado para atualizar os dados da entidade com base no objeto <strong>obj</strong>. Finalmente, a entidade atualizada é salva no repositório através do método <strong>repository.save(entity)</strong> é retornada.Caso uma exceção <strong>EntityNotFoundException</strong> seja capturada no bloco <strong>catch</strong>(pegar) é lançada uma exceção <strong>ResourceNotFoundException(id)</strong> para indicar que o recurso com o ID fornecido não foi encontrado. Em resumo, o método busca a entidade no repositório, atualiza seus dados com base no objeto fornecido e salva a entidade atualizada, lançando uma exceção personalizada em caso de falha na localização da entidade.
@@ -2674,6 +2667,7 @@ public OrderItem update(Long id, OrderItem obj) {
 <p>
 Este é um método privado chamado <strong>updateData</strong>, utilizado para atualizar os dados de um objeto <strong>OrderItem</strong>. O método recebe dois parâmetros do tipo <strong>OrderItem</strong>: <strong>entity</strong> (o objeto a ser atualizado) e <strong>obj</strong> (o objeto contendo os novos dados), o método realiza a atualização dos campos do objeto <strong>entity</strong> com base nos valores do objeto obj.<br>
 - <strong>setQuantity(obj.getQuantity());</strong> atualiza a quantidade do objeto <strong>entity</strong> com a quantidade do objeto <strong>obj</strong>.<br>
+- <strong>setPrice(obj.getPrice());</strong> atualiza a quantidade do objeto <strong>entity</strong> com o preço do objeto <strong>obj</strong>.<br>
 - <strong>entity.setProductId(obj.getProductId());</strong> atualiza o produto do objeto <strong>entity</strong> com o produto do objeto <strong>obj</strong>.<br>
 - <strong>entity.setOrderId(obj.getOrderId());</strong> atualiza o pedido do objeto <strong>entity</strong> com o pedido do objeto <strong>obj</strong>.
 <p>
