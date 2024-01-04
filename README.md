@@ -1147,6 +1147,8 @@ List<InterfaceOrderItem> procurarAll();
 }
 ```
 
+#### InterfaceOrderItem
+
 <p>
 Diferente de uma query JPQL(consulta orientada a objetos), uma query SQL(consulta nativa de um BD) depende de uma interface para funcionar, isso quando estamos falando da criação de uma JPA(Java Persistence API). Quando temos uma consulta SQL nativa dentro de um repositório cada linha da consulta é executada através da chamada de um método, por isso criamos a interface <strong>InterfaceOrderItem</strong> que armazena os métodos <strong>get</strong> que pegam dados, vamos fazer o código, primeiro definimos o pacote que a interface irá pertencer.
 </p>
@@ -2000,6 +2002,80 @@ return ResponseEntity.ok().body(obj);
 }
 ```
 
+### Criando Classes de Excessão para Tratar as Excessões dos Controladores
+
+<p>
+Essas classes são usadas para tratar exceções específicas que podem ocorrer durante o processamento de solicitações nos controladores.
+</p>
+
+#### ResourceExceptionHandler
+
+<p>
+As classes e métodos fornecidos estão relacionados ao tratamento de exceções em uma aplicação Spring MVC. Os métodos nesses controladores tratam exceções específicas, criando respostas adequadas para serem enviadas de volta ao cliente em caso de erro.
+</p>
+
+```java
+package com.requests.project.resources.exceptions;
+
+import java.time.Instant;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+
+import com.requests.project.services.exceptions.DatabaseException;
+import com.requests.project.services.exceptions.ResourceNotFoundException;
+
+import jakarta.servlet.http.HttpServletRequest;
+```
+
+<p>
+A anotação <strong>@ControllerAdvice</strong> na classe <strong>ResourceExceptionHandler</strong> indica que a classe atua como um controlador global para lidar com exceções em uma aplicação <strong>Spring MVC</strong>. Essa anotação centraliza a lógica de tratamento de exceções, permitindo que você defina métodos anotados com <strong>@ExceptionHandler</strong> para lidar com tipos específicos de exceções. Isso evita a repetição de código de tratamento de exceções em vários controladores, simplifica a manutenção e promove uma abordagem consistente para o tratamento de erros em toda a aplicação.
+ </p>
+
+```java
+@ControllerAdvice
+public class ResourceExceptionHandler {
+```
+
+<p>
+O método anotado com <strong>@ExceptionHandler</strong> trata exceções do tipo <strong>ResourceNotFoundException</strong>. Quando ocorre essa exceção, o método é invocado e retorna uma resposta <strong>HTTP 404 (NOT_FOUND)</strong> junto com um objeto <strong>StandardError</strong> que contém informações sobre o erro. O corpo da resposta inclui detalhes como o momento do erro, código de status, mensagem de erro padrão, mensagem específica da exceção, e a URI da requisição que originou a exceção. Essa abordagem centraliza o tratamento de exceções relacionadas a recursos não encontrados na aplicação, tornando as respostas consistentes e informativas.
+</p>
+
+```java
+@ExceptionHandler(ResourceNotFoundException.class)
+public ResponseEntity<StandardError> resourceNotFound(ResourceNotFoundException e, HttpServletRequest request) {
+	String error = "Resource not found";
+	HttpStatus status = HttpStatus.NOT_FOUND;
+	StandardError err = new StandardError(Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI());
+	return ResponseEntity.status(status).body(err);
+}
+```
+
+<p>
+O método anotado com <strong>@ExceptionHandler</strong> trata exceções do tipo <strong>DatabaseException</strong>. Quando ocorre essa exceção relacionada a erros no banco de dados, o método é acionado, retornando uma resposta <strong>HTTP 400 (BAD_REQUEST)</strong>. A resposta inclui um objeto <strong>StandardError</strong> com informações como o timestamp do erro, código de status, uma mensagem de erro padrão, a mensagem específica da exceção, e a <strong>URI</strong> da requisição que causou o problema. Essa abordagem centraliza o tratamento de exceções relacionadas a erros no banco de dados, proporcionando respostas consistentes e informativas em casos de falhas na interação com o banco de dados.
+</p>
+
+```java
+@ExceptionHandler(DatabaseException.class)
+public ResponseEntity<StandardError> database(DatabaseException e, HttpServletRequest request) {
+	String error = "Database error";
+	HttpStatus status = HttpStatus.BAD_REQUEST;
+	StandardError err = new StandardError(Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI());
+	return ResponseEntity.status(status).body(err);
+}
+```
+```java
+}
+```
+
+### Criando Serviços
+
+<p>
+As classes de serviço em um projeto coordenam a lógica de negócios, realizam validações, gerenciam transações e integram as entidades com os repositórios. Elas encapsulam a complexidade, promovem a reutilização de código e mantêm a coesão do sistema, facilitando a manutenção e evolução do código.
+</p>
+
 ### Criando Serviços
 
 <p>
@@ -2058,7 +2134,6 @@ public List<Product> searchAll() {
 	return repository.searchAll();
 }
 ```
-
 <p>
 Criamos também o método <strong>findById</strong> moldado pela classe <strong>Product</strong> que tem como argumento um <strong>id</strong> moldado pela classe <strong>Long</strong>, esse <strong>id</strong> no caso é o <strong>id</strong> do produto, dentro do método temos um <strong>obj</strong> moldado pela classe <strong>Optional</strong>(nos permite trabalhar com valores que podem ou não estar presentes) que aceita objetos do tipo <strong>Product</strong> e recebe o <strong>repository</strong> chamando o método <strong>findById</strong>(esse é um método pronto do Java que pega o objeto por <strong>id</strong>) que passa um <strong>id</strong> como argumento, esse <strong>id</strong> no caso é o <strong>id</strong> do produto, por fim o metodo tem um <strong>return</strong>(retorno) que traz o objeto ou uma excessão caso esse objeto não exista.
 </p>
