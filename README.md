@@ -2703,7 +2703,7 @@ package com.requests.project.services.exceptions;
 <p>
 Essas duas linhas de código pertencem à definição da classe DatabaseException.<br>
 A primeira linha faz a declaração da classe <strong>DatabaseException</strong> que se estende a classe <strong>RuntimeException</strong>, isso significa que <strong>DatabaseException</strong> é uma subclasse de RuntimeException, indicando que é uma exceção não verificada.<br>
-A segunda linha faz a declaração de um campo estático final chamado serialVersionUID. Esse campo é usado para fornecer uma versão única do objeto serializado, ajudando a garantir a consistência da serialização/desserialização. O valor <strong>1L</strong> é uma convenção padrão, e a presença deste campo é comum em classes serializáveis em Java.
+A segunda linha faz a declaração de um campo estático final chamado <strong>serialVersionUID</strong>. Esse campo é usado para fornecer uma versão única do objeto serializado, ajudando a garantir a consistência da serialização/desserialização. O valor <strong>1L</strong> é uma convenção padrão, e a presença deste campo é comum em classes serializáveis em Java.
 </p>
 
 ```java
@@ -2714,7 +2714,7 @@ public class DatabaseException extends RuntimeException {
 <p>
 Esse método é o construtor da classe <strong>DatabaseException</strong>.<br>
 A primeira linha faz a declaração do construtor da classe <strong>DatabaseException</strong>. O construtor é público (<strong>public</strong>), o que significa que pode ser acessado de qualquer lugar no código. Ele recebe uma string (<strong>msg</strong>) como parâmetro, que geralmente contém uma mensagem que descreve a natureza da exceção.<br>
-A segunda linha chama o construtor da classe pai (<strong>RuntimeException</strong>) utilizando <strong>super</strong>, passando a mensagem (<strong>msg</strong>) como argumento. Isso inicializa a exceção <strong>DatabaseException</strong> com a mensagem fornecida, permitindo que informações específicas sobre o erro sejam associadas à instância da exceção.
+A segunda linha chama o construtor da classe pai (<strong>RuntimeException</strong>) utilizando <strong>super</strong>, passando a mensagem (<strong>msg</strong>) como argumento, isso inicializa a exceção <strong>DatabaseException</strong> com a mensagem fornecida, permitindo que informações específicas sobre o erro sejam associadas à instância da exceção.
 </p>
 
 ```java
@@ -2738,7 +2738,7 @@ package com.requests.project.services.exceptions;
 
 <p>
 Essas duas linhas de código em Java referem-se à definição da classe <strong>ResourceNotFoundException</strong>.<br>
-A primeira linha faz a declaração da classe <strong>ResourceNotFoundException</strong> que se estende a classe <strong>RuntimeException</strong>, isso significa que <strong>ResourceNotFoundException</strong> é uma subclasse de RuntimeException, indicando que é uma exceção não verificada.<br>
+A primeira linha faz a declaração da classe <strong>ResourceNotFoundException</strong> que se estende a classe <strong>RuntimeException</strong>, isso significa que <strong>ResourceNotFoundException</strong> é uma subclasse de <strong>RuntimeException</strong>, indicando que é uma exceção não verificada.<br>
 A segunda linha faz a declaração de um campo estático final chamado <strong>serialVersionUID</strong>. Esse campo é usado para fornecer uma versão única do objeto serializado, ajudando a garantir a consistência da serialização/desserialização. O valor <strong>1L</strong> é uma convenção padrão, e a presença deste campo é comum em classes serializáveis em Java.
 </p>
 
@@ -2748,7 +2748,6 @@ public class ResourceNotFoundException extends RuntimeException {
 ```
 
 <p>
-
 Essas duas linhas de código correspondem ao construtor da classe <strong>ResourceNotFoundException</strong> e explicam como a exceção é inicializada.<br>
 A primeira linha faz a declaração do construtor da classe <strong>ResourceNotFoundException</strong>, que recebe um parâmetro do tipo <strong>Object</strong> chamado <strong>id</strong>. Este construtor é utilizado para criar instâncias da exceção, fornecendo um identificador específico do recurso que não foi encontrado.<br>
 A segunda linha chama o construtor da classe pai (<strong>RuntimeException</strong>) utilizando <strong>super</strong>, passando uma mensagem de erro composta por <strong>"Resource not found. Id "</strong> concatenado com o valor do id. Isso define a mensagem associada à exceção, que pode ser útil para identificar a causa do erro ao lidar com a exceção.
@@ -2762,6 +2761,69 @@ A segunda linha chama o construtor da classe pai (<strong>RuntimeException</stro
 ```java	
 }
 ```
+
+### Criando Classe de Teste
+
+<p>
+Essa classe serve para verificar se o contexto da aplicação Spring Boot é carregado corretamente.
+</p>
+
+#### ProjectApplicationTests
+
+<p>
+Primeiro vamos definir o pacote que a classe pertence e fazer as devidas importações necessárias.
+</p>
+
+```java
+package com.requests.project;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+```
+
+<p>
+Criamos a classe <strong>ProjectApplicationTests</strong> e inserimos a anotação <strong>@SpringBootTest</strong> que serve para indicar que a classe deve ser configurada como um teste de integração usando o Spring Boot. O <strong>@SpringBootTest</strong> inicializa toda a aplicação Spring context para o teste, permitindo que a aplicação seja testada como um todo, incluindo configurações, beans e interações entre componentes.
+</p>
+
+```java
+@SpringBootTest
+class ProjectApplicationTests {
+```
+
+<p>
+Criamos o método <strong>contextLoads</strong> com a anotação <strong>@Test</strong> que serve para indicar que o método é um método de teste, o tipo de retorno void indica que o método não retorna nenhum valor.
+</p>
+
+```java
+@Test
+void contextLoads() {
+}
+```
+```java
+}
+```
+
+### Criando Arquivos de Propiedades
+
+<p>
+Criamos o arquivo <strong>application.properties</strong> e inserimos algumas anotações
+</p>
+
+#### application.properties
+
+<p>
+Criamos o arquivo <strong>application.properties</strong> e inserimos algumas anotações, cada anotação tem uma finalidade.<br>
+A primeira anotação configura a porta do servidor(no caso a porta que a aplicação irá ocupar quando estive rodando), a segunda anotação especifica o perfil ativo da aplicação (<strong>dev</strong> é o perfil ativo, indicando que a aplicação está sendo executada no ambiente de desenvolvimento), a terceira anotação ativa ou desativa a funcionalidade Open EntityManagerInView (ou Open Session In View) para o JPA, essa funcionalidade mantém o <strong>EntityManager</strong> aberto durante a renderização da view em uma aplicação web, permitindo o acesso a dados relacionados às entidades JPA mesmo após a conclusão da transação do banco de dados, isso evita exceções de lazy loading durante a renderização da view. Por outro lado, ao definir como <strong>false</strong>, a funcionalidade é desativada, e o <strong>EntityManager</strong> é fechado após a conclusão da transação, o que pode levar a exceções de lazy loading se houver tentativas de acessar dados fora do escopo da transação.
+</p>
+
+```properties
+server.port=8082
+
+spring.profiles.active=dev
+
+spring.jpa.open-in-view=true
+```
+
 
 
 <img src = "imagensedocumentos\MODELORELACIONAL.png">
