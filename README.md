@@ -2684,6 +2684,84 @@ private void updateData(OrderItem entity, OrderItem obj) {
 }
 ```
 
+### Criando Classes de Excessão para Tratar as Excessões dos Serviços
+
+<p>
+Classes projetadas para tratar exceções em serviços. Essas classes se estendem a classe <strong>RuntimeException</strong>, o que sugere que são exceções não verificadas e, portanto, não exigem declaração explícita ou tratamento em tempo de compilação.Ambas as classes são úteis para lidar com exceções específicas nos serviços, proporcionando um meio de distinguir e tratar diferentes tipos de erros de maneira mais granular.
+</p>
+
+#### DatabaseException
+
+<p>
+Começamos definindo o pacote que a classe irá pertencer.
+</p>
+
+```java
+package com.requests.project.services.exceptions;
+```
+
+<p>
+Essas duas linhas de código pertencem à definição da classe DatabaseException.<br>
+A primeira linha faz a declaração da classe <strong>DatabaseException</strong> que se estende a classe <strong>RuntimeException</strong>, isso significa que <strong>DatabaseException</strong> é uma subclasse de RuntimeException, indicando que é uma exceção não verificada.<br>
+A segunda linha faz a declaração de um campo estático final chamado serialVersionUID. Esse campo é usado para fornecer uma versão única do objeto serializado, ajudando a garantir a consistência da serialização/desserialização. O valor <strong>1L</strong> é uma convenção padrão, e a presença deste campo é comum em classes serializáveis em Java.
+</p>
+
+```java
+public class DatabaseException extends RuntimeException {
+	private static final long serialVersionUID = 1L;
+```
+
+<p>
+Esse método é o construtor da classe <strong>DatabaseException</strong>.<br>
+A primeira linha faz a declaração do construtor da classe <strong>DatabaseException</strong>. O construtor é público (<strong>public</strong>), o que significa que pode ser acessado de qualquer lugar no código. Ele recebe uma string (<strong>msg</strong>) como parâmetro, que geralmente contém uma mensagem que descreve a natureza da exceção.<br>
+A segunda linha chama o construtor da classe pai (<strong>RuntimeException</strong>) utilizando <strong>super</strong>, passando a mensagem (<strong>msg</strong>) como argumento. Isso inicializa a exceção <strong>DatabaseException</strong> com a mensagem fornecida, permitindo que informações específicas sobre o erro sejam associadas à instância da exceção.
+</p>
+
+```java
+public DatabaseException(String msg) {
+		super(msg);
+	}
+```
+```java
+}
+```
+
+#### ResourceNotFoundException
+
+<p>
+Começamos definindo o pacote que a classe irá pertencer.
+</p>
+
+```java
+package com.requests.project.services.exceptions;
+```
+
+<p>
+Essas duas linhas de código em Java referem-se à definição da classe <strong>ResourceNotFoundException</strong>.<br>
+A primeira linha faz a declaração da classe <strong>ResourceNotFoundException</strong> que se estende a classe <strong>RuntimeException</strong>, isso significa que <strong>ResourceNotFoundException</strong> é uma subclasse de RuntimeException, indicando que é uma exceção não verificada.<br>
+A segunda linha faz a declaração de um campo estático final chamado <strong>serialVersionUID</strong>. Esse campo é usado para fornecer uma versão única do objeto serializado, ajudando a garantir a consistência da serialização/desserialização. O valor <strong>1L</strong> é uma convenção padrão, e a presença deste campo é comum em classes serializáveis em Java.
+</p>
+
+```java
+public class ResourceNotFoundException extends RuntimeException {
+	private static final long serialVersionUID = 1L;
+```
+
+<p>
+
+Essas duas linhas de código correspondem ao construtor da classe <strong>ResourceNotFoundException</strong> e explicam como a exceção é inicializada.<br>
+A primeira linha faz a declaração do construtor da classe <strong>ResourceNotFoundException</strong>, que recebe um parâmetro do tipo <strong>Object</strong> chamado <strong>id</strong>. Este construtor é utilizado para criar instâncias da exceção, fornecendo um identificador específico do recurso que não foi encontrado.<br>
+A segunda linha chama o construtor da classe pai (<strong>RuntimeException</strong>) utilizando <strong>super</strong>, passando uma mensagem de erro composta por <strong>"Resource not found. Id "</strong> concatenado com o valor do id. Isso define a mensagem associada à exceção, que pode ser útil para identificar a causa do erro ao lidar com a exceção.
+</p>
+
+```java
+	public ResourceNotFoundException(Object id) {
+		super("Resource not found. Id " + id);
+	}
+```
+```java	
+}
+```
 
 
 <img src = "imagensedocumentos\MODELORELACIONAL.png">
