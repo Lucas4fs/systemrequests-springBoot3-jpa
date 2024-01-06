@@ -2070,6 +2070,55 @@ public ResponseEntity<StandardError> database(DatabaseException e, HttpServletRe
 }
 ```
 
+#### StandardError
+
+<p>
+Primeiro vamos definir o pacote que a classe pertence e fazer as importações necessárias.
+</p>
+
+```java
+package com.requests.project.resources.exceptions;
+
+import java.io.Serializable;
+import java.time.Instant;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+```
+
+<p>
+Este trecho de código em define uma classe chamada <strong>StandardError</strong> que implementa a interface <strong>Serializable</strong>. A interface <strong>Serializable</strong>e que objetos da classe sejam convertidos em bytes, útil para armazenamento ou transmissão.<br>
+A linha <strong>private static final long serialVersionUID = 1L;</strong> declara uma constante <strong>serialVersionUID</strong> (identificador de versão) que ajuda a garantir a compatibilidade ao serializar e desserializar objetos. Se a estrutura da classe mudar, o <strong>serialVersionUID</strong> pode ser atualizado para indicar uma nova versão. Neste caso, o valor inicial é <strong>1L</strong>.
+</p>
+
+```java
+public class StandardError implements Serializable {
+	private static final long serialVersionUID = 1L;
+```
+
+<p>
+A anotação <strong>@JsonFormat</strong> indica que o formato de serialização/desserialização JSON deve ser personalizado para o campo anotado, <strong>shape = JsonFormat.Shape.STRING</strong> especifica que o campo deve ser tratado como uma string durante a serialização. Sem essa configuração, um objeto <strong>Instant</strong> seria normalmente serializado como um número longo.
+A anotação <strong>@JsonFormat</strong> a forma como o campo de timestamp é serializado para JSON, <strong>pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'"</strong> define o padrão de formatação para o campo do tipo <strong>Instant</strong>, <strong>timezone = "GMT"</strong> especifica o fuso horário a ser considerado durante a serialização. Neste caso, o fuso horário é definido como <strong>GMT</strong> (Greenwich Mean Time).<br>
+Embaixo da anotação fazemos um código que representa um objeto com informações relacionadas a um evento, esse evento tem seus atributos, incluindo um <strong>timestamp</strong> que informa o momento do erro, <trong>status</trong> que informa o status do erro, <strong>error</strong> que informa qual é o erro, <strong>message</strong> que informa qual a mensagem de erro e <strong>path</strong> que indica o  caminho da URL ou URI que estava sendo processado quando ocorreu o evento associado.
+</p>
+
+```java
+@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
+	private Instant timestamp;
+	private Integer status;
+	private String error;
+	private String message;
+	private String path;
+```
+
+<p>
+
+</p>
+
+```java
+public StandardError() {
+}
+```
+
 ### Criando Serviços
 
 <p>
