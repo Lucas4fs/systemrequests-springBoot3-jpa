@@ -3166,7 +3166,7 @@ Chegou a hora de startar a aplicação.
 Quando startamos a aplicação o console irá exibir oque está sendo feito, repare que as tabelas são criadas com suas contraints, observe o retorno do console e veja os frameworks trabalhando a nosso favor:
 </p>
 
-```
+```sql
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
