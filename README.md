@@ -3154,6 +3154,8 @@ Repare que o BD foi criado.
 
 ### Realizando Testes de Funcionalidade
 
+#### Iniciando a Aplicação
+
 <p>
 Chegou a hora de startar a aplicação.
 </p>
@@ -3163,10 +3165,10 @@ Chegou a hora de startar a aplicação.
 </p>
 
 <p>
-Quando startamos a aplicação o console irá exibir oque está sendo feito, repare que as tabelas são criadas com suas contraints, observe o retorno do console e veja os frameworks trabalhando a nosso favor:
+Quando startamos a aplicação o console irá exibir oque está sendo feito, repare que as tabelas são criadas e as contraints também, observe o retorno do console e veja os frameworks trabalhando a nosso favor:
 </p>
 
-```sql
+```
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -3266,8 +3268,45 @@ Hibernate:
 [2m2024-01-19T16:43:47.192-03:00[0;39m [32m INFO[0;39m [35m8084[0;39m [2m---[0;39m [2m[           main][0;39m [36mj.LocalContainerEntityManagerFactoryBean[0;39m [2m:[0;39m Initialized JPA EntityManagerFactory for persistence unit 'default'
 [2m2024-01-19T16:43:49.676-03:00[0;39m [32m INFO[0;39m [35m8084[0;39m [2m---[0;39m [2m[           main][0;39m [36mo.s.b.w.embedded.tomcat.TomcatWebServer [0;39m [2m:[0;39m Tomcat started on port(s): 8082 (http) with context path ''
 [2m2024-01-19T16:43:49.694-03:00[0;39m [32m INFO[0;39m [35m8084[0;39m [2m---[0;39m [2m[           main][0;39m [36mc.requests.project.ProjectApplication   [0;39m [2m:[0;39m Started ProjectApplication in 11.643 seconds (process running for 13.235)
+```
+
+#### Como Usar o Postman para a Realização de CRUD'S
+
+<p align="center">
+    <img src="Imagens\Postman.png">
+</p>
+
+#### Realizando CRUD de INSERT(POST) na tabela tb_user
+
+<p>
+Método: POST<br>
+URL:
+</p>
+
+```url
+http://localhost:8082/users
+```
+<p>
+Corpo:
+</p>
+
+```json
+{
+	 "name": "Manu Novaz",
+	 "email": "manu@gmail.com",
+	 "password": "12340",
+	 "phone": "61987865445"
+}
+```
+
+<p>
+Retorno do Postman:
+</p>
 
 ```
+201 Created
+```
+
 ## 2 CONCLUSÃO
     📌
 
