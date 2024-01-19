@@ -3273,7 +3273,7 @@ Hibernate:
 #### Como Usar o Postman para a Realização de CRUD'S
 
 <p align="center">
-    <img src="Imagens\Postman.png">
+    <img src="Imagens\postman.png">
 </p>
 
 #### Realizando CRUD de INSERT(POST) na tabela tb_user
