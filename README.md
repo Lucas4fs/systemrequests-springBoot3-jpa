@@ -60,6 +60,43 @@ INSERIR...
 1.2.9 **Notepad ++**
    -  Editor de texto e de código fonte de código aberto usado para fazer anotações.
 
+### 1.3 Comunicação das Classes em Relação a Funcionalidade da Aplicação
+
+<p>
+A ilustração abaixo mostra como as classes irão se comunicar durante a funcionalidade da aplicação.<br>
+O controlador chama o serviço que age no repositório, essa ação reflete na entidade.<br>
+Segue a lista que explica cada grupo de classe:
+
+- Controlador
+
+<p>
+O controlador é a camada responsável por receber as requisições do usuário e responder com a resposta apropriada. Ele é a ponte entre o mundo da aplicação e o mundo do usuário.
+</p>
+
+- Serviço
+
+<p>
+O serviço é a camada responsável por implementar a lógica de negócio da aplicação. Ele é responsável por executar as operações necessárias para atender às requisições do usuário.<br>
+Caso o serviço seja chamado e algo dê errado uma excessão será apresentada, então a excessão talvez pode aparecer a partir da execução do serviço
+</p>
+
+- Repositório
+
+<p>
+O repositório é a camada responsável por acessar os dados do banco de dados. Ele é responsável por fornecer acesso aos dados da aplicação de forma segura e eficiente.
+</p>
+
+- Entidade
+
+<p>
+A entidade é uma representação de um dado no banco de dados. Ela é responsável por armazenar os dados da aplicação de forma estruturada.<br>
+Existe especificamente uma interface que auxilia uma classe, é a <strong>InterfaceOrderItem</strong>, essa interface foi criada porque o repositório precisa acessar os dados diretamente para fazer um SELECT específcio, mas isso é só no caso do item do pedido.
+</p>
+
+<p align="center">
+    <img src="Imagens\funcionalidadeDaAplicacao.png">
+</p>
+
 ### 1.3 ORM (Mapeamento Objeto Relacional)
 
 <p>
@@ -72,10 +109,10 @@ O Framework <strong>Hibernate</strong> cria e mantém as tabelas do BD com base 
     <img src="Imagens\ORM.png">
 </p>
 
-### 1.4 Banco de Dados Modelo Relacional
+### 1.4 Modelo Relacional do Banco de Dados 
 
 <p>
-A imagem abaixo tem como objetivo mostrar como as tabelas do BD irão se relacionar.
+A imagem abaixo tem como objetivo mostrar como as tabelas do BD irão se relacionar.<br>
 </p>
 
 <p align="center">
