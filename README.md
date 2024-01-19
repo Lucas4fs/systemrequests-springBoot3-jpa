@@ -64,7 +64,7 @@ INSERIR...
 
 <p>
 A ilustração abaixo mostra como as classes irão se comunicar durante a funcionalidade da aplicação.<br>
-O controlador chama o serviço que age no repositório, essa ação reflete na entidade.<br>
+Quando dado o start o controlador chama o serviço que age no repositório, essa ação reflete na entidade.<br>
 Segue a lista que explica cada grupo de classe:
 
 - Controlador
@@ -77,7 +77,7 @@ O controlador é a camada responsável por receber as requisições do usuário 
 
 <p>
 O serviço é a camada responsável por implementar a lógica de negócio da aplicação. Ele é responsável por executar as operações necessárias para atender às requisições do usuário.<br>
-Caso o serviço seja chamado e algo dê errado uma excessão será apresentada, então a excessão talvez pode aparecer a partir da execução do serviço
+Caso o serviço seja chamado e algo dê errado uma excessão será apresentada, então a excessão é chamada a partir da execução do serviço quando um erro acontece.
 </p>
 
 - Repositório
@@ -90,7 +90,7 @@ O repositório é a camada responsável por acessar os dados do banco de dados. 
 
 <p>
 A entidade é uma representação de um dado no banco de dados. Ela é responsável por armazenar os dados da aplicação de forma estruturada.<br>
-Existe especificamente uma interface que auxilia uma classe, é a <strong>InterfaceOrderItem</strong>, essa interface foi criada porque o repositório precisa acessar os dados diretamente para fazer um SELECT específcio, mas isso é só no caso do item do pedido.
+Existe especificamente uma interface que auxilia uma classe, é a <strong>InterfaceOrderItem</strong>, essa interface foi criada porque o repositório precisa acessar os dados diretamente para fazer um SELECT específico, mas isso é só no caso do item do pedido.
 </p>
 
 <p align="center">
@@ -3108,6 +3108,166 @@ No arquivo <strong>pom.xml</strong>, são definidas as configurações do projet
 </project>
 ```
 
+### Conexão com Banco de Dados
+ 
+<p>
+Vamos criar o BD que irá armazenar os dados da aplicação, faremos isso através do SGBD <strong>pgAdmin 4</strong> que será usado para manipular o banco do PostgreSQL.<br>
+Então abrimos o <strong>pgAdmin 4</strong> e cliamos em <strong>Servers</strong>, será pedida uma senha, no caso é a senha que foi definida durante a instalação do BD.
+</p>
+
+<p align="center">
+    <img src="Imagens\SGBD.png">
+</p>
+
+<p>
+Após realizar a conexão vamos criar o banco de dados.<br>
+Clicando com o botão direito encima de <strong>Databases(1)</strong> depois em <strong>Create</strong> e <strong>Database...</strong>
+</p>
+
+<p align="center">
+    <img src="Imagens\createDB.png">
+</p>
+
+<p>
+Na aba <strong>General</strong> inserimos o nome do BD(lembrando que o nome tem que ser o mesmo mencionado no arquivo <strong>application-dev.properties</strong>) e selecionamos o dono
+</p>
+
+<p align="center">
+    <img src="Imagens\inserirNomeEdono.png">
+</p>
+
+<p>
+Nas demais abas deixamos do jeito que está, caso exista alguma configuração específica para sua aplicação pode fazer, mas deixando da forma que está sendo mostrada abaixo tudo irá ocorrer normalmente de acordo com esse manual.
+</p>
+
+<p align="center">
+    <img src="Imagens\bdInstallation.png">
+</p>
+
+<p>
+Repare que o BD foi criado.
+</p>
+
+<p align="center">
+    <img src="Imagens\bdCriado.png">
+</p>
+
+### Realizando Testes de Funcionalidade
+
+<p>
+Chegou a hora de startar a aplicação.
+</p>
+
+<p align="center">
+    <img src="Imagens\startApplication.png">
+</p>
+
+<p>
+Quando startamos a aplicação o console irá exibir oque está sendo feito, repare que as tabelas são criadas com suas contraints, observe o retorno do console e veja os frameworks trabalhando a nosso favor:
+</p>
+
+```
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+[32m :: Spring Boot :: [39m             [2m (v3.0.12)[0;39m
+
+[2m2024-01-19T16:43:39.018-03:00[0;39m [32m INFO[0;39m [35m8084[0;39m [2m---[0;39m [2m[           main][0;39m [36mc.requests.project.ProjectApplication   [0;39m [2m:[0;39m Starting ProjectApplication using Java 17.0.7 with PID 8084 (C:\projetos\project\target\classes started by Lucas in C:\projetos\project)
+[2m2024-01-19T16:43:39.027-03:00[0;39m [32m INFO[0;39m [35m8084[0;39m [2m---[0;39m [2m[           main][0;39m [36mc.requests.project.ProjectApplication   [0;39m [2m:[0;39m The following 1 profile is active: "dev"
+[2m2024-01-19T16:43:40.532-03:00[0;39m [32m INFO[0;39m [35m8084[0;39m [2m---[0;39m [2m[           main][0;39m [36m.s.d.r.c.RepositoryConfigurationDelegate[0;39m [2m:[0;39m Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[2m2024-01-19T16:43:40.676-03:00[0;39m [32m INFO[0;39m [35m8084[0;39m [2m---[0;39m [2m[           main][0;39m [36m.s.d.r.c.RepositoryConfigurationDelegate[0;39m [2m:[0;39m Finished Spring Data repository scanning in 123 ms. Found 5 JPA repository interfaces.
+[2m2024-01-19T16:43:41.720-03:00[0;39m [32m INFO[0;39m [35m8084[0;39m [2m---[0;39m [2m[           main][0;39m [36mo.s.b.w.embedded.tomcat.TomcatWebServer [0;39m [2m:[0;39m Tomcat initialized with port(s): 8082 (http)
+[2m2024-01-19T16:43:41.740-03:00[0;39m [32m INFO[0;39m [35m8084[0;39m [2m---[0;39m [2m[           main][0;39m [36mo.apache.catalina.core.StandardService  [0;39m [2m:[0;39m Starting service [Tomcat]
+[2m2024-01-19T16:43:41.741-03:00[0;39m [32m INFO[0;39m [35m8084[0;39m [2m---[0;39m [2m[           main][0;39m [36mo.apache.catalina.core.StandardEngine   [0;39m [2m:[0;39m Starting Servlet engine: [Apache Tomcat/10.1.15]
+[2m2024-01-19T16:43:41.967-03:00[0;39m [32m INFO[0;39m [35m8084[0;39m [2m---[0;39m [2m[           main][0;39m [36mo.a.c.c.C.[Tomcat].[localhost].[/]      [0;39m [2m:[0;39m Initializing Spring embedded WebApplicationContext
+[2m2024-01-19T16:43:41.968-03:00[0;39m [32m INFO[0;39m [35m8084[0;39m [2m---[0;39m [2m[           main][0;39m [36mw.s.c.ServletWebServerApplicationContext[0;39m [2m:[0;39m Root WebApplicationContext: initialization completed in 2786 ms
+[2m2024-01-19T16:43:42.596-03:00[0;39m [32m INFO[0;39m [35m8084[0;39m [2m---[0;39m [2m[           main][0;39m [36mo.hibernate.jpa.internal.util.LogHelper [0;39m [2m:[0;39m HHH000204: Processing PersistenceUnitInfo [name: default]
+[2m2024-01-19T16:43:42.846-03:00[0;39m [32m INFO[0;39m [35m8084[0;39m [2m---[0;39m [2m[           main][0;39m [36morg.hibernate.Version                   [0;39m [2m:[0;39m HHH000412: Hibernate ORM core version 6.1.7.Final
+[2m2024-01-19T16:43:44.153-03:00[0;39m [32m INFO[0;39m [35m8084[0;39m [2m---[0;39m [2m[           main][0;39m [36mcom.zaxxer.hikari.HikariDataSource      [0;39m [2m:[0;39m HikariPool-1 - Starting...
+[2m2024-01-19T16:43:44.517-03:00[0;39m [32m INFO[0;39m [35m8084[0;39m [2m---[0;39m [2m[           main][0;39m [36mcom.zaxxer.hikari.pool.HikariPool       [0;39m [2m:[0;39m HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@52f9e8bb
+[2m2024-01-19T16:43:44.522-03:00[0;39m [32m INFO[0;39m [35m8084[0;39m [2m---[0;39m [2m[           main][0;39m [36mcom.zaxxer.hikari.HikariDataSource      [0;39m [2m:[0;39m HikariPool-1 - Start completed.
+[2m2024-01-19T16:43:44.661-03:00[0;39m [32m INFO[0;39m [35m8084[0;39m [2m---[0;39m [2m[           main][0;39m [36mSQL dialect                             [0;39m [2m:[0;39m HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+Hibernate: 
+    
+    create table tb_category (
+       id bigserial not null,
+        name varchar(255),
+        primary key (id)
+    )
+Hibernate: 
+    
+    create table tb_order (
+       id bigserial not null,
+        moment timestamp(6) with time zone,
+        order_status varchar(255),
+        client_id bigint,
+        primary key (id)
+    )
+Hibernate: 
+    
+    create table tb_order_item (
+       id bigserial not null,
+        price float(53),
+        quantity integer,
+        order_id bigint,
+        product_id bigint,
+        primary key (id)
+    )
+Hibernate: 
+    
+    create table tb_product (
+       id bigserial not null,
+        description varchar(255),
+        img_url varchar(255),
+        name varchar(255),
+        price float(53),
+        category_id bigint,
+        primary key (id)
+    )
+Hibernate: 
+    
+    create table tb_user (
+       id bigserial not null,
+        email varchar(255),
+        name varchar(255),
+        password varchar(255),
+        phone varchar(255),
+        primary key (id)
+    )
+Hibernate: 
+    
+    alter table if exists tb_order 
+       add constraint FKi0x0rv7d65vsceuy33km9567n 
+       foreign key (client_id) 
+       references tb_user
+Hibernate: 
+    
+    alter table if exists tb_order_item 
+       add constraint FKgeobgl2xu916he8vhljktwxnx 
+       foreign key (order_id) 
+       references tb_order
+Hibernate: 
+    
+    alter table if exists tb_order_item 
+       add constraint FK4h5xid5qehset7qwe5l9c997x 
+       foreign key (product_id) 
+       references tb_product
+Hibernate: 
+    
+    alter table if exists tb_product 
+       add constraint FK8i0sq9mfbpsrabrm2pum9fspo 
+       foreign key (category_id) 
+       references tb_category
+[2m2024-01-19T16:43:47.172-03:00[0;39m [32m INFO[0;39m [35m8084[0;39m [2m---[0;39m [2m[           main][0;39m [36mo.h.e.t.j.p.i.JtaPlatformInitiator      [0;39m [2m:[0;39m HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+[2m2024-01-19T16:43:47.192-03:00[0;39m [32m INFO[0;39m [35m8084[0;39m [2m---[0;39m [2m[           main][0;39m [36mj.LocalContainerEntityManagerFactoryBean[0;39m [2m:[0;39m Initialized JPA EntityManagerFactory for persistence unit 'default'
+[2m2024-01-19T16:43:49.676-03:00[0;39m [32m INFO[0;39m [35m8084[0;39m [2m---[0;39m [2m[           main][0;39m [36mo.s.b.w.embedded.tomcat.TomcatWebServer [0;39m [2m:[0;39m Tomcat started on port(s): 8082 (http) with context path ''
+[2m2024-01-19T16:43:49.694-03:00[0;39m [32m INFO[0;39m [35m8084[0;39m [2m---[0;39m [2m[           main][0;39m [36mc.requests.project.ProjectApplication   [0;39m [2m:[0;39m Started ProjectApplication in 11.643 seconds (process running for 13.235)
+
+```
 ## 2 CONCLUSÃO
     📌
 
