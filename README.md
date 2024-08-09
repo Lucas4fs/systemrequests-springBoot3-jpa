@@ -6,12 +6,9 @@
     </h1>
 </p>
 <br>
-<h2>
-    :mag: DOWNLOAD DO PROJETO NO LINK ABAIXO
-</h2>
 
 ```
-INSERIR...
+PROJETO EM ANDAMENTO...
 ``` 
 <h2>
     📑 SUMÁRIO
